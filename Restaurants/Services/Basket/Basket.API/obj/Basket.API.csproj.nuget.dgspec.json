@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj": {}
+    "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Basket\\Basket.API\\Basket.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj": {
+    "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Basket\\Basket.API\\Basket.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj",
-        "projectName": "Restaurant.API",
-        "projectPath": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Basket\\Basket.API\\Basket.API.csproj",
+        "projectName": "Basket.API",
+        "projectPath": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Basket\\Basket.API\\Basket.API.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\obj\\",
+        "outputPath": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Basket\\Basket.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,10 +40,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "MongoDB.Driver": {
-              "target": "Package",
-              "version": "[2.21.0, )"
-            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"

@@ -1215,11 +1215,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\Desktop\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj",
       "projectName": "Restaurant.API",
-      "projectPath": "C:\\Users\\PC\\Desktop\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\Restaurant.API.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\Desktop\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\VISUAL STUDIO\\RS2\\Restaurants\\Services\\Restaurants\\Restaurant.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
