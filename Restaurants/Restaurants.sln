@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.API", "Services\Restaurants\Restaurant.API\Restaurant.API.csproj", "{EB82A991-231B-48EE-961F-9CF4519D0DAD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "Services\Basket\Basket.API\Basket.API.csproj", "{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D82917BF-AD2F-4E0E-BB68-AB88309300F8}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
