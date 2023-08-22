@@ -22,19 +22,40 @@ namespace Restaurants.Common.Repositories
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public Task<bool> CreateRestaurant(CreateRestaurantDTO restaurantDTO)
+        public async Task<bool> CreateRestaurant(CreateRestaurantDTO restaurantDTO)
         {
-            throw new NotImplementedException();
+            using var connection = _context.GetConnection();
+
+            var affectedRows = await connection.ExecuteAsync(
+                "INSERT INTO Restaurant (RestaurantName, Address) VALUES (@RestaurantName, @Address)",
+                new { restaurantDTO.RestaurantName, restaurantDTO.Address}
+                );
+
+            return affectedRows != 0;
         }
 
-        public Task<bool> DeleteRestaurant(string restaurantName)
+        public async Task<bool> DeleteRestaurant(string restaurantName)
         {
-            throw new NotImplementedException();
+            using var connection = _context.GetConnection();
+
+            var affectedRows = await connection.ExecuteAsync(
+                "DELETE FROM Restaurant WHERE RestaurantName = @RestaurantName", 
+                new { RestaurantName = restaurantName}
+                );
+
+            return affectedRows != 0;
         }
 
         public async Task<RestaurantDTO> GetRestaurant(string restaurantName)
         {
-            throw new NotImplementedException();
+            using var connection = _context.GetConnection();
+
+            var restaurant = await connection.QueryFirstOrDefaultAsync<Restaurant>(
+                "SELECT * FROM Restaurant WHERE RestaurantName = @RestaurantName", 
+                new {RestaurantName = restaurantName }
+                );
+
+            return _mapper.Map<RestaurantDTO>(restaurant);
         }
 
         public Task<bool> UpdateRestaurant(RestaurantDTO restaurantDTO)
