@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  identityserver:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+  mssql:
+    container_name: mssql
+    environment:
+      - SA_PASSWORD=MATF12345678rs2
+      - ACCEPT_EULA=Y
+    restart: always
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
