@@ -21,6 +21,8 @@ namespace Restaurants.Common.Extensions
             services.AddAutoMapper(configuration =>
             {
                 configuration.CreateMap<RestaurantDTO, Restaurant>().ReverseMap();
+                configuration.CreateMap<MenuItemDTO, MenuItem>().ReverseMap();
+
             });
         }
     }

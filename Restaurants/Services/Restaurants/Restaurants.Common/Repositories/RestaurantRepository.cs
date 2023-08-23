@@ -5,6 +5,7 @@ using Restaurants.Common.DTOs;
 using Restaurants.Common.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,7 +56,21 @@ namespace Restaurants.Common.Repositories
                 new {RestaurantName = restaurantName }
                 );
 
-            return _mapper.Map<RestaurantDTO>(restaurant);
+            if (restaurant != null)
+            {
+                var menu = await connection.QueryAsync<MenuItem>(
+                    "SELECT MealID, MealName, Price FROM Menu WHERE RestaurantID = @RestaurantID",
+                    new { RestaurantId = restaurant.Id }
+                    );
+
+                var res = _mapper.Map<RestaurantDTO>(restaurant);
+                res.Menu = _mapper.Map<List<MenuItemDTO>>(menu);
+
+                return res;
+            }
+
+            return null;
+
         }
 
         public async Task<bool> UpdateRestaurant(RestaurantDTO restaurantDTO)
