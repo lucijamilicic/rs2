@@ -58,9 +58,15 @@ namespace Restaurants.Common.Repositories
             return _mapper.Map<RestaurantDTO>(restaurant);
         }
 
-        public Task<bool> UpdateRestaurant(RestaurantDTO restaurantDTO)
+        public async Task<bool> UpdateRestaurant(RestaurantDTO restaurantDTO)
         {
-            throw new NotImplementedException();
+            using var connection = _context.GetConnection();
+
+            var affectedRows = await connection.ExecuteAsync(
+                "UPDATE Restaurant SET RestaurantName=@RestaurantName, Address=@Address WHERE Id = @Id",
+                new { restaurantDTO.RestaurantName, restaurantDTO.Address, restaurantDTO.Id });
+
+            return affectedRows != 0;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Restaurants.API.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("{restaurantName}")]
+        [HttpGet("{restaurantName}", Name = "GetRestaurant")]
         [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
 
@@ -29,6 +29,31 @@ namespace Restaurants.API.Controllers
             }
 
             return Ok(restaurant);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(IEnumerable<RestaurantDTO>), StatusCodes.Status201Created)]
+        public async Task<ActionResult<RestaurantDTO>> CreateRestaurant([FromBody] CreateRestaurantDTO restaurantDTO)
+        {
+            await _repository.CreateRestaurant(restaurantDTO);
+
+            return CreatedAtRoute("GetRestaurant", new { restaurantName = restaurantDTO.RestaurantName }, restaurantDTO);
+
+        }
+
+
+        [HttpDelete("{restaurantName}", Name = "DeleteRestaurant")]
+        [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteRestaurantById(string restaurantName)
+        {
+            return Ok(await _repository.DeleteRestaurant(restaurantName));
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateProduct([FromBody] RestaurantDTO restaurantDTO)
+        {
+            return Ok(await _repository.UpdateRestaurant(restaurantDTO));
         }
     }
 }
