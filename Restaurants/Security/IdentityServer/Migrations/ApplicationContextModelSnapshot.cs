@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentityServer.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ApplicationContext))]
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -147,15 +147,15 @@ namespace IdentityServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "86006473-dc1a-4a41-852c-0c0d73364032",
-                            ConcurrencyStamp = "c27a3fe3-eb5c-487e-906c-3095e710e02d",
+                            Id = "2d64ab0d-e517-4d58-8a7b-39947eec58ca",
+                            ConcurrencyStamp = "e8f658b1-892b-47a4-9297-92510329a0f2",
                             Name = "Buyer",
                             NormalizedName = "BUYER"
                         },
                         new
                         {
-                            Id = "616423dc-58fa-40e2-b302-f563f4826cac",
-                            ConcurrencyStamp = "c7c64c09-1e6e-4bf2-9f21-1ebab3681e69",
+                            Id = "6a45a719-d15f-426f-8115-c50895379de8",
+                            ConcurrencyStamp = "8bcaa17e-8553-424c-b7fe-5bc64510d0ef",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

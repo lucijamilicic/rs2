@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.Data
 {
-    public class IdentityContext : IdentityDbContext<User>
+    public class ApplicationContext : IdentityDbContext<User>
     {
         public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
-        public IdentityContext(DbContextOptions options) : base(options)
+        public ApplicationContext(DbContextOptions options) : base(options)
         {
         }
 

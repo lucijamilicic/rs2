@@ -14,7 +14,7 @@ public static class IdentityExtensions
 {
     public static IServiceCollection ConfigurePersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<IdentityContext>(options =>
+        services.AddDbContext<ApplicationContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("IdentityConnectionString"));
         });
@@ -33,7 +33,7 @@ public static class IdentityExtensions
             options.Password.RequiredLength = 8;
             options.User.RequireUniqueEmail = true;
         })
-            .AddEntityFrameworkStores<IdentityContext>()
+            .AddEntityFrameworkStores<ApplicationContext>()
             .AddDefaultTokenProviders();
 
         return services;

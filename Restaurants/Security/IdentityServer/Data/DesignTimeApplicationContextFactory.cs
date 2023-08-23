@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace IdentityServer.Data;
 
-public class DesignTimeApplicationContextFactory : IDesignTimeDbContextFactory<IdentityContext>
+public class DesignTimeApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
 {
-    public IdentityContext CreateDbContext(string[] args)
+    public ApplicationContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<IdentityContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
         optionsBuilder.UseSqlServer();
-        return new IdentityContext(optionsBuilder.Options);
+        return new ApplicationContext(optionsBuilder.Options);
     }
 }

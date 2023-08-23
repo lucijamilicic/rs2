@@ -14,9 +14,9 @@ public class AuthenticationService : IAuthenticationService
 {
     private readonly UserManager<User> _userManager;
     private readonly IConfiguration _configuration;
-    private readonly IdentityContext _dbContext;
+    private readonly ApplicationContext _dbContext;
 
-    public AuthenticationService(UserManager<User> userManager, IConfiguration configuration, IdentityContext dbContext)
+    public AuthenticationService(UserManager<User> userManager, IConfiguration configuration, ApplicationContext dbContext)
     {
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
