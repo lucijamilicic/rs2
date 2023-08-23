@@ -12,7 +12,7 @@ namespace Restaurants.Common.Data
     {
         private readonly IConfiguration _configuration;
 
-        RestaurantContext(IConfiguration configuration)
+        public RestaurantContext(IConfiguration configuration)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }

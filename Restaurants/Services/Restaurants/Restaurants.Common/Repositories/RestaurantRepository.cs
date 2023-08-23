@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Common.Repositories
 {
-    internal class RestaurantRepository : IRestaurantRepository
+    public class RestaurantRepository : IRestaurantRepository
     {
         private readonly IRestaurantContext _context;
         private readonly IMapper _mapper;
