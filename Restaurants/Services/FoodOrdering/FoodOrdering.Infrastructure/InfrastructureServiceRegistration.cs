@@ -2,6 +2,7 @@ using FoodOrdering.Application.EmailModels;
 using FoodOrdering.Application.Factories;
 using FoodOrdering.Application.Persistance;
 using FoodOrdering.Infrastructure.Email;
+using FoodOrdering.Infrastructure.Factories;
 using FoodOrdering.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +15,7 @@ public static class InfrastructureServiceRegistration
         IConfiguration configuration)
     {
         services.AddScoped<IOrderRepository, OrderRepository>();
-
-        services.AddScoped<IOrderFactory, IOrderFactory>();
+        services.AddScoped<IOrderDTOFactory, OrderDTOFactory>();
 
         services.Configure<EmailSettings>(c =>
         {

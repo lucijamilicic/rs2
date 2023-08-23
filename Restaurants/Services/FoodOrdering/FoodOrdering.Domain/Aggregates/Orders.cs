@@ -8,29 +8,22 @@ namespace FoodOrdering.Domain.Aggregates
 {
     public class Orders:AggregateRoot
     {
-        public Orders(string buyerId, Address buyerAddress)
+        public Orders(DateTime orderDate, string buyerId, string buyerName, Address buyerAddress,List<OrderItem> listOfOrders)
         {
-            BuyerId = buyerId;
-            BuyerAddress = buyerAddress;
-            OrderDate = DateTime.Now;
+            OrderDate = orderDate;
+            BuyerId = buyerId ?? throw new ArgumentNullException(nameof(buyerId));
+            BuyerName = buyerName ?? throw new ArgumentNullException(nameof(buyerName));
+            BuyerAddress = buyerAddress ?? throw new ArgumentNullException(nameof(buyerAddress));
+            ListOfOrders = listOfOrders ?? new List<OrderItem>();
         }
 
         public DateTime OrderDate { get; private set; }
         public string BuyerId { get; private set; }
+        public string BuyerName { get; private set; }
         public Address BuyerAddress  { get; private set; }
-        private readonly List<OrderItem> _listOfOrders = new List<OrderItem>();
-        public IReadOnlyCollection<OrderItem> ListOfOrders => _listOfOrders;
-        
-        public Orders(int id, string buyerId, Address address)
-            : this(buyerId, address)
-        {
-            Id = id;
-        }
-        
-        public Orders(int id)
-        {
-            Id = id;
-        }
+        public List<OrderItem> ListOfOrders { get; private set; }
+
+
 
     }
 }

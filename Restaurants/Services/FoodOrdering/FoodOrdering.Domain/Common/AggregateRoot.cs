@@ -1,6 +1,6 @@
 namespace FoodOrdering.Domain.Common
 {
-    public class AggregateRoot:EntityBase
+    public class AggregateRoot//:EntityBase
     {
         
     }

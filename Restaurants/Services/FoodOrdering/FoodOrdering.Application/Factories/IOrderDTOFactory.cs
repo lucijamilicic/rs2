@@ -3,7 +3,7 @@ using FoodOrdering.Domain.Aggregates;
 
 namespace FoodOrdering.Application.Factories;
 
-public interface IOrderFactory
+public interface IOrderDTOFactory
 {
-    Orders CreateOrders(OrderDTO ordersDTO);
+    OrderDTO CreateOrdersDTO(Orders orders);
 }

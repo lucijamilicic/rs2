@@ -6,16 +6,16 @@ using FoodOrdering.Domain.ValueObjects;
 
 namespace FoodOrdering.Domain.Entities
 {
-    public class OrderItem : EntityBase
+    public class OrderItem //: EntityBase
     {
-        public OrderItem(string restaurantId, Address restaurantAddress, int units)
+        public OrderItem(string restaurantName, Address restaurantAddress, List<FoodItem> foodOrders)
         {
-            RestaurantId = restaurantId;
+            RestaurantName = restaurantName;
             RestaurantAddress = restaurantAddress;
-            FoodOrder = new List<FoodItem>();
+            FoodOrder = foodOrders  ?? new List<FoodItem>();;
         }
 
-        public string RestaurantId { get; private set; } //RestaurantName
+        public string RestaurantName { get; private set; }
         public Address RestaurantAddress { get; private set; }
         public List<FoodItem> FoodOrder { get; private set; }
     }

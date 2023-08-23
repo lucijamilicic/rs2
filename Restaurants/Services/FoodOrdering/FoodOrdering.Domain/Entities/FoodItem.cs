@@ -3,7 +3,7 @@ using FoodOrdering.Domain.Common;
 
 namespace FoodOrdering.Domain.Entities
 {
-    public class FoodItem:EntityBase
+    public class FoodItem//:EntityBase
     {
         public FoodItem(string foodName, string orderDescription, decimal price, int units)
         {
