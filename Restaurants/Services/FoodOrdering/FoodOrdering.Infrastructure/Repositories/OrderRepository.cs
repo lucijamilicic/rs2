@@ -5,7 +5,6 @@ using FoodOrdering.Application.Persistance;
 using FoodOrdering.Domain.Aggregates;
 using FoodOrdering.Domain.Entities;
 using FoodOrdering.Domain.ValueObjects;
-using FoodOrdering.Infrastructure.Factories;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
@@ -72,7 +71,13 @@ public class OrderRepository:IOrderRepository
             //TODO:the order is empty, nothing to checkout - show window message
             return null;
         }
-        
+        var orders = JsonConvert.DeserializeObject<Orders>(order);
+
+        var email = new Application.EmailModels.Email();
+        email.To = orders.BuyerAddress.EmailAddress;
+        email.Subject = "Order from MATFraurant App";
+        email.Body = " Order is successfully created on RestaurantApp";
+        await _emailService.SendEmail(email);
 /*
         if (_localorder != null)
         {
@@ -86,7 +91,6 @@ public class OrderRepository:IOrderRepository
         await _emailService.SendEmail(_email);
         */
         //TODO: obrisati order MOZDA
-        var orders = JsonConvert.DeserializeObject<Orders>(order);
         return _factory.CreateOrdersDTO(orders);
 
     }
@@ -94,21 +98,22 @@ public class OrderRepository:IOrderRepository
     //TODO:check what he do if username doesnt exist in cash
     public async Task<bool> DeleteOrder(string username)
     {
-        string body = "Order for user with username "+username + " is deleted";
-        //TODO:send mail
-        /*
-        if (_localorder != null)
+        var order = await _cache.GetStringAsync(username);
+        if (String.IsNullOrEmpty(order))
         {
-            _email.To = _localorder.BuyerAddress.EmailAddress;
-            _email.Subject =_email.Subject = "Order from MATFraurant App";
-
-            _email.Body = body;
-            await _cache.RemoveAsync(username);
-            await _emailService.SendEmail(_email);
-            return true;
+            //TODO:the order is empty, nothing to checkout - show window message
+            return false;
         }
-        */
+        var orders = JsonConvert.DeserializeObject<Orders>(order);
+
         await _cache.RemoveAsync(username);
+
+        //TODO: mozda ni ne mora ovde da se salje mejl
+        var email = new Application.EmailModels.Email();
+        email.To = orders.BuyerAddress.EmailAddress;
+        email.Subject = "Order from MATFraurant App";
+        email.Body = " Order for user "+username+" is successfully deleted";
+        await _emailService.SendEmail(email);
 
         return true;
     }
