@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{1B4C3C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurants.Common", "Services\Restaurants\Restaurants.Common\Restaurants.Common.csproj", "{BE51774A-8BDE-4273-B231-BBD56861C94A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.API", "Services\Restaurants\Restaurants.API\Restaurants.API.csproj", "{9573A9C7-B17C-4996-A3AB-B12B723452C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurants.API", "Services\Restaurants\Restaurants.API\Restaurants.API.csproj", "{9573A9C7-B17C-4996-A3AB-B12B723452C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurants.GRPC", "Services\Restaurants\Restaurants.GRPC\Restaurants.GRPC.csproj", "{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9573A9C7-B17C-4996-A3AB-B12B723452C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9573A9C7-B17C-4996-A3AB-B12B723452C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9573A9C7-B17C-4996-A3AB-B12B723452C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{1B4C3C37-B97C-49F8-8B84-5DC68E607D79} = {EB0D1E3D-3C87-4405-B148-27A6613B880C}
 		{BE51774A-8BDE-4273-B231-BBD56861C94A} = {6700DA2A-0094-48E9-90B1-CF54EAFE1117}
 		{9573A9C7-B17C-4996-A3AB-B12B723452C6} = {6700DA2A-0094-48E9-90B1-CF54EAFE1117}
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC} = {6700DA2A-0094-48E9-90B1-CF54EAFE1117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22EAEBEF-D6FD-4D2E-8E58-E4E4CE619B8F}

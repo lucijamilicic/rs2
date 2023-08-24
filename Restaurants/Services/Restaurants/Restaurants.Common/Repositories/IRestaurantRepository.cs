@@ -14,6 +14,7 @@ namespace Restaurants.Common.Repositories
         Task<bool> CreateRestaurant(CreateRestaurantDTO restaurantDTO);
         Task<bool> UpdateRestaurant(RestaurantDTO restaurantDTO);
         Task<bool> DeleteRestaurant(string restaurantName);
+        Task<IEnumerable<RestaurantDTO>> GetRestaurantsByMeal(int  mealID);
 
 
     }

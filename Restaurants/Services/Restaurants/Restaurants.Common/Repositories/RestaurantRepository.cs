@@ -83,5 +83,20 @@ namespace Restaurants.Common.Repositories
 
             return affectedRows != 0;
         }
+
+        public async Task<IEnumerable<RestaurantDTO>> GetRestaurantsByMeal(int mealID)
+        {
+            using var connection = _context.GetConnection();
+
+            var restaurants = await connection.QueryAsync<Restaurant>(
+                    "SELECT RestaurantID, RestaurantName, Address " +
+                    "FROM Restaurant JOIN Menu " +
+                    "ON Restaurant.ID = Menu.RestaurantID" +
+                    "WHERE Menu.MealID = @MealID",
+                    new { MealID = mealID }
+                    );
+
+            return _mapper.Map<IEnumerable<RestaurantDTO>>(restaurants);
+        }
     }
 }
