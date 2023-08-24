@@ -2,11 +2,12 @@
 using System.Text;
 using IdentityServer.Data;
 using IdentityServer.Entities;
+using IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;  
 
 namespace IdentityServer.Extensions;
 
@@ -70,7 +71,13 @@ public static class IdentityExtensions
     public static IServiceCollection ConfigureMiscellaneousServices(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<Services.IAuthenticationService, Services.AuthenticationService>();
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy", builder =>
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        });
+
         return services;
     }
 }
