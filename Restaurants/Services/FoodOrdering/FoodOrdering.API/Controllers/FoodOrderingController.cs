@@ -1,9 +1,7 @@
 using System.Diagnostics;
 using FoodOrdering.Application.Common;
 using FoodOrdering.Application.Persistance;
-using FoodOrdering.Domain.Aggregates;
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
 
 namespace FoodOrdering.API.Controllers
 {
@@ -12,15 +10,12 @@ namespace FoodOrdering.API.Controllers
     public class FoodOrderingController:ControllerBase
     {
         private readonly IOrderRepository _repository;
-        //private readonly ILogger _logger;
         //grpc ili rabbitmq
 
-        public FoodOrderingController(IOrderRepository repository/*, ILogger logger*/)
+        public FoodOrderingController(IOrderRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        //TODO: dodaj logove
 
         
         //TODO: cim se korisnik uloguje njegova putanja ce biti ova ispod, i automatski se poziva ova funkcija za dohvatanje ordera
@@ -50,9 +45,9 @@ namespace FoodOrdering.API.Controllers
             var result = await _repository.CheckoutOrdersByUsername(username);
             if (result != null) return Ok(result);
             
-            //TODO: window - there is nothing to checkout, order is empty
+            //TODO: window - there is nothing to checkout, order is empty -return warning?
             Debug.Write("No orders at the moment");
-            //return warning?
+            
             return NotFound();
 
         }

@@ -16,9 +16,6 @@ public class OrderRepository:IOrderRepository
     private readonly IDistributedCache _cache;
     private readonly IOrderDTOFactory _factory;
 
-    private Application.EmailModels.Email _email;
-
-    private Orders? _localorder;
     //asinhrona komunikacija
     
     public OrderRepository(IEmailService emailService, IDistributedCache cache,IOrderDTOFactory factory)
@@ -26,7 +23,6 @@ public class OrderRepository:IOrderRepository
         _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         _factory = factory ?? throw new ArgumentNullException(nameof(factory));
-        _email = new Application.EmailModels.Email(); //TODO:
     }
 
     public async Task<OrderDTO?> GetOrdersAsync(string username)
@@ -42,7 +38,6 @@ public class OrderRepository:IOrderRepository
         var orderList = new List<OrderItem>();
         orderList.Add(orderItems);
         var order = new Orders(DateTime.Now,"1","Tobi",address, orderList);
-        _localorder = order;
         //--------------------------------------------------------------------------
         
         var orderString = JsonConvert.SerializeObject(order);
@@ -54,17 +49,10 @@ public class OrderRepository:IOrderRepository
         }
 
         return _factory.CreateOrdersDTO(orders);
-        //return _factory.CreateOrdersDTO(orders);
-
-        //_email.To = order.Address.EmailAddress;
-        //_email.Subject = "Order from MATFraurant App";
-        ////return JsonConvert.DeserializeObject<IReadOnlyList<Orders>>(order);
-
     }
 
-    public async Task<OrderDTO> CheckoutOrdersByUsername(string username)
+    public async Task<OrderDTO?> CheckoutOrdersByUsername(string username)
     {
-        //TODO: ovo bi trebalo biti ceo order?
         var order = await _cache.GetStringAsync(username);
         if (String.IsNullOrEmpty(order))
         {
@@ -76,21 +64,12 @@ public class OrderRepository:IOrderRepository
         var email = new Application.EmailModels.Email();
         email.To = orders.BuyerAddress.EmailAddress;
         email.Subject = "Order from MATFraurant App";
-        email.Body = " Order is successfully created on RestaurantApp";
+        var bodyStr = "Order is successfully created on RestaurantApp\n\n";
+        bodyStr += order;
+        email.Body = bodyStr;
+        
         await _emailService.SendEmail(email);
-/*
-        if (_localorder != null)
-        {
 
-            _email.To = _localorder.BuyerAddress.EmailAddress;
-            _email.Subject =_email.Subject = "Order from MATFraurant App";
-
-
-            _email.Body = " Order is successfully created on RestaurantApp";
-        }
-        await _emailService.SendEmail(_email);
-        */
-        //TODO: obrisati order MOZDA
         return _factory.CreateOrdersDTO(orders);
 
     }
