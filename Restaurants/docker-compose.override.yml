@@ -15,3 +15,14 @@ services:
       - basketdb
     ports:
       - "8001:80"
+
+  foodordering.api:
+    container_name: foodordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      -  "CacheSettings:ConnectionString=basketdb:6379"
+    depends_on:
+      - basketdb
+    ports:
+      - "5005:80"
+    

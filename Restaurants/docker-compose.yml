@@ -8,3 +8,10 @@ services:
     build:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
+
+  foodordering.api:
+    image: ${DOCKER_REGISTRY-}foodorderingapi
+    build:
+      context: .
+      dockerfile: Services/FoodOrdering/FoodOrdering.API/Dockerfile
+
