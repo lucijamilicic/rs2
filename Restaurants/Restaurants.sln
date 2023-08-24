@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.API", "Services\Restaurants\Restaurant.API\Restaurant.API.csproj", "{EB82A991-231B-48EE-961F-9CF4519D0DAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.API", "Services\Basket\Basket.API\Basket.API.csproj", "{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "Services\Basket\Basket.API\Basket.API.csproj", "{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D82917BF-AD2F-4E0E-BB68-AB88309300F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodOrdering.Domain", "Services\FoodOrdering\FoodOrdering.Domain\FoodOrdering.Domain.csproj", "{4309B796-1CAB-446E-903D-D0118713C5F0}"
 EndProject
@@ -49,6 +51,10 @@ Global
 		{9260CCE9-1DC9-4EDE-B2F1-235F40E6DD2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9260CCE9-1DC9-4EDE-B2F1-235F40E6DD2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9260CCE9-1DC9-4EDE-B2F1-235F40E6DD2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D82917BF-AD2F-4E0E-BB68-AB88309300F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D82917BF-AD2F-4E0E-BB68-AB88309300F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D82917BF-AD2F-4E0E-BB68-AB88309300F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D82917BF-AD2F-4E0E-BB68-AB88309300F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
