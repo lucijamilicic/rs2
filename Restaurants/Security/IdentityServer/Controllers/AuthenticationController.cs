@@ -51,7 +51,8 @@ public class AuthenticationController : RegistrationControllerBase
 
         return Ok(await _authService.CreateAuthenticationModel(user));
     }
-    
+
+    // it makes no sense for the user to be pre-authenticated
     [HttpPost("[action]")]
     [ProducesResponseType(typeof(AuthenticationModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -80,7 +81,8 @@ public class AuthenticationController : RegistrationControllerBase
 
         return Ok(await _authService.CreateAuthenticationModel(user));
     }
-    
+
+    // it makes sense for the user to be pre-authenticated
     [Authorize]
     [HttpPost("[action]")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]

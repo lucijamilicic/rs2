@@ -109,13 +109,13 @@ public class AuthenticationService : IAuthenticationService
     
     private async Task<RefreshToken> CreateRefreshToken()
     {
-        var randomNumber = new byte[32];
+        var randomBytes = new byte[32];
         using var rng = RandomNumberGenerator.Create();
-        rng.GetBytes(randomNumber);
+        rng.GetBytes(randomBytes);
 
         var token = new RefreshToken
         {
-            Token = Convert.ToBase64String(randomNumber),
+            Token = Convert.ToBase64String(randomBytes),
             ExpiryTime = DateTime.Now.AddDays(Convert.ToDouble(_configuration.GetValue<string>("RefreshTokenExpires")))
         };
 
