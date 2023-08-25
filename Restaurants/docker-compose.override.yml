@@ -1,0 +1,68 @@
+version: '3.4'
+
+services:
+  
+  recipesdb:
+    container_name: recipesdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  
+      
+  restaurantsdb:
+    container_name: restaurantsdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=RestaurantsDb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+
+
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=proba@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=abcd123
+    restart: always
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
+  recipes.api:
+    container_name: recipes.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://recipesdb:27017"
+    depends_on:
+      - recipesdb
+      - restaurants.grpc 
+    ports:
+      - "5009:80"
+
+  restaurants.api:
+    container_name: restaurants.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=restaurantsdb;Port=5432;Database=RestaurantsDb;User Id=admin;Password=admin1234;"
+    depends_on:
+      - restaurantsdb
+    ports:
+      - "5183:80"
+
+  restaurants.grpc:
+    container_name: restaurants.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=restaurantsdb;Port=5432;Database=RestaurantsDb;User Id=admin;Password=admin1234;"
+    depends_on:
+      - restaurantsdb
+    ports:
+      - "5186:80"
