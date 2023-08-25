@@ -84,7 +84,7 @@ namespace Restaurants.Common.Repositories
             return affectedRows != 0;
         }
 
-        public async Task<IEnumerable<RestaurantDTO>> GetRestaurantsByMeal(int mealID)
+        public async Task<IEnumerable<RestaurantDTO>> GetRestaurantsByMeal(string mealID)
         {
             using var connection = _context.GetConnection();
 

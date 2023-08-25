@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Recipes.API.Data;
 using Recipes.API.Entities;
+using Recipes.API.GrpcServices;
 using Recipes.API.Repositories;
 
 namespace Recipes.API.Controllers
@@ -10,6 +11,7 @@ namespace Recipes.API.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly IRecipesRepository _repository;
+        private readonly RestaurantsGrpcService _grpcService;
         
         public RecipesController(IRecipesRepository repository)
         {
@@ -33,6 +35,15 @@ namespace Recipes.API.Controllers
             {
                 return NotFound(null);
             }
+
+            var restaurants = await _grpcService.GetRestaurantsByMeal(recipe.Id);
+
+            Console.WriteLine(restaurants);
+            var proba = restaurants.Restaurants.ToList();
+            Console.WriteLine(proba);
+
+            // IMapper ??? 
+
             return Ok(recipe);
         }
         

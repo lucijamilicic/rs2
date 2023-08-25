@@ -9,6 +9,8 @@ namespace Recipes.API.Entities
         public string Recipe { get; set; }
         public string ImageUrl { get;  set;}
         public string TutorialVideoUrl { get; set;  }
+        public List<RestaurantInfo> Restaurants { get; set; }
+
     }
 }
 
