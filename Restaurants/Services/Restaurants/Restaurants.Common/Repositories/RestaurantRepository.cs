@@ -89,9 +89,9 @@ namespace Restaurants.Common.Repositories
             using var connection = _context.GetConnection();
 
             var restaurants = await connection.QueryAsync<Restaurant>(
-                    "SELECT RestaurantID, RestaurantName, Address " +
+                    "SELECT RestaurantID AS ID, RestaurantName, Address " +
                     "FROM Restaurant JOIN Menu " +
-                    "ON Restaurant.ID = Menu.RestaurantID" +
+                    "ON Restaurant.ID = Menu.RestaurantID " +
                     "WHERE Menu.MealID = @MealID",
                     new { MealID = mealID }
                     );

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.API.Data;
 using Recipes.API.Entities;
@@ -12,10 +13,13 @@ namespace Recipes.API.Controllers
     {
         private readonly IRecipesRepository _repository;
         private readonly RestaurantsGrpcService _grpcService;
-        
-        public RecipesController(IRecipesRepository repository)
+        private readonly IMapper _mapper;
+
+        public RecipesController(IRecipesRepository repository, IMapper mapper, RestaurantsGrpcService grpcService)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _grpcService = grpcService ?? throw new ArgumentNullException(nameof(grpcService));
         }
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Dish>), StatusCodes.Status200OK)]
@@ -36,14 +40,10 @@ namespace Recipes.API.Controllers
                 return NotFound(null);
             }
 
-            var restaurants = await _grpcService.GetRestaurantsByMeal(recipe.Id);
-
-            Console.WriteLine(restaurants);
-            var proba = restaurants.Restaurants.ToList();
-            Console.WriteLine(proba);
-
-            // IMapper ??? 
-
+            var response = await _grpcService.GetRestaurantsByMeal(recipe.Id);
+            var restaurants = _mapper.Map<List<RestaurantInfo>>(response.Restaurants);
+            recipe.Restaurants = restaurants;
+;
             return Ok(recipe);
         }
         
