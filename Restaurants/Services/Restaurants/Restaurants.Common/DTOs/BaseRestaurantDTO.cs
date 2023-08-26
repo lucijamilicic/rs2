@@ -11,6 +11,5 @@ namespace Restaurants.Common.DTOs
         public string RestaurantName { get; set; }
         public string Address { get; set; }
 
-        public IEnumerable<MenuItemDTO> Menu { get; set; }
     }
 }

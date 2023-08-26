@@ -42,18 +42,44 @@ namespace Restaurants.API.Controllers
         }
 
 
-        [HttpDelete("{restaurantName}", Name = "DeleteRestaurant")]
+        [HttpDelete("{restaurantId}", Name = "DeleteRestaurant")]
         [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteRestaurantById(string restaurantName)
+        public async Task<IActionResult> DeleteRestaurantById(int restaurantId)
         {
-            return Ok(await _repository.DeleteRestaurant(restaurantName));
+            return Ok(await _repository.DeleteRestaurant(restaurantId));
         }
 
         [HttpPut]
         [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateProduct([FromBody] RestaurantDTO restaurantDTO)
+        public async Task<IActionResult> UpdateRestaurantInfo([FromBody] RestaurantDTO restaurantDTO)
         {
-            return Ok(await _repository.UpdateRestaurant(restaurantDTO));
+            return Ok(await _repository.UpdateRestaurantInfo(restaurantDTO));
+        }
+
+
+        // Menu
+
+
+        [HttpPost("menu/{restaurantId}")]
+        [ProducesResponseType(typeof(IEnumerable<MenuItemDTO>), StatusCodes.Status201Created)]
+        public async Task<ActionResult> AddToMenu([FromBody] MenuItemDTO menuItemDTO, int restaurantId)
+        {
+            return Ok(await _repository.AddToMenu(restaurantId, menuItemDTO));
+        }
+
+
+        [HttpDelete("menu/{restaurantId}/{mealId}")]
+        [ProducesResponseType(typeof(MenuItemDTO), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteFromMenu(int restaurantId, string mealId)
+        {
+            return Ok(await _repository.DeleteFromMenu(restaurantId, mealId));
+        }
+
+        [HttpPut("menu/{restaurantId}")]
+        [ProducesResponseType(typeof(MenuItemDTO), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateMealInMenu([FromBody] MenuItemDTO menuItemDTO, int restaurantId)
+        {
+            return Ok(await _repository.UpdateMealInMenu(restaurantId, menuItemDTO));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Restaurants.Common.DTOs
 {
     public class MenuItemDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string MealName { get; set; }  
         public int Price { get; set; }
     }

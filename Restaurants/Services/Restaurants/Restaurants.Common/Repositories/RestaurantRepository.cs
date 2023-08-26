@@ -35,14 +35,17 @@ namespace Restaurants.Common.Repositories
             return affectedRows != 0;
         }
 
-        public async Task<bool> DeleteRestaurant(string restaurantName)
+        public async Task<bool> DeleteRestaurant(int restaurantId)
         {
             using var connection = _context.GetConnection();
 
-            var affectedRows = await connection.ExecuteAsync(
-                "DELETE FROM Restaurant WHERE RestaurantName = @RestaurantName", 
-                new { RestaurantName = restaurantName}
-                );
+            var affectedRows = await connection.ExecuteAsync("DELETE FROM Restaurant WHERE ID = @RestaurantId",
+                                                             new { RestaurantId = restaurantId });
+
+            // delete menu for selected restaurant
+            await connection.ExecuteAsync("DELETE FROM Menu WHERE RestaurantID = @RestaurantId",
+                                          new { RestaurantId = restaurantId });
+
 
             return affectedRows != 0;
         }
@@ -59,7 +62,7 @@ namespace Restaurants.Common.Repositories
             if (restaurant != null)
             {
                 var menu = await connection.QueryAsync<MenuItem>(
-                    "SELECT MealID, MealName, Price FROM Menu WHERE RestaurantID = @RestaurantID",
+                    "SELECT MealID AS ID, MealName, Price FROM Menu WHERE RestaurantID = @RestaurantID",
                     new { RestaurantId = restaurant.Id }
                     );
 
@@ -73,7 +76,7 @@ namespace Restaurants.Common.Repositories
 
         }
 
-        public async Task<bool> UpdateRestaurant(RestaurantDTO restaurantDTO)
+        public async Task<bool> UpdateRestaurantInfo(RestaurantDTO restaurantDTO)
         {
             using var connection = _context.GetConnection();
 
@@ -84,6 +87,47 @@ namespace Restaurants.Common.Repositories
             return affectedRows != 0;
         }
 
+
+        // Edit Menu
+
+        public async Task<bool> AddToMenu(int restaurantId, MenuItemDTO menuItemDTO)
+        {
+            using var connection = _context.GetConnection();
+
+            var affectedRows = await connection.ExecuteAsync(
+                "INSERT INTO Menu (RestaurantID, MealID, MealName, Price) VALUES " +
+                "(@RestaurantID, @MealID, @MealName, @Price)",
+                new { RestaurantID = restaurantId, MealID = menuItemDTO.Id, menuItemDTO.MealName, menuItemDTO.Price});
+
+            return affectedRows != 0;
+        }
+
+        public async Task<bool> DeleteFromMenu(int restaurantId, string mealId)
+        {
+            using var connection = _context.GetConnection();
+
+            var affectedRows = await connection.ExecuteAsync("DELETE FROM Menu WHERE " +
+                                                             "RestaurantID = @RestaurantId AND MealID = @MealId",
+                                                             new { RestaurantId = restaurantId, MealId = mealId });
+
+            return affectedRows != 0;
+        }
+
+        public async Task<bool> UpdateMealInMenu(int restaurantId, MenuItemDTO menuItemDTO)
+        {
+            using var connection = _context.GetConnection();
+
+            var affectedRows = await connection.ExecuteAsync(
+                "UPDATE Menu SET MealName=@MealName, Price=@Price WHERE " +
+                "RestaurantID=@RestaurantId AND MealID=@MealId",
+                new {menuItemDTO.MealName, menuItemDTO.Price, RestaurantId = restaurantId, MealId = menuItemDTO.Id});
+
+            return affectedRows != 0;
+        }
+
+
+
+        // gRPC 
         public async Task<IEnumerable<RestaurantDTO>> GetRestaurantsByMeal(string mealID)
         {
             using var connection = _context.GetConnection();

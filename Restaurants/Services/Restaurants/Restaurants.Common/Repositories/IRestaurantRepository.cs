@@ -12,10 +12,11 @@ namespace Restaurants.Common.Repositories
     {
         Task<RestaurantDTO> GetRestaurant(string restaurantName); // restaurant info + menu
         Task<bool> CreateRestaurant(CreateRestaurantDTO restaurantDTO);
-        Task<bool> UpdateRestaurant(RestaurantDTO restaurantDTO);
-        Task<bool> DeleteRestaurant(string restaurantName);
+        Task<bool> UpdateRestaurantInfo(RestaurantDTO restaurantDTO);
+        Task<bool> DeleteRestaurant(int restaurantId);
         Task<IEnumerable<RestaurantDTO>> GetRestaurantsByMeal(string  mealID);
-
-
+        Task<bool> AddToMenu(int restaurantId, MenuItemDTO menuItemDTO);
+        Task<bool> UpdateMealInMenu(int restaurantId, MenuItemDTO menuItemDTO);
+        Task<bool> DeleteFromMenu(int restaurantId, string mealId);
     }
 }
