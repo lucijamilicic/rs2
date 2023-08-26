@@ -16,6 +16,7 @@ public static class InfrastructureServiceRegistration
     {
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IOrderDTOFactory, OrderDTOFactory>();
+        services.AddScoped<IOrderFactory, OrderFactory>();
 
         services.Configure<EmailSettings>(c =>
         {

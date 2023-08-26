@@ -27,18 +27,18 @@ public class OrderDTOFactory:IOrderDTOFactory
             foreach (var foodItem in item.FoodOrder)
             {
                 var foodDTO = new FoodItemDTO();
-                foodDTO.FoodName = foodItem.FoodName;
+                foodDTO.DishName = foodItem.FoodName;
                 totalSub += foodItem.Units * foodItem.Price;
                 foodDTO.Price = foodItem.Price;
-                foodDTO.Units = foodItem.Units;
+                foodDTO.Quantity = foodItem.Units;
                 foodItemsList.Add(foodDTO);
             }
             total += totalSub;
-            orderItemDTO.TotalPrice = totalSub;
-            orderItemDTO.FoodItems = foodItemsList; 
+            orderItemDTO.FoodOrder = foodItemsList; 
             orderItemsDTOList.Add(orderItemDTO);
         }
 
+        orderDTO.TotalPrice = total;
         orderDTO.OrderItems = orderItemsDTOList;
         orderDTO.TotalPrice = total;
         return orderDTO;

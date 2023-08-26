@@ -1,6 +1,4 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -11,6 +9,7 @@ COPY ["Services/FoodOrdering/FoodOrdering.API/FoodOrdering.API.csproj", "Service
 COPY ["Services/FoodOrdering/FoodOrdering.Application/FoodOrdering.Application.csproj", "Services/FoodOrdering/FoodOrdering.Application/"]
 COPY ["Services/FoodOrdering/FoodOrdering.Domain/FoodOrdering.Domain.csproj", "Services/FoodOrdering/FoodOrdering.Domain/"]
 COPY ["Services/FoodOrdering/FoodOrdering.Infrastructure/FoodOrdering.Infrastructure.csproj", "Services/FoodOrdering/FoodOrdering.Infrastructure/"]
+COPY ["Common/EventBus.Messages/EventBus.Messages.csproj", "Common/EventBus.Messages/"]
 RUN dotnet restore "Services/FoodOrdering/FoodOrdering.API/FoodOrdering.API.csproj"
 COPY . .
 WORKDIR "/src/Services/FoodOrdering/FoodOrdering.API"

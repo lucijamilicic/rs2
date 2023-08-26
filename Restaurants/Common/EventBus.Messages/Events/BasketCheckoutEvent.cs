@@ -1,22 +1,18 @@
-namespace FoodOrdering.Application.Common;
+using EventBus.Messages.Entities;
 
-public class OrderDTO
+namespace EventBus.Messages.Events;
+
+public class BasketCheckoutEvent:IntegrationBaseEvent
 {
-    // EntityBase
-    public Guid Id { get; set; }
-
-    public DateTime CreationDate { get; set; }
-
-    // Address
+    //Address
     public string Street { get; set; }
     public string City { get; set; }
     public string Country { get; set; }
     public string ZipCode { get; set; }
     public string EmailAddress { get; set; }
 
-    // Order
     public string BuyerId { get; set; }
     public string BuyerUsername { get; set; }
+    public IEnumerable<BasketItem> OrderItems { get; set; }
     public decimal TotalPrice { get; set; }
-    public IEnumerable<OrderItemDTO> OrderItems { get; set; }
 }

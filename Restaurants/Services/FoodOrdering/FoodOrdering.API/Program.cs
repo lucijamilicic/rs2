@@ -1,6 +1,8 @@
-using FoodOrdering.Application.Persistance;
+using System.Reflection;
+using EventBus.Messages.Constants;
+using FoodOrdering.API.EventBusConsumers;
 using FoodOrdering.Infrastructure;
-using FoodOrdering.Infrastructure.Repositories;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,24 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString");
 });
 
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+//builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+//Automapper
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+//EventBus
+builder.Services.AddMassTransit(config =>
+{
+    config.AddConsumer<BasketCheckoutConsumer>();
+    config.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+        cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
+        {
+            c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
+        });
+    });
+});
 
 
 var app = builder.Build();
