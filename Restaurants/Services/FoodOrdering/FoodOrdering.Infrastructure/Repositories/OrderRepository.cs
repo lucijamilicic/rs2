@@ -70,7 +70,7 @@ public class OrderRepository:IOrderRepository
         bodyStr += orderString;
         email.Body = bodyStr;
         
-        await _emailService.SendEmail(email);
+        await _emailService.SendEmail(email); //salje mejl korisniku
 
         return _factoryDTO.CreateOrdersDTO(orders);
 

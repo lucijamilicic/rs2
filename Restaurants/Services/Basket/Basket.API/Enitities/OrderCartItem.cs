@@ -16,6 +16,8 @@ namespace Basket.API.Enitities
        public string City { get; set; }
        public string Country { get; set; }
        public string ZipCode { get; set; }
+       public string EmailAddress { get; set; }
+
        //TODO: dodati email
 
 
