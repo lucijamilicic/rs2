@@ -1,0 +1,22 @@
+.header {
+    position: absolute;
+    top: 0;
+    height:80px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgba(27, 22, 27, 0.7);
+    align-items:center;
+}
+
+.left {
+    font-size: 20px;
+    color: white;
+}
+
+.right .search-wrap {
+    justify-content: flex-end;
+    column-gap: 20px;
+    display: flex;
+
+}
