@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using AutoMapper;
 using FoodOrdering.Application.Common;
 using FoodOrdering.Application.EmailModels;
@@ -9,6 +10,7 @@ using FoodOrdering.Domain.Entities;
 using FoodOrdering.Domain.ValueObjects;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace FoodOrdering.Infrastructure.Repositories;
 
@@ -37,7 +39,15 @@ public class OrderRepository:IOrderRepository
         var order = _factory.CreateOrder(orderDTO);
         
         var orderString = JsonConvert.SerializeObject(order);
+        foreach (var item in Encoding.ASCII.GetBytes(order.BuyerName))
+        {
+            Console.WriteLine(item);
+
+        }
         await _cache.SetStringAsync(order.BuyerName, orderString);
+
+
+
         Console.WriteLine("---------------- USO: "+orderString);
         return order.Id;
 
@@ -47,10 +57,13 @@ public class OrderRepository:IOrderRepository
     {
         var orderString = await _cache.GetStringAsync(username);
 
+        foreach (var item in Encoding.ASCII.GetBytes(username))
+        {
+            Console.WriteLine(item);
 
-        Console.WriteLine(" --------------"+ orderString);
-        
-        
+        }
+
+
         if (String.IsNullOrEmpty(orderString))
          {
              //TODO:the order is empty, nothing to checkout - show window message

@@ -35,9 +35,6 @@ namespace Basket.API.Enitities.Repositories
             return await GetBasket(basket.BuyerUsername);
 
         }
-        public async Task DeleteBasket(string username)
-        {
-            await _cache.RemoveAsync(username);
-        }
+       
     }
 }

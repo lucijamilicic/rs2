@@ -3,10 +3,13 @@ using Basket.API.Enitities;
 using Basket.API.Enitities.Repositories;
 using EventBus.Messages.Events;
 using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Basket.API.Controllers
 {
+    [Authorize(Roles = "Buyer")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class BasketControllers : ControllerBase
@@ -30,6 +33,10 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(OrderCart), StatusCodes.Status200OK)]
         public async Task<ActionResult<OrderCart>> GetBasket(string username)
         {
+            if (User.FindFirst(ClaimTypes.Name)?.Value != username)
+            {
+                return Forbid();
+            }
             var basket = await _repository.GetBasket(username); 
             return Ok(basket ?? new OrderCart(username));
         }
@@ -38,18 +45,16 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(OrderCart), StatusCodes.Status200OK)]
         public async Task<ActionResult<OrderCart>> UpdateBasket([FromBody]OrderCart basket)
         {
+            if (User.FindFirstValue(ClaimTypes.Name) != basket.BuyerUsername)
+            {
+                return Forbid();
+            }
+
             return Ok(await _repository.UpdateBasket(basket));
 
 
         }
 
-        [HttpDelete("{username}")]
-        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteBasket(string username)
-        {
-            await _repository.DeleteBasket(username);
-            return Ok();
-        }
 
         [Route("[action]")]
         [HttpPost]
@@ -57,6 +62,11 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<BasketCheckoutEvent>?> Checkout(string username/*[FromBody] BasketCheckout basketCheckout*/)
         {
+            if (User.FindFirstValue(ClaimTypes.Name) != username)
+            {
+                return Forbid();
+            }
+
             //get exiating basket
             var basket = await _repository.GetBasket(username);
             if (basket is null)
@@ -66,9 +76,8 @@ namespace Basket.API.Controllers
             //send checkout event
             var eventMessage = _mapper.Map<BasketCheckoutEvent>(basket);
             await _publishEndpoint.Publish(eventMessage);
+           
             
-            //remove the basket
-            await _repository.DeleteBasket(username);
             
             return Ok(eventMessage);
         }

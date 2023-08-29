@@ -27,6 +27,8 @@ builder.Services.AddAutoMapper(configuration =>
     configuration.CreateMap<RestaurantInfo, GetRestaurantsByMealResponse.Types.Restaurant>().ReverseMap();
 });
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,8 +1,11 @@
 using System.Reflection;
+using System.Text;
 using EventBus.Messages.Constants;
 using FoodOrdering.API.EventBusConsumers;
 using FoodOrdering.Infrastructure;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,7 @@ builder.Services.AddMassTransit(config =>
         });
     });
 });
+
 
 
 var app = builder.Build();

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Restaurants.Common.DTOs;
 using Restaurants.Common.Repositories;
 
 namespace Restaurants.API.Controllers
 {
+    [Authorize(Roles = "Buyer,Administrator")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class RestaurantsController : ControllerBase
@@ -15,6 +17,7 @@ namespace Restaurants.API.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
+       
         [HttpGet("{restaurantName}", Name = "GetRestaurant")]
         [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
@@ -31,6 +34,7 @@ namespace Restaurants.API.Controllers
             return Ok(restaurant);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ProducesResponseType(typeof(IEnumerable<RestaurantDTO>), StatusCodes.Status201Created)]
         public async Task<ActionResult<RestaurantDTO>> CreateRestaurant([FromBody] CreateRestaurantDTO restaurantDTO)
@@ -41,7 +45,7 @@ namespace Restaurants.API.Controllers
 
         }
 
-
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{restaurantId}", Name = "DeleteRestaurant")]
         [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteRestaurantById(int restaurantId)
@@ -49,6 +53,7 @@ namespace Restaurants.API.Controllers
             return Ok(await _repository.DeleteRestaurant(restaurantId));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPut]
         [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateRestaurantInfo([FromBody] RestaurantDTO restaurantDTO)
@@ -59,7 +64,7 @@ namespace Restaurants.API.Controllers
 
         // Menu
 
-
+        [Authorize(Roles = "Administrator")]
         [HttpPost("menu/{restaurantId}")]
         [ProducesResponseType(typeof(IEnumerable<MenuItemDTO>), StatusCodes.Status201Created)]
         public async Task<ActionResult> AddToMenu([FromBody] MenuItemDTO menuItemDTO, int restaurantId)
@@ -68,6 +73,7 @@ namespace Restaurants.API.Controllers
         }
 
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("menu/{restaurantId}/{mealId}")]
         [ProducesResponseType(typeof(MenuItemDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteFromMenu(int restaurantId, string mealId)
@@ -75,6 +81,7 @@ namespace Restaurants.API.Controllers
             return Ok(await _repository.DeleteFromMenu(restaurantId, mealId));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPut("menu/{restaurantId}")]
         [ProducesResponseType(typeof(MenuItemDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateMealInMenu([FromBody] MenuItemDTO menuItemDTO, int restaurantId)

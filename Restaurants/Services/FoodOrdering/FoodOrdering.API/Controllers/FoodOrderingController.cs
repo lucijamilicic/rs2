@@ -1,13 +1,16 @@
 using System.Diagnostics;
+using System.Security.Claims;
 using AutoMapper;
 using EventBus.Messages.Events;
 using FoodOrdering.Application.Common;
 using FoodOrdering.Application.Persistance;
 using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrdering.API.Controllers
 {
+    
     [ApiController]
     [Route("api/v1/[controller]")]
     public class FoodOrderingController:ControllerBase
@@ -31,6 +34,10 @@ namespace FoodOrdering.API.Controllers
         [ProducesResponseType(typeof(void),StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(string username)
         {
+           /* if (User.FindFirst(ClaimTypes.Name)?.Value != username)
+            {
+                return Forbid();
+            }*/
             var result = await _repository.CheckoutOrdersByUsername(username);
             Console.WriteLine("*************"+result);
 
@@ -41,7 +48,7 @@ namespace FoodOrdering.API.Controllers
                     var eventMessage = _mapper.Map<EmailSendingEvent>(restaurant);
                     await _publishEndpoint.Publish(eventMessage);
                 }
-
+                await _repository.DeleteOrder(username);
                 return Ok(result);
             }
             return BadRequest();
@@ -66,16 +73,6 @@ namespace FoodOrdering.API.Controllers
             return Ok(result);
         }
         */
-
-        [HttpPut("{username}/delete")]
-        [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteOrder(string username)
-        {
-            await _repository.DeleteOrder(username);
-            return Ok();
-            
-
-        }
 
     }    
 }
