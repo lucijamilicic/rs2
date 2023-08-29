@@ -1,24 +1,6 @@
 version: '3.4'
 
 services:
-  basketdb :
-    image: redis:alpine
-    
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    
-  basket.api:
-    image: ${DOCKER_REGISTRY-}basketapi
-    build:
-      context: .
-      dockerfile: Services/Basket/Basket.API/Dockerfile
-
-  foodordering.api:
-    image: ${DOCKER_REGISTRY-}foodorderingapi
-    build:
-      context: .
-      dockerfile: Services/FoodOrdering/FoodOrdering.API/Dockerfile
-
   recipesdb:
     image: mongo
 
@@ -47,8 +29,25 @@ services:
       context: .
       dockerfile: Services/Restaurants/Restaurants.GRPC/Dockerfile
 
+  basketdb :
+    image: redis:alpine
+    
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+
+  foodordering.api:
+    image: ${DOCKER_REGISTRY-}foodorderingapi
+    build:
+      context: .
+      dockerfile: Services/FoodOrdering/FoodOrdering.API/Dockerfile
+
 volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
-
