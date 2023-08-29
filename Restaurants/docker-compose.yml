@@ -8,5 +8,55 @@ services:
       dockerfile: Security/IdentityServer/Dockerfile
   mssql:
     image: mcr.microsoft.com/mssql/server:2017-latest
+
+  recipesdb:
+    image: mongo
+
+  restaurantsdb:
+    image: postgres
+  
+  pgadmin:
+    image: dpage/pgadmin4
+
+  recipes.api:
+    image: ${DOCKER_REGISTRY-}recipesapi
+    build:
+      context: .
+      dockerfile: Services/Recipes/Recipes.API/Dockerfile
+
+  restaurants.api:
+    image: ${DOCKER_REGISTRY-}restaurantsapi
+    build:
+      context: .
+      dockerfile: Services/Restaurants/Restaurants.API/Dockerfile
+
+
+  restaurants.grpc:
+    image: ${DOCKER_REGISTRY-}restaurantsgrpc
+    build:
+      context: .
+      dockerfile: Services/Restaurants/Restaurants.GRPC/Dockerfile
+
+  basketdb :
+    image: redis:alpine
+    
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+
+  foodordering.api:
+    image: ${DOCKER_REGISTRY-}foodorderingapi
+    build:
+      context: .
+      dockerfile: Services/FoodOrdering/FoodOrdering.API/Dockerfile
+
 volumes:
+  mongo_data:
+  postgres_data:
+  pgadmin_data:
   mssql_data:
