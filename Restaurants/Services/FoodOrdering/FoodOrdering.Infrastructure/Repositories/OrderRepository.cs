@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using AutoMapper;
 using FoodOrdering.Application.Common;
 using FoodOrdering.Application.EmailModels;
 using FoodOrdering.Application.Factories;
@@ -17,62 +18,70 @@ public class OrderRepository:IOrderRepository
     private readonly IDistributedCache _cache;
     private readonly IOrderDTOFactory _factoryDTO;
     private readonly IOrderFactory _factory;
-
+    private readonly IMapper _mapper;
     //asinhrona komunikacija
 
 
     public OrderRepository(IEmailService emailService, IDistributedCache cache, IOrderDTOFactory factoryDto,
-        IOrderFactory factory)
+        IOrderFactory factory, IMapper mapper)
     {
         _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         _factoryDTO = factoryDto ?? throw new ArgumentNullException(nameof(factoryDto));
         _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<int> CreateOrder(OrderDTO orderDTO)
+    public async Task<string> CreateOrder(OrderDTO orderDTO)
     {
         var order = _factory.CreateOrder(orderDTO);
         
         var orderString = JsonConvert.SerializeObject(order);
         await _cache.SetStringAsync(order.BuyerName, orderString);
-        Console.WriteLine("---------------- USO: "+order.BuyerName);
-        return int.Parse(order.Id);
+        Console.WriteLine("---------------- USO: "+orderString);
+        return order.Id;
 
     }
-    /*
-    public async Task<OrderDTO?> GetOrdersAsync(string username)
-    {
-        //TODO: treba da se kontaktira basket (asinhrina komunikacija) da bi se dohvatili podaci i smestili u kes (key da bude username)
-        var orderString = await _cache.GetStringAsync(username);
-        if (string.IsNullOrEmpty(orderString))
-        {
-            return null;
-        }
-
-        return JsonConvert.DeserializeObject<OrderDTO>(orderString);
-    }
-*/
+  
     public async Task<OrderDTO?> CheckoutOrdersByUsername(string username)
     {
         var orderString = await _cache.GetStringAsync(username);
-        if (String.IsNullOrEmpty(orderString))
-        {
-            //TODO:the order is empty, nothing to checkout - show window message
-            return null;
-        }
-        var orders = JsonConvert.DeserializeObject<Orders>(orderString);
 
+
+        Console.WriteLine(" --------------"+ orderString);
+        
+        
+        if (String.IsNullOrEmpty(orderString))
+         {
+             //TODO:the order is empty, nothing to checkout - show window message
+             return null;
+         }
+        
+        var orders =JsonConvert.DeserializeObject<Orders>(orderString);
+        Console.WriteLine(" ------jgdkhfgekhgfkhrfg--------" + orders);
+
+        
+        var orderDTO = _factoryDTO.CreateOrdersDTO(orders);
+        
+
+        //await SendMail(orderDTO);
+        return orderDTO;
+
+    }
+
+    public async Task SendMail(OrderDTO orderDTO) {
         var email = new Application.EmailModels.Email();
-        email.To = orders.BuyerAddress.EmailAddress;
+        
+        email.To = orderDTO.EmailAddress;
         email.Subject = "Order from MATFraurant App";
         var bodyStr = "Order is successfully created on RestaurantApp\n\n";
-        bodyStr += orderString;
+        bodyStr += "Hvala mnogo na poverenju";
         email.Body = bodyStr;
-        
-        await _emailService.SendEmail(email); //salje mejl korisniku
 
-        return _factoryDTO.CreateOrdersDTO(orders);
+        await _emailService.SendEmail(email);
+
+        
+        //salje mejl korisniku 
 
     }
 

@@ -25,6 +25,6 @@ public class BasketCheckoutConsumer:IConsumer<BasketCheckoutEvent>
         //TODO: proceri tipove
         var res = _mapper.Map<OrderDTO>(context.Message);
         //TODO: napraviti u repository funkciju CreateOrder, a onda izmeniti argument poziva funkcije odje dole
-        var id = await _repository.CreateOrder(res);
+        await _repository.CreateOrder(res);
     }
 }

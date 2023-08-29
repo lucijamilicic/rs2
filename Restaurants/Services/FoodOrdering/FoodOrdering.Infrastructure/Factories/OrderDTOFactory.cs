@@ -40,7 +40,6 @@ public class OrderDTOFactory:IOrderDTOFactory
 
         orderDTO.TotalPrice = total;
         orderDTO.OrderItems = orderItemsDTOList;
-        orderDTO.TotalPrice = total;
         return orderDTO;
     }
 }

@@ -26,29 +26,26 @@ namespace FoodOrdering.API.Controllers
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
 
-        [HttpGet("{username}/checkout")]
-        [ProducesResponseType(typeof(IEnumerable<OrderDTO>), StatusCodes.Status200OK)]
+        [HttpPost("checkout")]
+        [ProducesResponseType(typeof(OrderDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void),StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(string username)
         {
             var result = await _repository.CheckoutOrdersByUsername(username);
-            if (result is null)
-            {
-                  
-                //TODO: window - there is nothing to checkout, order is empty -return warning?
-                Debug.Write("No orders at the moment");
+            Console.WriteLine("*************"+result);
 
-                return BadRequest();
-            }
-            
-              
-            foreach (var restaurant in result.OrderItems)
+            if(result!=null)
             {
-                var eventMessage = _mapper.Map<EmailSendingEvent>(restaurant);
-                await _publishEndpoint.Publish(eventMessage);
+                foreach (var restaurant in result.OrderItems)
+                {
+                    var eventMessage = _mapper.Map<EmailSendingEvent>(restaurant);
+                    await _publishEndpoint.Publish(eventMessage);
+                }
+
+                return Ok(result);
             }
-            
-            return Ok();
+            return BadRequest();
+
         }
         
         //TODO: cim se korisnik uloguje njegova putanja ce biti ova ispod, i automatski se poziva ova funkcija za dohvatanje ordera
@@ -72,15 +69,12 @@ namespace FoodOrdering.API.Controllers
 
         [HttpPut("{username}/delete")]
         [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void),StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteOrder(string username)
         {
-            if(await _repository.DeleteOrder(username))
-            {
-                return Ok();
-            }
+            await _repository.DeleteOrder(username);
+            return Ok();
+            
 
-            return BadRequest();
         }
 
     }    

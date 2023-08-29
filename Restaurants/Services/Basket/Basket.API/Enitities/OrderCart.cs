@@ -2,8 +2,8 @@
 {
     public class OrderCart
     {
-        public Guid Id { get; set; }
-        public DateTime CreationDate { get; set; }
+        //public Guid Id { get; set; }
+       // public DateTime CreationDate { get; set; }
         public string BuyerUsername { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
