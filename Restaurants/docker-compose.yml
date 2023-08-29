@@ -19,3 +19,36 @@ services:
       context: .
       dockerfile: Services/FoodOrdering/FoodOrdering.API/Dockerfile
 
+  recipesdb:
+    image: mongo
+
+  restaurantsdb:
+    image: postgres
+  
+  pgadmin:
+    image: dpage/pgadmin4
+
+  recipes.api:
+    image: ${DOCKER_REGISTRY-}recipesapi
+    build:
+      context: .
+      dockerfile: Services/Recipes/Recipes.API/Dockerfile
+
+  restaurants.api:
+    image: ${DOCKER_REGISTRY-}restaurantsapi
+    build:
+      context: .
+      dockerfile: Services/Restaurants/Restaurants.API/Dockerfile
+
+
+  restaurants.grpc:
+    image: ${DOCKER_REGISTRY-}restaurantsgrpc
+    build:
+      context: .
+      dockerfile: Services/Restaurants/Restaurants.GRPC/Dockerfile
+
+volumes:
+  mongo_data:
+  postgres_data:
+  pgadmin_data:
+

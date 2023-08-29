@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.API", "Services\Restaurants\Restaurant.API\Restaurant.API.csproj", "{EB82A991-231B-48EE-961F-9CF4519D0DAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "Services\Basket\Basket.API\Basket.API.csproj", "{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "Services\Basket\Basket.API\Basket.API.csproj", "{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}"
 EndProject
@@ -25,16 +25,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{9B2DFC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Messages", "Common\EventBus.Messages\EventBus.Messages.csproj", "{F7670429-CEB9-491F-8510-58195F021A2F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EB0D1E3D-3C87-4405-B148-27A6613B880C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Restaurants", "Restaurants", "{6700DA2A-0094-48E9-90B1-CF54EAFE1117}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{1B4C3C37-B97C-49F8-8B84-5DC68E607D79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurants.Common", "Services\Restaurants\Restaurants.Common\Restaurants.Common.csproj", "{BE51774A-8BDE-4273-B231-BBD56861C94A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurants.API", "Services\Restaurants\Restaurants.API\Restaurants.API.csproj", "{9573A9C7-B17C-4996-A3AB-B12B723452C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurants.GRPC", "Services\Restaurants\Restaurants.GRPC\Restaurants.GRPC.csproj", "{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recipes.API", "Services\Recipes\Recipes.API\Recipes.API.csproj", "{E237788D-84CE-48A4-8C3A-6197C9E3C69E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Recipes", "Recipes", "{1DC6335C-7280-429C-941F-24D233C7A2B5}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C7F1B1DD-67BA-40B0-B604-179078B45934}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB82A991-231B-48EE-961F-9CF4519D0DAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,9 +77,39 @@ Global
 		{F7670429-CEB9-491F-8510-58195F021A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7670429-CEB9-491F-8510-58195F021A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7670429-CEB9-491F-8510-58195F021A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE51774A-8BDE-4273-B231-BBD56861C94A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE51774A-8BDE-4273-B231-BBD56861C94A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE51774A-8BDE-4273-B231-BBD56861C94A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE51774A-8BDE-4273-B231-BBD56861C94A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9573A9C7-B17C-4996-A3AB-B12B723452C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9573A9C7-B17C-4996-A3AB-B12B723452C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9573A9C7-B17C-4996-A3AB-B12B723452C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9573A9C7-B17C-4996-A3AB-B12B723452C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E237788D-84CE-48A4-8C3A-6197C9E3C69E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E237788D-84CE-48A4-8C3A-6197C9E3C69E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E237788D-84CE-48A4-8C3A-6197C9E3C69E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E237788D-84CE-48A4-8C3A-6197C9E3C69E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F1B1DD-67BA-40B0-B604-179078B45934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F1B1DD-67BA-40B0-B604-179078B45934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F1B1DD-67BA-40B0-B604-179078B45934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F1B1DD-67BA-40B0-B604-179078B45934}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32ADAFA7-F5F9-46F3-8445-E81FEADDFE2B} = {1B4C3C37-B97C-49F8-8B84-5DC68E607D79}
+		{6700DA2A-0094-48E9-90B1-CF54EAFE1117} = {EB0D1E3D-3C87-4405-B148-27A6613B880C}
+		{1B4C3C37-B97C-49F8-8B84-5DC68E607D79} = {EB0D1E3D-3C87-4405-B148-27A6613B880C}
+		{BE51774A-8BDE-4273-B231-BBD56861C94A} = {6700DA2A-0094-48E9-90B1-CF54EAFE1117}
+		{9573A9C7-B17C-4996-A3AB-B12B723452C6} = {6700DA2A-0094-48E9-90B1-CF54EAFE1117}
+		{217D6A27-82E0-4A2C-9665-F78D8A5F58BC} = {6700DA2A-0094-48E9-90B1-CF54EAFE1117}
+		{E237788D-84CE-48A4-8C3A-6197C9E3C69E} = {1DC6335C-7280-429C-941F-24D233C7A2B5}
+		{1DC6335C-7280-429C-941F-24D233C7A2B5} = {EB0D1E3D-3C87-4405-B148-27A6613B880C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22EAEBEF-D6FD-4D2E-8E58-E4E4CE619B8F}

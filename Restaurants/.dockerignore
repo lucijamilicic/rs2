@@ -1,3 +1,4 @@
+**/.classpath
 ﻿**/.dockerignore
 **/.env
 **/.git
@@ -6,7 +7,7 @@
 **/.settings
 **/.toolstarget
 **/.vs
-**/.vscode
+**/.vscode`
 **/.idea
 **/*.*proj.user
 **/*.dbmdl

@@ -5,7 +5,10 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "basket.api": "StartDebugging",
-        "foodordering.api": "StartDebugging"
+        "foodordering.api": "StartDebugging",
+        "recipes.api": "StartDebugging",
+        "restaurants.api": "StartDebugging",
+        "restaurants.grpc": "StartDebugging"
       }
     }
   }
