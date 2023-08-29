@@ -10,7 +10,6 @@
         "recipes.api": "StartDebugging",
         "restaurants.api": "StartDebugging",
         "restaurants.grpc": "StartDebugging"
-
       }
     }
   }
