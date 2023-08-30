@@ -12,6 +12,14 @@
     height: 80px;
 }
 
+.App-overlay {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  background-color: rgba(27,27,27,0.6);
+}
+
 .App div {
     height: 100%;
   display: flex;

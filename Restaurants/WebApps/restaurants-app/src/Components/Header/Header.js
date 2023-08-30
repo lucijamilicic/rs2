@@ -1,38 +1,61 @@
-import React from "react";
-import './Header.css';
+import React, { useState } from "react";
+import "./Header.css";
+import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
 
 const Header = () => {
-    return (
-        /*<div className="ui secondary menu">
-            <div className="left menu">
-               MATF RESTAURANTS
-            </div>
-            <div className="right menu">
-                <div className="item">
-                    <div className="ui icon input">
-                        <input type="text" placeholder="Search..."/>
-                        <i className="search link icon"></i>
-                    </div>
-                </div>
-                <a className="ui item">
-                    Logout
-                </a>
-            </div>
-        </div>*/
-        <div className='header'>
-            <div className='left'>
-            MATF RESTAURANTS
-            </div>
-            <div className='right'>
-                <div className='search-wrap'>
-                    <input type='text' name='restaurants' placeholder='Search' />
-                    <button type='button'>Logout</button>
-                </div>
-                
-            </div>
-        </div>
+  const [searchRecipes, setSearchRecipes] = useState(false);
+  const [searchRestaurants, setSearchRestaurants] = useState(true);
+  const [searchState, setSearchState] = useState("");
 
-    );
+  const textInputHandler = (e) => {
+    setSearchState(e.target.value);
+  };
+
+  return (
+    <div className="header">
+      <div className="header-left">
+        <div className="search-wrap">
+          <input
+            type="text"
+            name="restaurants-recipes"
+            value={searchState}
+            placeholder={
+              searchRecipes ? "Search recipes" : "Search restaurants"
+            }
+            onChange={textInputHandler}
+          />
+          <button
+            type="button"
+            className={`switch-button ${
+              searchRestaurants ? "active" : "disabled"
+            }`}
+            onClick={() => {
+              setSearchRestaurants(!searchRestaurants);
+              setSearchRecipes(!searchRecipes);
+            }}
+          >
+            Restaurants
+          </button>
+          <button
+            type="button"
+            className={`switch-button ${searchRecipes ? "active" : "disabled"}`}
+            onClick={() => {
+              setSearchRecipes(!searchRecipes);
+              setSearchRestaurants(!searchRestaurants);
+            }}
+          >
+            Recipes
+          </button>
+        </div>
+      </div>
+      <div className="header-right">
+        <BasketIcon />
+        <button type="button" className="logout-button">
+          Logout
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Header;

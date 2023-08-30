@@ -5,18 +5,88 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    background-color: rgba(27, 22, 27, 0.7);
+    background-color:transparent;
     align-items:center;
+    padding: 0 20px;
+    z-index: 10;
 }
 
-.left {
+.header-left .search-wrap {
     font-size: 20px;
     color: white;
 }
 
-.right .search-wrap {
+.header-right  {
+    display: flex;
+    align-items: center;
     justify-content: flex-end;
     column-gap: 20px;
-    display: flex;
-
 }
+
+svg {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+button {
+    height: 45px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.logout-button {
+    background-color: rgba(125, 26, 26, 0.7);
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-weight: bold; 
+}
+
+.logout-button:hover {
+    background-color: rgba(125, 26, 26, 0.9);
+}
+
+input {
+    width: 400px;
+    border-radius: 10px;
+    height: 40px;
+    color: white;
+    background-color: rgba(27, 22, 27, 0);
+    border:none;
+    border-bottom: 1px solid rgba(255,255, 255, 0.3);
+    padding: 5px 15px;
+}
+
+input::selection {
+    color: white;
+}
+
+input::placeholder {
+    font-size: 18px;
+    color: rgba(255,255,255, 0.7);
+}
+
+input:hover,
+input:focus {
+    background-color: rgba(27, 22, 27, 0.3);
+    border:none;
+    border-bottom: 1px solid rgba(255,255, 255, 0.3);
+    cursor: pointer;
+}
+
+.switch-button {
+    width: 150px;
+    margin-left: 15px;
+    padding: 0px;
+    height: 40px;
+    background-color: transparent;
+    border:none;
+    border-bottom: 1px solid rgba(255,255, 255, 0.7);
+}
+
+.switch-button.disabled {
+    color: rgba(255,255,255, 0.5);
+    border-bottom: 1px solid rgba(255,255, 255, 0.3);
+}
+
