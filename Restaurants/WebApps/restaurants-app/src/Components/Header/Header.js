@@ -5,7 +5,15 @@ import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
 const Header = () => {
   const [searchRecipes, setSearchRecipes] = useState(false);
   const [searchRestaurants, setSearchRestaurants] = useState(true);
+  const [showCategories, setShowCategories] = useState(false);
   const [searchState, setSearchState] = useState("");
+  const [categories, setCategories] = useState([
+    "Pork",
+    "Chicken",
+    "Pasta",
+    "Pizza",
+    "Salad",
+  ]);
 
   const textInputHandler = (e) => {
     setSearchState(e.target.value);
@@ -32,6 +40,7 @@ const Header = () => {
             onClick={() => {
               setSearchRestaurants(!searchRestaurants);
               setSearchRecipes(!searchRecipes);
+              setShowCategories(false);
             }}
           >
             Restaurants
@@ -42,6 +51,7 @@ const Header = () => {
             onClick={() => {
               setSearchRecipes(!searchRecipes);
               setSearchRestaurants(!searchRestaurants);
+              setShowCategories(true);
             }}
           >
             Recipes
@@ -53,6 +63,24 @@ const Header = () => {
         <button type="button" className="logout-button">
           Logout
         </button>
+      </div>
+      <div
+        className={`categories-container ${
+          showCategories ? "visible" : "hidden"
+        }`}
+      >
+        {categories.map((category) => {
+          return (
+            <div
+              className="category-item"
+              onClick={() => {
+                //todo
+              }}
+            >
+              {category}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
