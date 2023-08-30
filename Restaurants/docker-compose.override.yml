@@ -6,12 +6,121 @@ services:
     restart: always
     ports:
       - "6379:6379"
+  
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+
   basket.api:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CacheSettings:ConnectionString=basketdb:6379"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - basketdb
+      - rabbitmq
     ports:
       - "8001:80"
+
+  foodordering.api:
+    container_name: foodordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=basketdb:6379"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - basketdb
+      - rabbitmq
+    ports:
+      - "5005:80"
+  recipesdb:
+    container_name: recipesdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  
+      
+  restaurantsdb:
+    container_name: restaurantsdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=RestaurantsDb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+
+
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=proba@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=abcd123
+    restart: always
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
+  recipes.api:
+    container_name: recipes.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://recipesdb:27017"
+      - "GrpcSettings:RestaurantsUrl=http://restaurants.grpc"
+    depends_on:
+      - recipesdb
+      - restaurants.grpc 
+    ports:
+      - "5009:80"
+
+  restaurants.api:
+    container_name: restaurants.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=restaurantsdb;Port=5432;Database=RestaurantsDb;User Id=admin;Password=admin1234;"
+    depends_on:
+      - restaurantsdb
+    ports:
+      - "5183:80"
+
+  restaurants.grpc:
+    container_name: restaurants.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=restaurantsdb;Port=5432;Database=RestaurantsDb;User Id=admin;Password=admin1234;"
+    depends_on:
+      - restaurantsdb
+    ports:
+      - "5186:80"
+  mssql:
+    container_name: mssql
+    environment:
+      - SA_PASSWORD=MATF12345678rs2
+      - ACCEPT_EULA=Y
+    restart: always
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
+
+
+  identityserver:
+    container_name: identityserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:IdentityConnectionString=Server=mssql;Database=IdentityDb;User Id=sa;Password=MATF12345678rs2;"
+    depends_on:
+      - mssql
+    ports:
+      - "4000:80"
+ 
