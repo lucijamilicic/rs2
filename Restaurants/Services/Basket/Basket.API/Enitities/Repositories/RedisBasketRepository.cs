@@ -35,6 +35,25 @@ namespace Basket.API.Enitities.Repositories
             return await GetBasket(basket.BuyerUsername);
 
         }
-       
+        public async Task<bool> DeleteBasket(string username)
+        {
+            var basketString = await _cache.GetStringAsync(username);
+            if (string.IsNullOrEmpty(basketString))
+            {
+                return false;    
+            }
+            var basket =  JsonConvert.DeserializeObject<OrderCart>(basketString);
+            if (basket is null)
+            {
+                return false;    
+            }
+            basket.OrderItems = Enumerable.Empty<OrderCartItem>();
+            
+            var emptyBasket = JsonConvert.SerializeObject(basket);
+            await _cache.SetStringAsync(basket.BuyerUsername, emptyBasket);
+            
+            return true;
+        }
+
     }
 }

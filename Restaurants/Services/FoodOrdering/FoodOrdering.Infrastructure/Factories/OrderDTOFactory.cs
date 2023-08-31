@@ -34,6 +34,7 @@ public class OrderDTOFactory:IOrderDTOFactory
                 foodItemsList.Add(foodDTO);
             }
             total += totalSub;
+            orderItemDTO.TotalPrice = totalSub;
             orderItemDTO.FoodOrder = foodItemsList; 
             orderItemsDTOList.Add(orderItemDTO);
         }

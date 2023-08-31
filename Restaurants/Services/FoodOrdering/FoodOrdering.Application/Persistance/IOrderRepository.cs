@@ -7,6 +7,5 @@ public interface IOrderRepository
     public Task<string> CreateOrder(OrderDTO orderDTO);
     //Task<OrderDTO?> GetOrdersAsync(string username);
     Task<OrderDTO?> CheckoutOrdersByUsername(string username);
-    Task<bool> DeleteOrder(string username);
-
+    Task DeleteOrder(string username);
 }

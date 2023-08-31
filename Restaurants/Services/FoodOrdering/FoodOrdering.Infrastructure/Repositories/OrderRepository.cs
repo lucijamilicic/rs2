@@ -21,8 +21,6 @@ public class OrderRepository:IOrderRepository
     private readonly IOrderDTOFactory _factoryDTO;
     private readonly IOrderFactory _factory;
     private readonly IMapper _mapper;
-    //asinhrona komunikacija
-
 
     public OrderRepository(IEmailService emailService, IDistributedCache cache, IOrderDTOFactory factoryDto,
         IOrderFactory factory, IMapper mapper)
@@ -39,45 +37,26 @@ public class OrderRepository:IOrderRepository
         var order = _factory.CreateOrder(orderDTO);
         
         var orderString = JsonConvert.SerializeObject(order);
-        foreach (var item in Encoding.ASCII.GetBytes(order.BuyerName))
-        {
-            Console.WriteLine(item);
-
-        }
+        
         await _cache.SetStringAsync(order.BuyerName, orderString);
-
-
-
-        Console.WriteLine("---------------- USO: "+orderString);
+        
         return order.Id;
-
     }
   
     public async Task<OrderDTO?> CheckoutOrdersByUsername(string username)
     {
         var orderString = await _cache.GetStringAsync(username);
-
-        foreach (var item in Encoding.ASCII.GetBytes(username))
-        {
-            Console.WriteLine(item);
-
-        }
-
-
+        
         if (String.IsNullOrEmpty(orderString))
-         {
-             //TODO:the order is empty, nothing to checkout - show window message
+        {
              return null;
-         }
+        }
         
         var orders =JsonConvert.DeserializeObject<Orders>(orderString);
-        Console.WriteLine(" ------jgdkhfgekhgfkhrfg--------" + orders);
-
-        
         var orderDTO = _factoryDTO.CreateOrdersDTO(orders);
         
-
-        //await SendMail(orderDTO);
+        await SendMail(orderDTO);
+        
         return orderDTO;
 
     }
@@ -87,38 +66,16 @@ public class OrderRepository:IOrderRepository
         
         email.To = orderDTO.EmailAddress;
         email.Subject = "Order from MATFraurant App";
-        var bodyStr = "Order is successfully created on RestaurantApp\n\n";
-        bodyStr += "Hvala mnogo na poverenju";
+        var bodyStr = $"Order for user {orderDTO.BuyerUsername} is successfully created.\n\n";
+        bodyStr += "Thank you for using our service.\n Have a good day!";
         email.Body = bodyStr;
 
         await _emailService.SendEmail(email);
-
-        
-        //salje mejl korisniku 
-
     }
-
-    //TODO:check what he do if username doesnt exist in cash
-    public async Task<bool> DeleteOrder(string username)
+    public async Task DeleteOrder(string username)
     {
         var order = await _cache.GetStringAsync(username);
-        if (String.IsNullOrEmpty(order))
-        {
-            //TODO:the order is empty, nothing to checkout - show window message
-            return false;
-        }
-        var orders = JsonConvert.DeserializeObject<Orders>(order);
-
         await _cache.RemoveAsync(username);
-
-        //TODO: mozda ni ne mora ovde da se salje mejl
-        var email = new Application.EmailModels.Email();
-        email.To = orders.BuyerAddress.EmailAddress;
-        email.Subject = "Order from MATFraurant App";
-        email.Body = " Order for user "+username+" is successfully deleted";
-        await _emailService.SendEmail(email);
-
-        return true;
     }
 
 }

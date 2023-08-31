@@ -19,9 +19,6 @@ namespace FoodOrdering.API.Controllers
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        
-        
-        //TODO: mozda menjati putanju
         public FoodOrderingController(IOrderRepository repository, IMapper mapper, IPublishEndpoint publishEndpoint)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -39,7 +36,6 @@ namespace FoodOrdering.API.Controllers
                 return Forbid();
             }*/
             var result = await _repository.CheckoutOrdersByUsername(username);
-            Console.WriteLine("*************"+result);
 
             if(result!=null)
             {
@@ -54,26 +50,6 @@ namespace FoodOrdering.API.Controllers
             return BadRequest();
 
         }
-        
-        //TODO: cim se korisnik uloguje njegova putanja ce biti ova ispod, i automatski se poziva ova funkcija za dohvatanje ordera
-        //TODO: mozda treba dodati u putanju npr. {username}/order
-        /*
-        [HttpGet( "{username}/get")]
-        [ProducesResponseType(typeof(IEnumerable<OrderDTO>),StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void),StatusCodes.Status400BadRequest)]
-
-        public async Task<ActionResult<OrderDTO>> GetOrdersByUsername(string username)
-        {
-            var result = await _repository.GetOrdersAsync(username);
-            if (result == null)
-            {
-                return NotFound();
-
-            }
-            return Ok(result);
-        }
-        */
-
     }    
 }
 

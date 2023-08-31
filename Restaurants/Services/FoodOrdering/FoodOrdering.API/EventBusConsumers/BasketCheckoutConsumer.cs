@@ -22,9 +22,8 @@ public class BasketCheckoutConsumer:IConsumer<BasketCheckoutEvent>
 
     public async Task Consume(ConsumeContext<BasketCheckoutEvent> context)
     {
-        //TODO: proceri tipove
         var res = _mapper.Map<OrderDTO>(context.Message);
-        //TODO: napraviti u repository funkciju CreateOrder, a onda izmeniti argument poziva funkcije odje dole
+        
         await _repository.CreateOrder(res);
     }
 }

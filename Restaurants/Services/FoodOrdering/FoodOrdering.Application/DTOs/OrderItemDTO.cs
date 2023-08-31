@@ -17,6 +17,6 @@ public class OrderItemDTO
 
     //TODO: fali adresa
     public IEnumerable<FoodItemDTO> FoodOrder { get; set; }
-
+    public decimal TotalPrice { get; set; }
 
 }

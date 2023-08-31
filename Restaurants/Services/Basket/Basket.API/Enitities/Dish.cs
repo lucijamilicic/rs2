@@ -7,11 +7,5 @@
         public string ExtraNote { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        
-        //TODO:mozda ovo ne treba
-        //public string Description { get; set; }
-
-
-
     }
 }

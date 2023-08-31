@@ -4,7 +4,6 @@
     {
         Task<OrderCart?> GetBasket(string username);
         Task<OrderCart> UpdateBasket(OrderCart basket);
-
-
+        Task<bool> DeleteBasket(string username);
     }
 }

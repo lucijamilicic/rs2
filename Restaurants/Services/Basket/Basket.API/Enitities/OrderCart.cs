@@ -30,10 +30,7 @@
                 decimal total = 0;
                 foreach (var item in OrderItems)
                 {
-                    foreach (var food in item.FoodOrder)
-                    {
-                        total += food.Price;
-                    }
+                    total += item.TotalPrice;
                 }
                 return total;
             }
