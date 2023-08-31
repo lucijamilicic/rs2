@@ -38,9 +38,11 @@ const Header = () => {
               searchRestaurants ? "active" : "disabled"
             }`}
             onClick={() => {
-              setSearchRestaurants(!searchRestaurants);
-              setSearchRecipes(!searchRecipes);
-              setShowCategories(false);
+              if (!searchRestaurants) {
+                setSearchRestaurants(!searchRestaurants);
+                setSearchRecipes(!searchRecipes);
+                setShowCategories(false);
+              }
             }}
           >
             Restaurants
@@ -49,9 +51,11 @@ const Header = () => {
             type="button"
             className={`switch-button ${searchRecipes ? "active" : "disabled"}`}
             onClick={() => {
-              setSearchRecipes(!searchRecipes);
-              setSearchRestaurants(!searchRestaurants);
-              setShowCategories(true);
+              if (!searchRecipes) {
+                setSearchRecipes(!searchRecipes);
+                setSearchRestaurants(!searchRestaurants);
+                setShowCategories(true);
+              }
             }}
           >
             Recipes
