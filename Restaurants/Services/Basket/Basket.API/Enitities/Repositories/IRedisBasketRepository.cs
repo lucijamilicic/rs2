@@ -2,10 +2,8 @@
 {
     public interface IRedisBasketRepository
     {
-        Task<OrderCart> GetBasket(string username);
+        Task<OrderCart?> GetBasket(string username);
         Task<OrderCart> UpdateBasket(OrderCart basket);
-        Task DeleteBasket (string username);
-
-
+        Task<bool> DeleteBasket(string username);
     }
 }

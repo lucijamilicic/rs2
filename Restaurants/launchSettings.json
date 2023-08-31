@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "identityserver": "StartDebugging",
+        "basket.api": "StartDebugging",
+        "foodordering.api": "StartDebugging",
+        "recipes.api": "StartDebugging",
+        "restaurants.api": "StartDebugging",
+        "restaurants.grpc": "StartDebugging"
+      }
+    }
+  }
+}
