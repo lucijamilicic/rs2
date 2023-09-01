@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "Restaurants.GRPC.Protos";
+
+service RestaurantsProtoService {
+	rpc GetRestaurantsByMeal (GetRestaurantsByMealRequest) returns (GetRestaurantsByMealResponse);
+}
+
+message GetRestaurantsByMealRequest {
+	string id = 1;
+}
+
+message GetRestaurantsByMealResponse {
+	message Restaurant {
+		int32 id = 1;
+		string restaurantName = 2;
+		string address = 3;
+	}
+
+	repeated Restaurant restaurants = 1;
+}
+
+
