@@ -1,5 +1,6 @@
 import "./App.css";
 import Header from "./Header/Header";
+import RestaurantsList from "./RestaurantsList/RestaurantsList"
 
 const App = () => {
   return (
@@ -8,7 +9,8 @@ const App = () => {
       <div className="App">
         <div>Restaurants</div>
       </div>
-      <div className="App-overlay" />
+          <RestaurantsList></RestaurantsList>
+          <div className="App-overlay" />
     </>
   );
 };

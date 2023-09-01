@@ -1,0 +1,17 @@
+.restaurant-card {
+    padding: 20px;
+    padding-left: 50px;
+    border: solid 1px white;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 20px;
+    color:white;
+}
+
+.show-menu-button {
+    background-color: transparent;
+    padding-left: 90%;
+}
+
+.show-menu-button:hover {
+    font-weight: bold;
+}
