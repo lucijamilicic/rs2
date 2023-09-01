@@ -1,3 +1,4 @@
+import LoginRegistrationModal from "../modals/LoginRegistrationModal";
 import "./App.css";
 import Header from "./Header/Header";
 
@@ -9,6 +10,7 @@ const App = () => {
         <div>Restaurants</div>
       </div>
       <div className="App-overlay" />
+      <LoginRegistrationModal />
     </>
   );
 };
