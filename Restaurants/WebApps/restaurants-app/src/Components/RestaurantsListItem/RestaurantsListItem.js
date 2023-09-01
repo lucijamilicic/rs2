@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./RestaurantsListItem.css"
+import Menu from "./../Menu/Menu"
 
 
 
@@ -9,10 +10,10 @@ const RestaurantsListItem = ({ restaurantInfo }) => {
 
     return (
         <div className="restaurant-card">
-            <p> {restaurantInfo.name} </p>
-            <p> {restaurantInfo.address} </p>
+            <div className="restaurant-name"> {restaurantInfo.name} </div>
+            <div className="restaurant-address"> {restaurantInfo.address} </div>
+            {showMenu ? <Menu/> : <></>}
             <button className="show-menu-button" onClick={() => setShowMenu(!showMenu)}>{showMenu ? "Hide menu" : "View menu"}</button>
-            {showMenu ? < p > menu items ....</p> : <></>}
         </div>
     )
 } 

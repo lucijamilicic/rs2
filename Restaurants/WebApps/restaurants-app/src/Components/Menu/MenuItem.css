@@ -29,7 +29,11 @@
 }
 
 .order-button {
-    background-color: rgba(125, 26, 26, 1);
+    background-color: rgba(125, 26, 26, 0.6);
     border-radius: 10px;
     font-weight: bold;
+}
+
+.order-button:hover {
+    background-color: rgba(125, 26, 26, 1);
 }

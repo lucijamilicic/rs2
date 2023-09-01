@@ -1,6 +1,6 @@
 .restaurant-card {
     padding: 20px;
-    padding-left: 50px;
+    padding-left: 70px;
     border: solid 1px white;
     background-color: rgba(0, 0, 0, 0.5);
     margin: 20px;
@@ -14,4 +14,16 @@
 
 .show-menu-button:hover {
     font-weight: bold;
+}
+
+
+.restaurant-name {
+    font-size: larger;
+}
+
+.restaurant-address{
+    font-size: large;
+    font-style: italic;
+    color: rgba(125, 26, 26, 1);
+    padding-top: 10px;
 }
