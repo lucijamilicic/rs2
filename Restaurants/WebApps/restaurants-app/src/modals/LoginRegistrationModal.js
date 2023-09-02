@@ -1,37 +1,68 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "./Modal.css";
-import { registerUser } from "../api/Service";
+import { registerUser, loginUser } from "../api/Service";
+import { useNavigate } from "react-router-dom";
+
+/*const History() => {
+    const history = useHistory();
+    history.push('/');
+    history.replace('/');
+    history.goBack();
+
+};*/
+
 
 const LoginRegistrationModal = ({ isOpen = true }) => {
   const [registered, setRegistered] = useState(false);
   const [message, setMessage] = useState("Already registered? Log in ");
-  const [state, setState] = useState({
+  const [registerState, setRegisterState] = useState({
     firstName: "",
     lastName: "",
     email: "",
     userName: "",
     password: "",
-    phoneNumber: "",
+    phoneNumber: ""
+  });
+  const [logInState, setLogInState] = useState({
+    userName: "",
+    password: ""
   });
 
-  const inputHandler = (e) => {
+  const navigate = useNavigate();
+
+  const registerInputHandler = (e) => {
     const { name, value } = e.target;
 
-    setState({ ...state, [name]: value });
+      setRegisterState({ ...registerState, [name]: value });
+  };
+  const logInInputHandler = (e) => {
+    const { name, value } = e.target;
+
+      setLogInState({ ...logInState, [name]: value });
   };
 
   //TODO
-  const inputVerification = () => {};
+    const inputVerification = () => { };
 
-  //TODO
-  const loginRegistrationHandler = async () => {
-    const body = {
-      ...state,
+    const loginRegistrationHandler = async () => {
+       
+        if (registered) {
+            console.log(logInState);
+
+            const res = await loginUser(logInState);
+            localStorage.setItem("accessToken", res.data.accessToken);
+            localStorage.setItem("refreshToken", res.data.refreshToken);
+            localStorage.setItem("userName", res.data.userName);
+            localStorage.setItem("roleName", res.data.roleName);
+            navigate('/');
+        } else {
+            console.log("QUEEE: "+registerState);
+            await registerUser(registerState);
+            navigate('/login-register');
+        }
     };
-    console.log(body);
-    await registerUser(body);
-  };
+
 
   return (
     <Modal
@@ -50,60 +81,60 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
               <label htmlFor="firstName">First name: </label>
               <input
                 placeholder="Enter name"
-                value={state.firstName}
+                value={registerState.firstName}
                 name="firstName"
                 type="text"
-                onChange={inputHandler}
+                onChange={registerInputHandler}
               />
             </div>
             <div className="input-wrap">
               <label htmlFor="lastName">Last name: </label>
               <input
                 placeholder="Enter last name"
-                value={state.lastName}
+                value={registerState.lastName}
                 name="lastName"
                 type="text"
-                onChange={inputHandler}
+                onChange={registerInputHandler}
               />
             </div>
             <div className="input-wrap">
               <label htmlFor="userName">Username: </label>
               <input
                 placeholder="Enter username"
-                value={state.userName}
+                value={registerState.userName}
                 name="userName"
                 type="text"
-                onChange={inputHandler}
+                onChange={registerInputHandler}
               />
             </div>
             <div className="input-wrap">
               <label htmlFor="email">Email: </label>
               <input
                 placeholder="Enter email"
-                value={state.email}
+                value={registerState.email}
                 name="email"
                 type="text"
-                onChange={inputHandler}
+                onChange={registerInputHandler}
               />
             </div>
             <div className="input-wrap">
               <label htmlFor="password">Password: </label>
               <input
                 placeholder="Enter password"
-                value={state.password}
+                value={registerState.password}
                 name="password"
                 type="password"
-                onChange={inputHandler}
+                onChange={registerInputHandler}
               />
             </div>
             <div className="input-wrap">
               <label htmlFor="phone">Phone number: </label>
               <input
                 placeholder="Enter phone number"
-                value={state.phoneNumber}
+                value={registerState.phoneNumber}
                 name="phoneNumber"
                 type="text"
-                onChange={inputHandler}
+                onChange={registerInputHandler}
               />
             </div>
           </>
@@ -113,28 +144,28 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
               <label htmlFor="userName">Username: </label>
               <input
                 placeholder="Enter username"
-                value={state.userName}
-                name="Username"
+                value={logInState.userName}
+                name="userName"
                 type="text"
-                onChange={inputHandler}
+                onChange={logInInputHandler}
               />
             </div>
             <div className="input-wrap">
               <label htmlFor="password">Password: </label>
               <input
                 placeholder="Enter password"
-                value={state.password}
+                value={logInState.password}
                 name="password"
                 type="password"
-                onChange={inputHandler}
+                onChange={logInInputHandler}
               />
             </div>
           </>
         )}
         <button
-          type="submit"
-          className="login-button"
-          onClick={loginRegistrationHandler}
+                  type="submit"
+                  className="login-button"
+                  onClick={() => { loginRegistrationHandler() }}
         >
           {registered ? "Log in" : "Register"}
         </button>

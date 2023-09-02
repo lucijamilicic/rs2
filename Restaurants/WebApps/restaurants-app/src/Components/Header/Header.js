@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./Header.css";
 import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
+import { logout } from "../../api/Service"
+import { useNavigate } from "react-router-dom";
+
+
 
 const Header = ({ setIsBasketOpen }) => {
   const [searchRecipes, setSearchRecipes] = useState(false);
@@ -14,10 +18,41 @@ const Header = ({ setIsBasketOpen }) => {
     "Pizza",
     "Salad",
   ]);
+  const [userState, setUserState] = useState({
+    "userName": "",
+    "refreshToken": ""
+  });
+
+    const navigate = useNavigate();
 
   const textInputHandler = (e) => {
     setSearchState(e.target.value);
   };
+
+    const logoutUser = async () => {
+        const token = localStorage.getItem("refreshToken");
+        const accessToken = localStorage.getItem("accessToken");
+
+        if (token) {
+            setUserState({
+                userName: localStorage.getItem("userName"),
+                refreshToken: localStorage.getItem("refreshToken")
+            });
+
+            await logout({
+                userName: localStorage.getItem("userName"),
+                refreshToken: localStorage.getItem("refreshToken")
+
+            }, accessToken);
+            localStorage.clear();
+            setUserState({
+                userName: "",
+                refreshToken: ""
+            });
+            navigate('/login-register');
+
+        }
+    };
 
   return (
     <div className="header">
@@ -62,15 +97,24 @@ const Header = ({ setIsBasketOpen }) => {
           </button>
         </div>
       </div>
-      <div className="header-right">
-        <BasketIcon
-          onClick={() => {
-            setIsBasketOpen((isBasketOpen) => !isBasketOpen);
-          }}
-        />
-        <button type="button" className="logout-button">
-          Logout
-        </button>
+          <div className="header-right">
+              {
+                  localStorage.getItem("refreshToken") && (
+                      <>
+                      <BasketIcon
+                          onClick={() => {
+                            setIsBasketOpen((isBasketOpen) => !isBasketOpen);
+                          }}
+                              />
+                          <button type="button" className="logout-button" onClick={() => {
+                              logoutUser();
+                              }}>
+                          Logout
+                          </button>
+                      </>
+                  )
+              }
+        
       </div>
       <div
         className={`categories-container ${
@@ -81,8 +125,8 @@ const Header = ({ setIsBasketOpen }) => {
           return (
             <div
               className="category-item"
-              onClick={() => {
-                //todo
+                  onClick={() => {
+                      
               }}
             >
               {category}

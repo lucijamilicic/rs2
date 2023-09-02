@@ -1,4 +1,3 @@
-//import axios from "axios";
 import axios from "axios";
 
 const BASKET = "http://localhost:8001";
@@ -86,6 +85,9 @@ export const refreshToken = (body) => {
   return axios.post(`${USER}/api/v1/Authentication/Refresh`, body);
 };
 
-export const logout = (body) => {
-  return axios.post(`${USER}/api/v1/Authentication/Logout`, body);
+export const logout = (body, token) => {
+    const headers = {Authorization: `Bearer ${token}`}
+    return axios.post(`${USER}/api/v1/Authentication/Logout`, body, {
+        headers
+    });
 };
