@@ -12,9 +12,7 @@ const App = () => {
         <div>Restaurants</div>
       </div>
       <div className="App-overlay" >
-        <RecipesList></RecipesList>
           <div className="App-overlay">
-          <RestaurantsList></RestaurantsList>
           </div>
 	</div>
     </>
