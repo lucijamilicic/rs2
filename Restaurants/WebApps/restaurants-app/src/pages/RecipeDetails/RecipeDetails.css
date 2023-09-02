@@ -1,0 +1,32 @@
+.recipe-details {
+    padding: 20px;
+    padding-left: 70px;
+    background-color: transparent;
+    margin: 20px;
+    color: white;
+}
+
+.ingredients {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+}
+
+
+
+.container {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 5px;
+}
+
+.ingredients {
+    display: block;
+}
+
+img {
+    max-width: 70%
+}
+
