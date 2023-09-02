@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Header = ({ setIsBasketOpen }) => {
+const Header = ({ searchStateApp, setIsBasketOpen }) => {
   const [searchRecipes, setSearchRecipes] = useState(false);
   const [searchRestaurants, setSearchRestaurants] = useState(true);
   const [showCategories, setShowCategories] = useState(false);
   const [searchState, setSearchState] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([
     "Pork",
     "Chicken",
@@ -25,8 +26,8 @@ const Header = ({ setIsBasketOpen }) => {
 
     const navigate = useNavigate();
 
-  const textInputHandler = (e) => {
-    setSearchState(e.target.value);
+    const textInputHandler = (e) => {
+        setSearchState(e.target.value);
   };
 
     const logoutUser = async () => {
@@ -77,7 +78,7 @@ const Header = ({ setIsBasketOpen }) => {
                 setSearchRestaurants(!searchRestaurants);
                 setSearchRecipes(!searchRecipes);
                 setShowCategories(false);
-              }
+                }
             }}
           >
             Restaurants
@@ -91,6 +92,7 @@ const Header = ({ setIsBasketOpen }) => {
                 setSearchRestaurants(!searchRestaurants);
                 setShowCategories(true);
               }
+                
             }}
           >
             Recipes
@@ -125,8 +127,8 @@ const Header = ({ setIsBasketOpen }) => {
           return (
             <div
               className="category-item"
-                  onClick={() => {
-                      
+                  onClick={(e) => {
+                      setSelectedCategory(e.target.value);
               }}
             >
               {category}
