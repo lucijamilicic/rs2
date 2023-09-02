@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import "./LoginRegistrationModal.css";
+import "./Modal.css";
 
 const LoginRegistrationModal = ({ isOpen = true }) => {
   const [registered, setRegistered] = useState(false);

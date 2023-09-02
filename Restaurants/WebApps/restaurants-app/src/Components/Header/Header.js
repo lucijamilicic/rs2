@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Header.css";
 import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
 
-const Header = () => {
+const Header = ({ setIsBasketOpen }) => {
   const [searchRecipes, setSearchRecipes] = useState(false);
   const [searchRestaurants, setSearchRestaurants] = useState(true);
   const [showCategories, setShowCategories] = useState(false);
@@ -63,7 +63,11 @@ const Header = () => {
         </div>
       </div>
       <div className="header-right">
-        <BasketIcon />
+        <BasketIcon
+          onClick={() => {
+            setIsBasketOpen((isBasketOpen) => !isBasketOpen);
+          }}
+        />
         <button type="button" className="logout-button">
           Logout
         </button>
