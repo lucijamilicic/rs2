@@ -28,7 +28,8 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
   const loginRegistrationHandler = async () => {
     const body = {
       ...state
-    };
+      };
+      console.log(body);
     await registerUser(body);
   };
 

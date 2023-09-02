@@ -19,6 +19,7 @@ public class AuthenticationController : RegistrationControllerBase
         : base(logger, mapper, userManager, roleManager)
     {
         _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+
     }
 
     [HttpPost("[action]")]
