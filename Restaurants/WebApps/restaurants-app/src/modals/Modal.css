@@ -1,0 +1,328 @@
+.modal {
+  /* background-color: rgb(208, 203, 203); */
+  background-color: white;
+  height: auto;
+  width: 550px;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  overflow: auto;
+  border: 1px solid black;
+}
+
+.modal-header {
+  background-color: rgba(125, 26, 26, 0.9);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-wrap {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input-wrap {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  width: 80%;
+  padding: 10px 5px;
+  color: rgb(0,0,0);
+}
+
+.input-wrap input {
+  width: 100% ;
+  height: 35px;
+  color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.1);
+  border-radius: 5px;
+}
+
+.input-wrap input:hover {
+  border: 2px solid rgb(0,0,0, 0.5)
+}
+
+.input-wrap input::placeholder {
+  font-size: 14px;
+  color: rgb(0,0,0)
+}
+
+label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.login-button {
+  margin-top: 40px;
+  width: 80%;
+  background-color: rgba(125, 26, 26, 0.9);
+}
+
+p {
+  margin-top: 15px;
+}
+
+p span {
+  text-decoration: underline;
+  color: blue ;
+  cursor: pointer;
+}
+
+.quantity-buttons {
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-buttons p {
+  margin: 0;
+  font-size: 20px;
+  color: rgb(0,0,0);
+}
+
+.quantity-buttons button {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: rgba(125, 26, 26, 0.9);
+
+}
+
+.note-input {
+  display: flex;
+  flex-direction: column;
+  color: rgb(0,0,0);
+}
+
+.note-input label{
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.note-input textarea {
+  height: 80px;
+  padding: 15px;
+  background-color: rgb(226, 217, 217);
+}
+
+.sidebar {
+  z-index: 1001;
+  height: 100%;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: width 0.5s;
+}
+
+.sidebar.open {
+  padding: 0px 0px 30px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar.closed {
+  width: 0px;
+}
+
+.basket-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
+}
+
+.basket-header svg {
+  margin-top: 0;
+}
+
+.basket-headline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.basket-headline svg {
+  margin-top: 0;
+  fill: rgb(0,0,0); 
+}
+
+.basket-headline > svg {
+  fill: rgb(0,0,0); 
+  cursor: pointer;
+}
+
+.basket-headline h2 {
+  color: rgba(0,0,0, 0.6) !important;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.list {
+  width: 100%;
+}
+
+.basket-item {
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 16px;
+  width: 100%;
+  height: auto;
+  background-color: rgb(226, 217, 217);
+  border-bottom: 1px solid rgba(0,0,0, 0.3);
+}
+
+.item-restaurant-name {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(0,0,0, 0.6) !important;
+}
+
+.item {
+  color: rgb(0,0,0);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.item-price {
+  color: rgba(125, 26, 26, 1) !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.basket-item span {
+  color: rgba(125, 26, 26, 0.9);
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.content div {
+  margin-top: 10px;
+  color: rgb(0,0,0);
+}
+
+.basket-item:last-of-type {
+  border-bottom:none;
+}
+
+.basket-item .header-buttons {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 10px;
+}
+.basket-item .header-buttons svg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.total-price {
+  color: rgba(125, 26, 26, 1) !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-top: 40px;
+  font-size: 18px;
+  font-weight: 400 !important;
+  letter-spacing: 1.5px;
+  text-align: left;
+  width: 100%;
+  padding-left: 30px;
+  text-transform: uppercase;
+}
+
+.total-price span {
+  font-weight: 600 !important;
+}
+
+.address-input {
+  margin-top: 50px;
+  border-bottom: 1px solid rgb(0,0,0,0.7);
+  border-radius: 0;
+  width: 80%;
+}
+
+.address-input::placeholder {
+  color: rgb(0,0,0);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.address-input:hover {
+  background-color: white;
+  border-bottom: 2px solid rgb(0,0,0,0.7);
+}
+
+.clear {
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: 10px;
+  width: 150px;
+  margin: 0;
+  color: rgba(125, 26, 26, 0.9);
+}
+
+.buttons-wrap {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+  align-items: center;
+
+}
+
+.buttons-wrap button{
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.checkout-button {
+  background-color: rgba(125, 26, 26, 0.9);
+  width: 150px;
+}
+
+.edit-container {
+  width: 90%;
+  transition: all 0.6s ease-in-out;
+}
+
+.edit-container.open {
+  height: 180px;
+  opacity: 1;
+  margin: 10px auto;
+}
+
+.edit-container.closed {
+  overflow: hidden;
+  opacity: 0;
+  height: 0;
+  margin: 0 auto;
+}
+
+.buttons-wrap.edit {
+  margin-top: 0;
+}
+
+.buttons-wrap.edit button {
+  width: 130px !important;
+}

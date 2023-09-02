@@ -17,6 +17,7 @@ builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureMiscellaneousServices();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
