@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "./Modal.css";
+import { registerUser } from "../api/Service";
 
 const LoginRegistrationModal = ({ isOpen = true }) => {
   const [registered, setRegistered] = useState(false);
   const [message, setMessage] = useState("Already registered? Log in ");
   const [state, setState] = useState({
-    name: "",
+    firstName: "",
     lastName: "",
     email: "",
     userName: "",
     password: "",
-    phone: "",
+    phoneNumber: "",
   });
 
   const inputHandler = (e) => {
@@ -24,7 +25,13 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
   const inputVerification = () => {};
 
   //TODO
-  const loginRegistrationHandler = () => {};
+  const loginRegistrationHandler = async () => {
+    const body = {
+      ...state,
+    };
+    console.log(body);
+    await registerUser(body);
+  };
 
   return (
     <Modal
@@ -40,11 +47,11 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
         {!registered ? (
           <>
             <div className="input-wrap">
-              <label htmlFor="name">Name: </label>
+              <label htmlFor="firstName">First name: </label>
               <input
                 placeholder="Enter name"
-                value={state.name}
-                name="name"
+                value={state.firstName}
+                name="firstName"
                 type="text"
                 onChange={inputHandler}
               />
@@ -64,7 +71,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
               <input
                 placeholder="Enter username"
                 value={state.userName}
-                name="Username"
+                name="userName"
                 type="text"
                 onChange={inputHandler}
               />
@@ -93,9 +100,9 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
               <label htmlFor="phone">Phone number: </label>
               <input
                 placeholder="Enter phone number"
-                value={state.phone}
-                name="phone"
-                type="number"
+                value={state.phoneNumber}
+                name="phoneNumber"
+                type="text"
                 onChange={inputHandler}
               />
             </div>

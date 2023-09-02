@@ -39,7 +39,7 @@ public class AuthenticationService : IAuthenticationService
         var refreshToken = await CreateRefreshToken();
         user.RefreshTokens.Add(refreshToken);
         await _userManager.UpdateAsync(user);
-        return new AuthenticationModel { AccessToken = accessToken, RefreshToken = refreshToken.Token };
+        return new AuthenticationModel { AccessToken = accessToken, RefreshToken = refreshToken.Token, UserName = user.UserName, RoleName = (await _userManager.GetRolesAsync(user))[0]};
     }
 
     public async Task RemoveRefreshToken(User user, string refreshToken)
