@@ -1,0 +1,42 @@
+.modal {
+    width: fit-content;
+    height: auto;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 20px;
+}
+
+.modal-wrap {
+    display: flex;
+    flex-direction: column;
+    background-color: gainsboro;
+    flex-wrap: wrap;
+    text-align: center;
+    margin: 10px;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.button-wrap {
+    font-weight: bold;
+    text-align: center;
+}
+
+.button-delete {
+    border-radius: 10px;
+    background-color: rgba(125, 26, 26, 0.8);
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+    .button-delete:hover {
+        background-color: rgba(125, 26, 26, 1);
+    }
+
+.input {
+    background-color: rgb(112, 112, 112, 0.60);
+}
