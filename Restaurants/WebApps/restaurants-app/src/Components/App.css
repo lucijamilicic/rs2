@@ -18,6 +18,10 @@
   position: absolute;
   top: 0;
   background-color: rgba(27,27,27,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .App div {
@@ -41,4 +45,3 @@
   color: white;
   top: 0;
 }
-
