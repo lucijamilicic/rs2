@@ -25,10 +25,9 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
         const token = localStorage.getItem("accessToken");
         if (token !== null) {
             navigate('/');
-            return false;
-        } else {
-
             return true;
+        } else {
+            return false;
         }
     };
 
@@ -65,9 +64,9 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
     };
 
 
-    return (<>{ isLogged() &&
+    return (<>{ 
         <Modal
-            isOpen={isOpen}
+            isOpen={!isLogged()}
             className={`modal`}
             shouldCloseOnEsc={false}
             shouldCloseOnOverlayClick={false}
@@ -166,7 +165,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                 <button
                     type="submit"
                     className="login-button"
-                    onClick={() => { loginRegistrationHandler() }}
+                    onClick={loginRegistrationHandler}
                 >
                     {registered ? "Log in" : "Register"}
                 </button>

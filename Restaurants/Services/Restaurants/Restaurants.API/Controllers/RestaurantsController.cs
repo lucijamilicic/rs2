@@ -5,8 +5,7 @@ using Restaurants.Common.Repositories;
 
 namespace Restaurants.API.Controllers
 {
-    //TODO
-    //[Authorize(Roles = "Buyer,Administrator")]
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class RestaurantsController : ControllerBase
@@ -18,7 +17,7 @@ namespace Restaurants.API.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-
+        [Authorize(Roles = "Buyer")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<RestaurantDTO>), StatusCodes.Status200OK)]
         public async Task<ActionResult<RestaurantDTO>> GetAllRestaurants()
@@ -28,6 +27,7 @@ namespace Restaurants.API.Controllers
             return Ok(restaurants);
         }
 
+        [Authorize(Roles = "Buyer")]
         [HttpGet("{restaurantName}", Name = "GetRestaurantsByName")]
         [ProducesResponseType(typeof(IEnumerable<RestaurantDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
