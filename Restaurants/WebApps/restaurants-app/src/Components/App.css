@@ -1,45 +1,21 @@
 .App {
-  text-align: center;
   height: 100vh;
   width: 100vw;
   background-image: url('../../src/assets/background.jpg');
   background-size: cover;
   background-position: center center;
-
+  overflow:scroll;
 }
 
-.App .appHeader {
-    height: 80px;
-}
 
 .App-overlay {
-  height: 100vh;
-  width: 100vw;
-  position: absolute;
-  top: 0;
-  background-color: rgba(27,27,27,0.6);
-  padding-top: 100px;
-}
-
-.App div {
     height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 66px;
-  font-family: cursive;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    background-color: rgba(27,27,27,0.6);
+    padding-top: 100px;
+    overflow: scroll;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  top: 0;
-}
 

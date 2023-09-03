@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
+import { getRecipes } from '../../../api/Service';
+import RecipesList from '../../RecipesList/RecipesList';
 
 const WelcomePage = () => {
     const navigate = useNavigate();
@@ -12,8 +14,8 @@ const WelcomePage = () => {
     };
 
     return (<>
-        {isLogged() && <div>Radiiiiii</div>}
-        </>
+        <div></div>
+    </>
     );
 };
 
