@@ -4,12 +4,13 @@ import Header from "./Header/Header";
 import RecipesList from "./RecipesList/RecipesList";
 import EditRestaurantModal from "../modals/EditRestaurantModal";
 import RestaurantsList from "./RestaurantsList/RestaurantsList"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginRegistrationModal from "../modals/LoginRegistrationModal";
 import AddToBasketModal from "../modals/AddToBasketModal";
 import { BrowserRouter as Router, Switch, Routes, Route, Link } from 'react-router-dom';
 import WelcomePage from "../Components/pages/WelcomePage/WelcomePage";
 import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
+import { getRecipes } from "../api/Service";
 
 const App = () => {
     const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
@@ -17,31 +18,29 @@ const App = () => {
         searched: '',
         restaurant: true,
         category:'',
-    }); 
+    });
+
+
 
     return (
         <>
             <Router>
-                <Header className="appHeader" setSearchStateApp={setSearchState} setIsBasketOpen={setIsBasketSidebarOpen} />
-                <div className="App">
-                    <div>Restaurants</div>
-                </div>
-                <Routes>
-                    <Route exact path='/' element={<WelcomePage searchState={searchState} />}></Route>
-                    <Route exact path='/login-register' element={<LoginRegistrationModal />}></Route>
-                    <Route exact path='/details/:id' element={<RecipeDetails />}></Route>
 
-                </Routes>
+                <div className="App">
+                        <Header setSearchStateApp={setSearchState} setIsBasketOpen={setIsBasketSidebarOpen} />
+                        <BasketSidebar
+                            isOpen={isBasketSidebarOpen}
+                            setIsOpen={setIsBasketSidebarOpen}
+                        />
+			<Routes>
+                    		<Route exact path='/' element={<WelcomePage searchState={searchState} />}></Route>
+                    		<Route exact path='/login-register' element={<LoginRegistrationModal />}></Route>
+                    		<Route exact path='/details/:id' element={<RecipeDetails />}></Route>
+                	</Routes>
+                </div>
             </Router>
-            
-      
-      
-            {/*  <div className="App-overlay" />
-            { <BasketSidebar
-        isOpen={isBasketSidebarOpen}
-        setIsOpen={setIsBasketSidebarOpen}
-            />}
-            */}
+        
+        
             
     </>
   );

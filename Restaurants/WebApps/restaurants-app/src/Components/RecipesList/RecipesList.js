@@ -1,39 +1,32 @@
+import { getRecipes } from "../../api/Service";
 import RecipesListItem from "../RecipesListItem/RecipesListItem"
-
+import React, { useEffect, useState } from 'react';
 
 const RecipesList = () => {
 
-	const recipes = [
-		{
-			"name": "Lamb with vegetables",
-			"image": "...",
-			"ingredients":["onion", "tomatoes", "spaghetti", "carrots", "lamb"]
-		},
-		{
-			"name": "Lamb with vegetables",
-			"image": "...",
-			"ingredients": ["onion", "tomatoes", "spaghetti", "carrots", "lamb"]
-		},
-		{
-			"name": "Lamb with vegetables",
-			"image": "...",
-			"ingredients": ["onion", "tomatoes", "spaghetti", "carrots", "lamb"]
-		}
-	]
 
+	const [recipes, setRecipes] = useState([]);
+
+	useEffect(() => {
+		const getAllRecipes = async () => {
+			const recipes = await getRecipes().then(response => response.data).catch(error => []);
+			setRecipes(recipes);
+		}
+
+		getAllRecipes();
+	}, []);
 
 
 	return (
-		<>
+		<div className="recipes-list">
 			{
-				recipes.map((recipe) => {
+				recipes.slice(0,10).map((recipe, i) => {
 					return (
-						<RecipesListItem recipeInfo={recipe}></RecipesListItem>
+						<RecipesListItem key={i} recipeInfo={recipe}></RecipesListItem>
 					)
 				})
-
 			}
-		</>
+		</div>
 	)
 
 }

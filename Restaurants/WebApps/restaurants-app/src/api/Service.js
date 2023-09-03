@@ -5,8 +5,8 @@ const RECIPE = "http://localhost:5009";
 const RESTAURANT = "http://localhost:5183";
 const USER = "http://localhost:4000";
 
-export const getRecipes = () => {
-  return axios.get(`${RECIPE}/api/v1/Recipes`);
+export const getRecipes = async () => {
+  return await axios.get(`${RECIPE}/api/v1/Recipes`);
 };
 
 export const getRecipesById = (id) => {
