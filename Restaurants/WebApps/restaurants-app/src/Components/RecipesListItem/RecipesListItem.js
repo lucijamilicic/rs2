@@ -1,5 +1,7 @@
 import "./RecipesListItem.css"
 import Image from "../../assets/background.jpg"
+import { Link, useNavigate } from 'react-router-dom'
+
 
 const RecipesListItem = ({ recipeInfo }) => {
 
@@ -19,7 +21,7 @@ const RecipesListItem = ({ recipeInfo }) => {
                 <div className="recipe-ingredients">
                     {listOfIngredients}
                 </div>
-                <a className="see-more-button">See more...</a>
+                <Link className="see-more-button" to={"/details/" + recipeInfo?.id}>See more...</Link>
             </div>
            
         </div>

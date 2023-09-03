@@ -3,38 +3,21 @@ import RestaurantsListItem from "../RestaurantsListItem/RestaurantsListItem"
 import { getAllRestaurants, getRestaurantsByName } from "./../../api/Service"
 
 
-const RestaurantList = ({searchText}) => {
-
-	/*
-	const restaurants = [
-		{
-			"name": "Restoran1",
-			"address": "Adresa 11"
-		},
-		{
-			"name": "Restoran2",
-			"address": "Adresa 22"
-		},
-		{
-			"name": "Restoran3",
-			"address": "Adresa 33"
-		}
-	]
-	*/
+const RestaurantList = ({searchedRestaurant}) => {
 
 	const [restaurants, setRestaurants] = useState([])
 	useEffect(() => {
-		if (searchText === "") {
+		if (searchedRestaurant === "") {
 			getAllRestaurants().then((res) => setRestaurants(res.data));
 		}
 		else {
-			getRestaurantsByName(searchText).then((res) => setRestaurants(res.data));
+			getRestaurantsByName(searchedRestaurant).then((res) => setRestaurants(res.data));
 		}
 
-	}, [searchText]);
+	}, [searchedRestaurant]);
 
 	return (
-		<>
+		<div className="restaurant-list">
 			{
 				restaurants.map((restaurant) => {
 					return (
@@ -43,7 +26,7 @@ const RestaurantList = ({searchText}) => {
 				})
 
 			}
-		</>
+		</div>
 	)
 
 	}

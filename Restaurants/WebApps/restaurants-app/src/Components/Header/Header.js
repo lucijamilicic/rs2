@@ -6,23 +6,20 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Header = ({ setSearchStateApp, setIsBasketOpen }) => {
-  const [searchRecipes, setSearchRecipes] = useState(false);
-  const [searchRestaurants, setSearchRestaurants] = useState(true);
+const Header = ({ state, setState, setIsBasketOpen }) => {
+
   const [showCategories, setShowCategories] = useState(false);
   const [searchState, setSearchState] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([
     "Pork",
     "Chicken",
-    "Pasta",
-    "Pizza",
-    "Salad",
+    "Pasta"
   ]);
   const [userState, setUserState] = useState({
     "userName": "",
     "refreshToken": ""
   });
+
 
     const navigate = useNavigate();
 
@@ -32,11 +29,11 @@ const Header = ({ setSearchStateApp, setIsBasketOpen }) => {
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            setSearchStateApp({
+            setState({
+                ...state,
                 searched: searchState,
-                restaurant: searchRestaurants,
-                category: selectedCategory
             });
+            navigate('/');
             setSearchState('');
         }
     }
@@ -75,20 +72,22 @@ const Header = ({ setSearchStateApp, setIsBasketOpen }) => {
                       name="restaurants-recipes"
                       value={searchState}
                       placeholder={
-                          searchRecipes ? "Search recipes" : "Search restaurants"
+                          !state.isRestaurant ? "Search recipes" : "Search restaurants"
                       }
                       onChange={textInputHandler}
                       onKeyPress={(e) => handleKeyPress(e) }
           />
           <button
             type="button"
-            className={`switch-button ${
-              searchRestaurants ? "active" : "disabled"
+            className={`switch-button ${ state.isRestaurant
+               ? "active" : "disabled"
             }`}
             onClick={() => {
-              if (!searchRestaurants) {
-                setSearchRestaurants(!searchRestaurants);
-                setSearchRecipes(!searchRecipes);
+                if (!state.isRestaurant) {
+                    setState({
+                        ...state,
+                        isRestaurant: true,
+                    });
                 setShowCategories(false);
                 }
             }}
@@ -97,11 +96,13 @@ const Header = ({ setSearchStateApp, setIsBasketOpen }) => {
           </button>
           <button
             type="button"
-            className={`switch-button ${searchRecipes ? "active" : "disabled"}`}
+                      className={`switch-button ${!state.isRestaurant ? "active" : "disabled"}`}
             onClick={() => {
-              if (!searchRecipes) {
-                setSearchRecipes(!searchRecipes);
-                setSearchRestaurants(!searchRestaurants);
+                if (state.isRestaurant) {
+                    setState({
+                        ...state,
+                        isRestaurant: false,
+                    })
                 setShowCategories(true);
               }
                 
@@ -140,7 +141,12 @@ const Header = ({ setSearchStateApp, setIsBasketOpen }) => {
             <div
               className="category-item"
                   onClick={(e) => {
-                      setSelectedCategory(e.target.value);
+                      navigate('/');
+                      setState({
+                          ...state,
+                          isRestaurant: false,
+                          category: category,
+                      })
               }}
             >
               {category}

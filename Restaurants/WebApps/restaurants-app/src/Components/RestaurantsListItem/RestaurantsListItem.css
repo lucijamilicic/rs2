@@ -1,24 +1,65 @@
-.restaurant-card {
+
+
+.restaurant-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    justify-content: center;
+}
+
+.restaurant-item {
+    width: 700px;
+    background-color: rgb(226, 217, 217);
     padding: 20px;
-    padding-left: 70px;
-    border: solid 1px white;
-    background-color: rgba(0, 0, 0, 0.5);
-    margin: 20px;
-    color:white;
+    border: 2px solid rgba(0,0,0,0.6);
+    background-color: rgb(226, 217, 217);
+    margin-bottom: 20px;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.restaurant-card {
+    color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    justify-content: space-between;
+}
+
+.restaurant-image {
+    width: 35%;
+}
+
+    .restaurant-image img {
+        max-width: none;
+        width: 100%;
+    }
+
+.content {
+    width: 40%;
+    display: flex;
+    column-gap: 30px;
+    justify-content: flex-start;
 }
 
 .show-menu-button {
     background-color: transparent;
-    padding-left: 90%;
+    color: rgb(125, 26, 26);
 }
 
-.show-menu-button:hover {
-    font-weight: bold;
-}
+    .show-menu-button:hover {
+        font-weight: bold;
+        color: rgb(125, 26, 26);
+    }
 
 
 .restaurant-name {
-    font-size: larger;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: rgba(0,0,0,0.5);
 }
 
 .restaurant-address{

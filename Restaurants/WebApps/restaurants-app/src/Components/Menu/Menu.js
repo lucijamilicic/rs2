@@ -12,7 +12,7 @@ const Menu = ({ menu}) =>{
 
         </>);
   return (
-    <div  className="menu-background">
+    <div  className="menu">
         <div className="menu-title">Menu</div>
         {menuList}
     </div>

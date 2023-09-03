@@ -13,13 +13,12 @@ import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
 import { getRecipes } from "../api/Service";
 
 const App = () => {
-    const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
-    const [searchState, setSearchState] = useState({
+    const [state, setState] = useState({
         searched: '',
-        restaurant: true,
+        isRestaurant: true,
         category:'',
     });
-
+    const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
 
 
     return (
@@ -27,16 +26,16 @@ const App = () => {
             <Router>
 
                 <div className="App">
-                        <Header setSearchStateApp={setSearchState} setIsBasketOpen={setIsBasketSidebarOpen} />
+                    <Header state={state} setState={setState} setIsBasketOpen={setIsBasketSidebarOpen} />
                         <BasketSidebar
                             isOpen={isBasketSidebarOpen}
                             setIsOpen={setIsBasketSidebarOpen}
                         />
-			<Routes>
-                    		<Route exact path='/' element={<WelcomePage searchState={searchState} />}></Route>
+			            <Routes>
+                    		<Route exact path='/' element={<WelcomePage state={state} />}></Route>
                     		<Route exact path='/login-register' element={<LoginRegistrationModal />}></Route>
                     		<Route exact path='/details/:id' element={<RecipeDetails />}></Route>
-                	</Routes>
+                	    </Routes>
                 </div>
             </Router>
         

@@ -5,7 +5,9 @@ import { getRecipes } from '../../../api/Service';
 import RecipesList from '../../RecipesList/RecipesList';
 
 
-const WelcomePage = ({ searchState }) => {
+const WelcomePage = ({ state }) => {
+    const { isRestaurant, searched, category } = state;
+    console.log(category);
     const navigate = useNavigate();
     const accToken = localStorage.getItem("accessToken") ? true : false;
     const isLogged = () => {
@@ -16,7 +18,15 @@ const WelcomePage = ({ searchState }) => {
     };
 
     return (
-        <RestaurantsList searchText={searchState.searched} />
+        <>
+            {
+                isRestaurant ? (
+                    <RestaurantsList searchedRestaurant={searched} />
+                ) : (
+                    <RecipesList searchedRecipe={searched} searchedCategory={category} />
+                )
+            }
+        </>
     );
 };
 
