@@ -10,7 +10,8 @@ namespace Restaurants.Common.Repositories
 {
     public interface IRestaurantRepository
     {
-        Task<RestaurantDTO> GetRestaurant(string restaurantName); // restaurant info + menu
+        Task<IEnumerable<RestaurantDTO>> GetAllRestaurants(); // restaurant info + menu
+        Task<IEnumerable<RestaurantDTO>> GetRestaurantsByName(string restaurantName); // restaurant info + menu
         Task<bool> CreateRestaurant(CreateRestaurantDTO restaurantDTO);
         Task<bool> UpdateRestaurantInfo(RestaurantDTO restaurantDTO);
         Task<bool> DeleteRestaurant(int restaurantId);

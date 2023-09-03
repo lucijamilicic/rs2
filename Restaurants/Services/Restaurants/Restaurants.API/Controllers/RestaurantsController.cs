@@ -5,7 +5,8 @@ using Restaurants.Common.Repositories;
 
 namespace Restaurants.API.Controllers
 {
-    [Authorize(Roles = "Buyer,Administrator")]
+    //TODO
+    //[Authorize(Roles = "Buyer,Administrator")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class RestaurantsController : ControllerBase
@@ -17,21 +18,25 @@ namespace Restaurants.API.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-       
-        [HttpGet("{restaurantName}", Name = "GetRestaurant")]
-        [ProducesResponseType(typeof(RestaurantDTO), StatusCodes.Status200OK)]
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<RestaurantDTO>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<RestaurantDTO>> GetAllRestaurants()
+        {
+            var restaurants = await _repository.GetAllRestaurants();
+
+            return Ok(restaurants);
+        }
+
+        [HttpGet("{restaurantName}", Name = "GetRestaurantsByName")]
+        [ProducesResponseType(typeof(IEnumerable<RestaurantDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<RestaurantDTO>> GetRestaurant(string restaurantName)
+        public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetRestaurantsByName(string restaurantName)
         {
-            var restaurant = await _repository.GetRestaurant(restaurantName);
+            var restaurants = await _repository.GetRestaurantsByName(restaurantName);
 
-            if (restaurant == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(restaurant);
+            return Ok(restaurants);
         }
 
         [Authorize(Roles = "Administrator")]

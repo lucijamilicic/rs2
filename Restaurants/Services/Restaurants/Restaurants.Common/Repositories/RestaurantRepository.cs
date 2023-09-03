@@ -50,29 +50,47 @@ namespace Restaurants.Common.Repositories
             return affectedRows != 0;
         }
 
-        public async Task<RestaurantDTO> GetRestaurant(string restaurantName)
+        public async Task<IEnumerable<RestaurantDTO>> GetRestaurantsByName(string restaurantName)
         {
             using var connection = _context.GetConnection();
 
-            var restaurant = await connection.QueryFirstOrDefaultAsync<Restaurant>(
-                "SELECT * FROM Restaurant WHERE RestaurantName = @RestaurantName", 
-                new {RestaurantName = restaurantName }
+            var restaurants = await connection.QueryAsync<Restaurant>(
+                "SELECT * FROM Restaurant WHERE LOWER(RestaurantName) LIKE @RestaurantName", 
+                new {RestaurantName = "%" + restaurantName.ToLower() + "%"}
                 );
 
-            if (restaurant != null)
+            foreach (var restaurant in restaurants)
             {
                 var menu = await connection.QueryAsync<MenuItem>(
                     "SELECT MealID AS ID, MealName, Price FROM Menu WHERE RestaurantID = @RestaurantID",
                     new { RestaurantId = restaurant.Id }
                     );
 
-                var res = _mapper.Map<RestaurantDTO>(restaurant);
-                res.Menu = _mapper.Map<List<MenuItemDTO>>(menu);
-
-                return res;
+                restaurant.Menu = menu;
             }
 
-            return null;
+            return _mapper.Map<IEnumerable<RestaurantDTO>>(restaurants);
+
+        }
+
+        public async Task<IEnumerable<RestaurantDTO>> GetAllRestaurants()
+        {
+            using var connection = _context.GetConnection();
+
+            var restaurants = await connection.QueryAsync<Restaurant>(
+                "SELECT * FROM Restaurant");
+            
+            foreach(var restaurant in restaurants)
+            {
+                var menu = await connection.QueryAsync<MenuItem>(
+                    "SELECT MealID AS ID, MealName, Price FROM Menu WHERE RestaurantID = @RestaurantID",
+                    new { RestaurantId = restaurant.Id }
+                    );
+
+                restaurant.Menu = menu;
+            }
+
+            return _mapper.Map<IEnumerable<RestaurantDTO>>(restaurants);
 
         }
 
