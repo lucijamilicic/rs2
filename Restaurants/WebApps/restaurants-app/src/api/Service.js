@@ -21,8 +21,12 @@ export const GetRecipesByName = (name) => {
   return axios.get(`${RECIPE}/api/v1/Recipes/GetRecipesByName/${name}`);
 };
 
-export const getRestaurants = (name) => {
+export const getRestaurantsByName = (name) => {
   return axios.get(`${RESTAURANT}/api/v1/Restaurants/${name}`);
+};
+
+export const getAllRestaurants = () => {
+    return axios.get(`${RESTAURANT}/api/v1/Restaurants`);
 };
 
 export const createRestaurants = (body) => {

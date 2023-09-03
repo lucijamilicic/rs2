@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Header = ({ searchStateApp, setIsBasketOpen }) => {
+const Header = ({ setSearchStateApp, setIsBasketOpen }) => {
   const [searchRecipes, setSearchRecipes] = useState(false);
   const [searchRestaurants, setSearchRestaurants] = useState(true);
   const [showCategories, setShowCategories] = useState(false);
@@ -28,7 +28,18 @@ const Header = ({ searchStateApp, setIsBasketOpen }) => {
 
     const textInputHandler = (e) => {
         setSearchState(e.target.value);
-  };
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            setSearchStateApp({
+                searched: searchState,
+                restaurant: searchRestaurants,
+                category: selectedCategory
+            });
+            setSearchState('');
+        }
+    }
 
     const logoutUser = async () => {
         const token = localStorage.getItem("refreshToken");
@@ -60,13 +71,14 @@ const Header = ({ searchStateApp, setIsBasketOpen }) => {
       <div className="header-left">
         <div className="search-wrap">
           <input
-            type="text"
-            name="restaurants-recipes"
-            value={searchState}
-            placeholder={
-              searchRecipes ? "Search recipes" : "Search restaurants"
-            }
-            onChange={textInputHandler}
+                      type="text"
+                      name="restaurants-recipes"
+                      value={searchState}
+                      placeholder={
+                          searchRecipes ? "Search recipes" : "Search restaurants"
+                      }
+                      onChange={textInputHandler}
+                      onKeyPress={(e) => handleKeyPress(e) }
           />
           <button
             type="button"

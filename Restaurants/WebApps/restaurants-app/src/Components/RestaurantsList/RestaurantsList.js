@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react"
 import RestaurantsListItem from "../RestaurantsListItem/RestaurantsListItem"
+import { getAllRestaurants, getRestaurantsByName } from "./../../api/Service"
 
 
-const RestaurantList = () => {
+const RestaurantList = ({searchText}) => {
 
+	/*
 	const restaurants = [
 		{
 			"name": "Restoran1",
@@ -17,13 +20,25 @@ const RestaurantList = () => {
 			"address": "Adresa 33"
 		}
 	]
+	*/
+
+	const [restaurants, setRestaurants] = useState([])
+	useEffect(() => {
+		if (searchText === "") {
+			getAllRestaurants().then((res) => setRestaurants(res.data));
+		}
+		else {
+			getRestaurantsByName(searchText).then((res) => setRestaurants(res.data));
+		}
+
+	}, [searchText]);
 
 	return (
 		<>
 			{
 				restaurants.map((restaurant) => {
 					return (
-						<RestaurantsListItem restaurantInfo={restaurant}></RestaurantsListItem>
+						<RestaurantsListItem restaurantInfo={restaurant} menu={restaurant.menu}></RestaurantsListItem>
 					)
 				})
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import RestaurantsList from "../../RestaurantsList/RestaurantsList"
 
-const WelcomePage = () => {
+
+const WelcomePage = ({ searchState }) => {
     const navigate = useNavigate();
     const accToken = localStorage.getItem("accessToken") ? true : false;
     const isLogged = () => {
@@ -11,9 +13,8 @@ const WelcomePage = () => {
         }
     };
 
-    return (<>
-        {isLogged() && <div>Radiiiiii</div>}
-        </>
+    return (
+        <RestaurantsList searchText={searchState.searched} />
     );
 };
 

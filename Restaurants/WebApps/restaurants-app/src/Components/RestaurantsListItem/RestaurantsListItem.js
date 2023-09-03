@@ -4,15 +4,15 @@ import Menu from "./../Menu/Menu"
 
 
 
-const RestaurantsListItem = ({ restaurantInfo }) => {
+const RestaurantsListItem = ({ restaurantInfo, menu}) => {
 
     const [showMenu, setShowMenu] = useState(false);
 
     return (
         <div className="restaurant-card">
-            <div className="restaurant-name"> {restaurantInfo.name} </div>
+            <div className="restaurant-name"> {restaurantInfo.restaurantName} </div>
             <div className="restaurant-address"> {restaurantInfo.address} </div>
-            {showMenu ? <Menu/> : <></>}
+            {showMenu ? <Menu menu={menu} /> : <></>}
             <button className="show-menu-button" onClick={() => setShowMenu(!showMenu)}>{showMenu ? "Hide menu" : "View menu"}</button>
         </div>
     )

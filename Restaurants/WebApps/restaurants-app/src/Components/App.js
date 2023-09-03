@@ -14,7 +14,7 @@ const App = () => {
     const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
     const [searchState, setSearchState] = useState({
         searched: '',
-        restaurant: false,
+        restaurant: true,
         category:'',
     }); 
 
@@ -26,7 +26,7 @@ const App = () => {
                     <div>Restaurants</div>
                 </div>
                 <Routes>
-                    <Route exact path='/' element={<WelcomePage />}></Route>
+                    <Route exact path='/' element={<WelcomePage searchState={searchState} />}></Route>
                     <Route exact path='/login-register' element={<LoginRegistrationModal />}></Route>
                 </Routes>
             </Router>
