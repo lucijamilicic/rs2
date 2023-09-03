@@ -10,7 +10,7 @@ export const getRecipes = () => {
 };
 
 export const getRecipesById = (id) => {
-  return axios.get(`${RECIPE}/api/v1/Recipes/GetRecipesById/${id}`);
+  return axios.get(`${RECIPE}/api/v1/Recipes/GetRecipeById/${id}`);
 };
 
 export const getRecipesByCategory = (category) => {

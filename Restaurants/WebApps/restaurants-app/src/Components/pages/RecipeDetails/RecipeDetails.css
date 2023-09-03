@@ -1,7 +1,7 @@
 .recipe-details {
     padding: 20px;
     padding-left: 70px;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.3);
     margin: 20px;
     color: white;
 }

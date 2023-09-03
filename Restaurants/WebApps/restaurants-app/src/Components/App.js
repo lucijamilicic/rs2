@@ -9,6 +9,7 @@ import LoginRegistrationModal from "../modals/LoginRegistrationModal";
 import AddToBasketModal from "../modals/AddToBasketModal";
 import { BrowserRouter as Router, Switch, Routes, Route, Link } from 'react-router-dom';
 import WelcomePage from "../Components/pages/WelcomePage/WelcomePage";
+import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
 
 const App = () => {
     const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
@@ -28,6 +29,8 @@ const App = () => {
                 <Routes>
                     <Route exact path='/' element={<WelcomePage searchState={searchState} />}></Route>
                     <Route exact path='/login-register' element={<LoginRegistrationModal />}></Route>
+                    <Route exact path='/details/:id' element={<RecipeDetails />}></Route>
+
                 </Routes>
             </Router>
             
