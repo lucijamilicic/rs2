@@ -32,6 +32,13 @@ namespace Recipes.API.Repositories
         {
             return await _context.Recipes.Find(p => p.Category.ToLower().Contains(name.ToLower())).ToListAsync();
         }
+
+        public async Task<IEnumerable<string>> GetAllCategories()
+        {
+            var recipes = await _context.Recipes.Find(p => true).ToListAsync();
+            var categories = recipes.Select(r => r.Category).Distinct();
+            return categories;
+        }
     }
 }
 

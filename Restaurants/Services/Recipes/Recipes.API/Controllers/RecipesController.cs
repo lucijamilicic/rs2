@@ -64,6 +64,15 @@ namespace Recipes.API.Controllers
             var recipes = await _repository.GetRecipesByName(name);
             return Ok(recipes);
         }
+
+        [Route("[action]")]
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<string>>> GetAllCategories()
+        {
+            var categories = await _repository.GetAllCategories();
+            return Ok(categories);
+        }
     }
 }
 
