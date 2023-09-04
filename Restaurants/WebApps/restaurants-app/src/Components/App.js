@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Routes, Route, Link } from 'react-rout
 import WelcomePage from "../Components/pages/WelcomePage/WelcomePage";
 import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
 import { getRecipes } from "../api/Service";
+import AddRecipe from "./AddRecipes/AddRecipe";
 
 const App = () => {
     const [state, setState] = useState({
@@ -34,7 +35,8 @@ const App = () => {
 			            <Routes>
                     		<Route exact path='/' element={<WelcomePage state={state} />}></Route>
                     		<Route exact path='/login-register' element={<LoginRegistrationModal />}></Route>
-                    		<Route exact path='/details/:id' element={<RecipeDetails />}></Route>
+                        <Route exact path='/details/:id' element={<RecipeDetails />}></Route>
+                        <Route exact path='/addRecipe' element={<AddRecipe />}></Route>
                 	    </Routes>
                 </div>
             </Router>

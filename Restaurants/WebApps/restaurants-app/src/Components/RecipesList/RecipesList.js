@@ -2,14 +2,37 @@ import { getRecipes, getRecipesByCategory } from "../../api/Service";
 import RecipesListItem from "../RecipesListItem/RecipesListItem"
 import React, { useEffect, useState } from 'react';
 import "./RecipesList.css"
+import AddRecipe from "../AddRecipes/AddRecipe";
+import { useNavigate } from 'react-router-dom'; 
+import jwt_decode from 'jwt-decode';
 
 const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 
 	const [recipes, setRecipes] = useState([]);
-	const [snowAdd, setShowAdd] = useState(false);
+	const [showAdd, setShowAdd] = useState(false);
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = localStorage.getItem("accessToken");
+		const decodedToken = jwt_decode(token)
+
+		const role = Object.keys(decodedToken).map(key => {
+
+			if (key.includes('role')) {
+				return decodedToken[key];
+			}
+			return null;
+		}).find(elem => elem !== null);
+
+		if (role === "Administrator") {
+			setShowAdd(true);
+		}
+
+	}, []);
 
 	const addNewHandler = () => {
-		setShowAdd(true);
+		navigate('/addRecipe');
 	};
 
 	useEffect(() => {
@@ -50,8 +73,7 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 				})
 			}
 		</div>
-		<buton className="add-recipe-button" onCLick={addNewHandler}>Add new recipe</buton>
-		 
+		{showAdd && <buton className="add-recipe-button" onClick={addNewHandler}>Add new recipe</buton>}
 	</>
 	)
 

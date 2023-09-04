@@ -4,9 +4,12 @@
     right: 15px;
     width: 150px;
     height: auto;
-    padding:10px;
-    text-align:center;
-    background-color: brown;
-    border-radius:15px;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(125, 26, 26, 0.9);
+    border-radius: 15px;
+}
 
+.add-recipe-button:hover {
+    background-color: rgba(125, 26, 26, 1);
 }

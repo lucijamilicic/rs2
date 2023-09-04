@@ -3,7 +3,10 @@ import Modal from "react-modal";
 import "./EditRestaurantModal.css"
 //import {ReactComponent as CancelImage} from "../assets/cancel-img.svg";
 
-const EditRestaurantModal= ({isOpen, text, onCofirm, onCancel})=>{
+const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
+
+   // const isEdit = data;
+
    return( <Modal isOpen className="modal" >
        <div className="modal-wrap">
            NAME
@@ -12,9 +15,9 @@ const EditRestaurantModal= ({isOpen, text, onCofirm, onCancel})=>{
            <input type="text" className="input" placeholder="address" name="address" maxlength="30" size="10" />
 
            <h2>Are you sure?</h2>
-           <p>Do you really want to edit {text}?  </p>
+           <p>Do you really want to edit {/*text*/}?  </p>
            <div className="button-wrap">
-               <button onClick={onCofirm} className="button-delete">Confirm</button>
+               <button onClick={onConfirm} className="button-delete">Confirm</button>
                <button onClick={onCancel} className="button-delete">Cancel</button>
            </div>
         </div>

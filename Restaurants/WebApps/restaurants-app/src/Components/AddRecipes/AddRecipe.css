@@ -98,3 +98,14 @@ td{
     height: 15px;
     width: 15px;
 }
+
+.submit-button {
+    background-color: rgba(125, 26, 26, 0.8);
+    border-radius:20px;
+    width: 70%;
+    padding:10px;
+}
+
+.submit-button:hover {
+    background-color: rgba(125, 26, 26, 1);
+}
