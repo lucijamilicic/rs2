@@ -1,10 +1,16 @@
 import { getRecipes, getRecipesByCategory } from "../../api/Service";
 import RecipesListItem from "../RecipesListItem/RecipesListItem"
 import React, { useEffect, useState } from 'react';
+import "./RecipesList.css"
 
 const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 
 	const [recipes, setRecipes] = useState([]);
+	const [snowAdd, setShowAdd] = useState(false);
+
+	const addNewHandler = () => {
+		setShowAdd(true);
+	};
 
 	useEffect(() => {
 
@@ -34,7 +40,7 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	}, [searchedCategory])
 
 
-	return (
+	return (<>
 		<div className="recipes-list">
 			{
 				recipes.slice(0,10).map((recipe, i) => {
@@ -44,6 +50,9 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 				})
 			}
 		</div>
+		<buton className="add-recipe-button" onCLick={addNewHandler}>Add new recipe</buton>
+		 
+	</>
 	)
 
 }

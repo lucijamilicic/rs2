@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import RestaurantsListItem from "../RestaurantsListItem/RestaurantsListItem"
 import { getAllRestaurants, getRestaurantsByName } from "./../../api/Service"
+import { createRestaurants, deleteRestaurantById, updateRestaurantById } from "../../api/Service"
 
 
 const RestaurantList = ({searchedRestaurant}) => {

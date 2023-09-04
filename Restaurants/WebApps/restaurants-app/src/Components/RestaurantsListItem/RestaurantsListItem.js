@@ -2,12 +2,28 @@ import React, { useState } from "react";
 import "./RestaurantsListItem.css"
 import Menu from "./../Menu/Menu"
 import Image from '../../../src/assets/background.jpg'
+import { createRestaurants, deleteRestaurantById, updateRestaurantById } from "../../api/Service"
+import { Link, useNavigate } from 'react-router-dom'
+import EditRestaurantModal from "../../modals/EditRestaurantModal";
 
 
 
 const RestaurantsListItem = ({ restaurantInfo, menu}) => {
 
     const [showMenu, setShowMenu] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+    const navigate = useNavigate();
+
+    const deleteandler = async () => {
+        deleteRestaurantById(restaurantInfo.id);
+        navigate("/");
+    };
+
+    const editHandler = () => {
+        setShowEdit(true);
+        //TODO: fali nam komponenta?
+    };
+
 
     return (
         <>
@@ -26,6 +42,10 @@ const RestaurantsListItem = ({ restaurantInfo, menu}) => {
                 </div>
                 </div>
                 {showMenu && <Menu menu={menu} />}
+                <div>
+                    <button> delete</button>
+                    <button onClick={editHandler}>edit</button>
+                </div>
         </div>
         </>
     )

@@ -1,0 +1,12 @@
+.add-recipe-button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 150px;
+    height: auto;
+    padding:10px;
+    text-align:center;
+    background-color: brown;
+    border-radius:15px;
+
+}
