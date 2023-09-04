@@ -12,6 +12,7 @@ namespace Restaurants.Common.Entities
         public string RestaurantName { get; set; }
         public string Address { get; set;}
         public IEnumerable<MenuItem> Menu { get; set;}
+        public string Img { get; set;}
 
     }
 }

@@ -28,8 +28,8 @@ namespace Restaurants.Common.Repositories
             using var connection = _context.GetConnection();
 
             var affectedRows = await connection.ExecuteAsync(
-                "INSERT INTO Restaurant (RestaurantName, Address) VALUES (@RestaurantName, @Address)",
-                new { restaurantDTO.RestaurantName, restaurantDTO.Address}
+                "INSERT INTO Restaurant (RestaurantName, Address, Img) VALUES (@RestaurantName, @Address, @Img)",
+                new { restaurantDTO.RestaurantName, restaurantDTO.Address, restaurantDTO.Img}
                 );
 
             return affectedRows != 0;
@@ -99,8 +99,8 @@ namespace Restaurants.Common.Repositories
             using var connection = _context.GetConnection();
 
             var affectedRows = await connection.ExecuteAsync(
-                "UPDATE Restaurant SET RestaurantName=@RestaurantName, Address=@Address WHERE Id = @Id",
-                new { restaurantDTO.RestaurantName, restaurantDTO.Address, restaurantDTO.Id });
+                "UPDATE Restaurant SET RestaurantName=@RestaurantName, Address=@Address, Img = @Img WHERE Id = @Id",
+                new { restaurantDTO.RestaurantName, restaurantDTO.Address, restaurantDTO.Img, restaurantDTO.Id });
 
             return affectedRows != 0;
         }
