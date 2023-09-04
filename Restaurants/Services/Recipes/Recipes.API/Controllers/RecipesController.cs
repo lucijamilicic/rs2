@@ -1,6 +1,8 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.API.Data;
+using Recipes.API.DTO;
 using Recipes.API.Entities;
 using Recipes.API.GrpcServices;
 using Recipes.API.Repositories;
@@ -72,6 +74,16 @@ namespace Recipes.API.Controllers
         {
             var categories = await _repository.GetAllCategories();
             return Ok(categories);
+        }
+        
+        //fix later
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
+        public async Task<ActionResult> AddRecipe([FromBody] AddRecipeDTO dish)
+        {
+            await _repository.AddRecipe(dish);
+            return Ok();
         }
     }
 }

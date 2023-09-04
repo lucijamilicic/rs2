@@ -1,3 +1,4 @@
+using Recipes.API.DTO;
 using Recipes.API.Entities;
 
 namespace Recipes.API.Repositories
@@ -9,6 +10,7 @@ namespace Recipes.API.Repositories
         Task<IEnumerable<Dish>> GetRecipesByCategory(string category);
         Task<IEnumerable<Dish>> GetRecipesByName(string name);
         Task<IEnumerable<string>> GetAllCategories();
+        Task AddRecipe(AddRecipeDTO dish);
     }
 }
 
