@@ -7,9 +7,6 @@ const RecipesListItem = ({ recipeInfo }) => {
 
 
     const listOfIngredients = (recipeInfo?.listOfIngredients.map((ingredient) => ingredient.name)).toString().toLowerCase();
-   
-   
-
 
     return (
         <div className="recipe-card">
@@ -22,8 +19,7 @@ const RecipesListItem = ({ recipeInfo }) => {
                     {listOfIngredients}
                 </div>
                 <Link className="see-more-button" to={"/details/" + recipeInfo?.id}>See more...</Link>
-            </div>
-           
+            </div>      
         </div>
     )
 }

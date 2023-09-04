@@ -4,6 +4,7 @@ import { ReactComponent as EditIcon } from "../assets/edit.svg";
 import { ReactComponent as CancelIcon } from "../assets/cancel.svg";
 import { ReactComponent as BasketIcon } from "../assets/basket.svg";
 import { ReactComponent as ArrowIcon } from "../assets/double-arrow.svg";
+//import BasketCheckoutType from '../../src/types/types/BasketCheckoutType';
 import "./Modal.css";
 
 const BasketListItem = (props) => {
@@ -13,6 +14,7 @@ const BasketListItem = (props) => {
     quantity,
     extraNote,
   });
+
   const [edit, setEdit] = useState(false);
 
   const deleteItemHandler = () => {
@@ -101,16 +103,12 @@ const BasketListItem = (props) => {
 };
 
 const BasketSidebar = ({ isOpen, setIsOpen }) => {
-  const [listOfItems, setListOfItems] = useState([
-    { restaurantName: "restaurant 1", name: "lala", price: 5.66, quantity: 3 },
-    { restaurantName: "restaurant 2", name: "lala1", price: 14, quantity: 1 },
-    {
-      restaurantName: "restaurant 3",
-      name: "lala111",
-      price: 2.5,
-      quantity: 7,
-    },
-  ]);
+
+ /*   const [basketState, setBasketState] = useState < BasketCheckoutType > ({
+
+    });
+    */
+  const [listOfItems, setListOfItems] = useState([]);
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -123,6 +121,10 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
     const total = calculateTotalPrice().toPrecision(4);
     setTotalPrice(total);
   }, [listOfItems]);
+
+    const onCheckout = () => {
+        //TODO
+    }
 
   return (
     <>
@@ -153,7 +155,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
             <button onClick={() => setListOfItems([])} className="clear">
               Clear basket
             </button>
-            <button type="submit" className="checkout-button">
+            <button type="submit" className="checkout-button" onClick={onCheckout}>
               Checkout
             </button>
           </div>
@@ -166,3 +168,12 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 };
 
 export default BasketSidebar;
+
+            /*{ restaurantName: "restaurant 1", name: "lala", price: 5.66, quantity: 3 },
+    { restaurantName: "restaurant 2", name: "lala1", price: 14, quantity: 1 },
+    {
+      restaurantName: "restaurant 3",
+      name: "lala111",
+      price: 2.5,
+      quantity: 7,
+    }, */

@@ -12,8 +12,11 @@ import WelcomePage from "../Components/pages/WelcomePage/WelcomePage";
 import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
 import { getRecipes } from "../api/Service";
 import AddRecipe from "./AddRecipes/AddRecipe";
+import jwt_decode from 'jwt-decode';
+import { getRole } from "../common/helpers";
 
 const App = () => {
+    
     const [state, setState] = useState({
         searched: '',
         isRestaurant: true,
@@ -21,11 +24,9 @@ const App = () => {
     });
     const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
 
-
     return (
         <>
             <Router>
-
                 <div className="App">
                     <Header state={state} setState={setState} setIsBasketOpen={setIsBasketSidebarOpen} />
                         <BasketSidebar
@@ -35,8 +36,8 @@ const App = () => {
 			            <Routes>
                     		<Route exact path='/' element={<WelcomePage state={state} />}></Route>
                     		<Route exact path='/login-register' element={<LoginRegistrationModal />}></Route>
-                        <Route exact path='/details/:id' element={<RecipeDetails />}></Route>
-                        <Route exact path='/addRecipe' element={<AddRecipe />}></Route>
+                            <Route exact path='/details/:id' element={<RecipeDetails />}></Route>
+                            <Route exact path='/addRecipe' element={<AddRecipe />}></Route>
                 	    </Routes>
                 </div>
             </Router>

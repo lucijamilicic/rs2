@@ -109,3 +109,13 @@ td{
 .submit-button:hover {
     background-color: rgba(125, 26, 26, 1);
 }
+
+.cancel-button {
+    background-color: rgba(125, 26, 26, 0.8);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+    .cancel-button:hover {
+        background-color: rgba(125, 26, 26, 1);
+    }
