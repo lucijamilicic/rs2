@@ -40,7 +40,7 @@ const MenuItem = ({ restaurantId, menuItem }) => {
         <div className="list-item">
             <div className="left-content">
                 <div className="food-name" ><Link to={"/details/" + menuItem.id} >{menuItem.mealName}</Link></div>
-                <div className="food-price">{menuItem.price}</div>
+                <div className="food-price">{menuItem.price} &euro;</div>
             </div>
             {!isAdmin && <button className="right-content order-button" onClick={orderHandler}>Order</button>}
             {isAdmin && < button className="right-content order-button" onClick={() => setIsDeleteModalOpen(true)}>Delete</button>}

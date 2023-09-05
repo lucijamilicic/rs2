@@ -104,12 +104,33 @@ const BasketListItem = (props) => {
 
 const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
- /*   const [basketState, setBasketState] = useState < BasketCheckoutType > ({
+    /*   const [basketState, setBasketState] = useState < BasketCheckoutType > ({
 
-    });
+        });
+
+       
     */
-  const [listOfItems, setListOfItems] = useState([]);
 
+
+    const [listOfItems, setListOfItems] = useState([
+        {
+            restaurantName: 'Restaurant 1',
+            name: 'Meal 1',
+            quantity: 2,
+            price: 5,
+        },
+        {
+            restaurantName: 'Restaurant 2',
+            name: 'Meal 2',
+            quantity: 7,
+            price: 2.6,
+        },
+        {
+            restaurantName: 'Restaurant 3',
+            name: 'Meal 3',
+            quantity: 5.8,
+            price: 5,
+        }]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateTotalPrice = () => {
@@ -151,6 +172,12 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
             className="address-input"
             required
           />
+          <input
+              type="text"
+              placeholder="Enter email"
+              className="address-input"
+              required
+          />
           <div className="buttons-wrap">
             <button onClick={() => setListOfItems([])} className="clear">
               Clear basket
@@ -168,12 +195,3 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 };
 
 export default BasketSidebar;
-
-            /*{ restaurantName: "restaurant 1", name: "lala", price: 5.66, quantity: 3 },
-    { restaurantName: "restaurant 2", name: "lala1", price: 14, quantity: 1 },
-    {
-      restaurantName: "restaurant 3",
-      name: "lala111",
-      price: 2.5,
-      quantity: 7,
-    }, */

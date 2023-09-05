@@ -21,7 +21,7 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	}, []);
 
 	const addNewHandler = () => {
-		navigate('/addRecipe');
+		navigate('/add-recipe');
 	};
 
 	useEffect(() => {

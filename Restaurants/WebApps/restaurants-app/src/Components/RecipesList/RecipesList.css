@@ -2,9 +2,11 @@
     position: fixed;
     bottom: 15px;
     right: 15px;
-    width: 150px;
-    height: auto;
+    width: 170px;
+    height: 40px;
     padding: 10px;
+    color: white;
+    font-weight: bold;
     text-align: center;
     background-color: rgba(125, 26, 26, 0.9);
     border-radius: 15px;

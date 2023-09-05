@@ -93,31 +93,36 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
 
     return (
         <>
-            <div className="restaurant-item">
-                <div className="restaurant-card">
-                    <div className="restaurant-image content">
+            <div className="restaurant restaurant-item">
+                <div className="card">
+                    <div className="content-container">
                         <img src={restaurantInfo.img} alt="alternative"></img>
-                            <div>
-                                <div className="restaurant-name"> {restaurantInfo.restaurantName} </div>
-                                <div className="restaurant-address"> {restaurantInfo.address} </div>
+                        <div className="right-container">
+                            <div className="upper-container">
+                                <div className="name"> {restaurantInfo.restaurantName} </div>
+                                <div className="address">{restaurantInfo.address} </div>
                             </div>
+                            <div className="bottom-container">
+                                {isAdmin && (
+                                    <>
+                                        <button className="show-menu-button" onClick={deleteHandler}>Remove restaurant</button>
+                                        <button className="show-menu-button" onClick={editHandler}>Edit restaurant</button>
+                                    </>
+                                )}
+                                <button className="show-menu-button" onClick={() => setShowMenu(!showMenu)}>{showMenu ? "Hide menu" : "View menu"}</button>
+                            </div>
+                        </div>
                     </div>
-                    <button className="show-menu-button" onClick={() => setShowMenu(!showMenu)}>{showMenu ? "Hide menu" : "View menu"}</button>
                  </div>
                 {
-                    isAdmin && (
-                        <div>
-                            <button className="show-menu-button" onClick={deleteHandler}>Remove restaurant</button>
-                            <button className="show-menu-button" onClick={editHandler}>Edit restaurant</button>
-                        </div>
-                    )
+                    
                 }
                 {showMenu && <Menu restaurantId={restaurantInfo.id} menu={menu} />}
                 {isAdmin && 
                     <>
                     {
                         showMenu &&
-                        <button className="show-menu-button" onClick={() => setIsAddItemShown(!isAddItemShown)}>Add item to menu</button>
+                        <button className=" show-menu-button" onClick={() => setIsAddItemShown(!isAddItemShown)}>Add item to menu</button>
                     }
                     {
                         isAddItemShown &&  

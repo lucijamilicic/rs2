@@ -54,7 +54,8 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
             localStorage.setItem("accessToken", res.data.accessToken);
             localStorage.setItem("refreshToken", res.data.refreshToken);
             localStorage.setItem("userName", res.data.userName);
-            localStorage.setItem("roleName", res.data.roleName);
+            localStorage.setItem("userEmail", res.data.userEmail);
+
             navigate('/');
         } else {
             await registerUser(registerState);

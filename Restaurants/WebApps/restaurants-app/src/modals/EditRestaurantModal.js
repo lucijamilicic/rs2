@@ -17,7 +17,7 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
     useEffect(() => {
         isEdit && setState({
             ...data,
-            img: '',
+            img: data.img,
             restaurantName: data.restaurantName,
             address: data.address,
         });
@@ -53,6 +53,10 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
                     <label>Address</label>
                     <input type="text" placeholder="Address" name="address" maxLength="30" size="10" value={state.address} onChange={textInputHandler} />
                 </div>
+                <div className="input-wrap">
+                    <label>Image URL</label>
+                    <input type="text" placeholder="Image url" name="img" size="10" value={state.img} onChange={textInputHandler} />
+                </div>
                 <div className="button-wrap">
                     <button
                         onClick={() => {
@@ -60,7 +64,11 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
                             clearState();
                         }}
                         className="button-delete">Cancel</button>
-                    <button onClick={() => onConfirm(state)} className="button-delete">Confirm</button>
+                    <button onClick={() => {
+                        onConfirm(state);
+                        window.location.reload();
+                    }
+                    } className="button-delete">Confirm</button>
                 </div>
             </div>
         </Modal>

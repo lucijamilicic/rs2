@@ -1,5 +1,4 @@
 .modal {
-  /* background-color: rgb(208, 203, 203); */
   background-color: white;
   height: auto;
   width: 550px;
@@ -26,14 +25,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-y: scroll;
-  max-height: 500px;
 }
 
 .input-wrap {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
+  row-gap: 2px;
   width: 80%;
   padding: 10px 5px;
   color: rgb(0,0,0);
@@ -41,34 +38,40 @@
 
 .input-wrap input {
   width: 100% ;
-  height: 35px;
+  height: 30px;
   color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.1);
   border-radius: 5px;
 }
 
 .input-wrap input:hover {
-  border: 2px solid rgb(0,0,0, 0.5)
+  border: 2px solid rgb(0,0,0, 0.3)
 }
 
 .input-wrap input::placeholder {
   font-size: 14px;
-  color: rgb(0,0,0)
+  color: rgb(0,0,0,0.5);
+  letter-spacing: 0.4px;
 }
 
 label {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
+  letter-spacing: 0.4px;
 }
 
 .login-button {
-  margin-top: 40px;
+  margin-top:20px;
   width: 80%;
   background-color: rgba(125, 26, 26, 0.9);
 }
 
+.login-button:hover {
+  background-color: rgba(125, 26, 26, 1);
+}
+
 p {
-  margin-top: 15px;
+    margin-top: 15px;
 }
 
 p span {
@@ -193,6 +196,7 @@ p span {
   letter-spacing: 2px;
 }
 .list {
+    overflow-y: scroll;
   width: 100%;
 }
 
@@ -272,22 +276,28 @@ p span {
 }
 
 .address-input {
-  margin-top: 50px;
-  border-bottom: 1px solid rgb(0,0,0,0.7);
-  border-radius: 0;
-  width: 80%;
+    margin-top: 50px;
+    border-bottom: 1px solid rgb(0,0,0,0.2);
+    border-radius: 0;
+    width: 80%;
 }
 
 .address-input::placeholder {
-  color: rgb(0,0,0);
+  color: rgb(0,0,0,0.5);
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;
 }
 
-.address-input:hover {
-  background-color: white;
-  border-bottom: 2px solid rgb(0,0,0,0.7);
-}
+    .address-input:hover {
+        background-color: white;
+        border-bottom: 1px solid rgb(0,0,0,0.7);
+    }
+
+    .address-input:focus {
+        color: black;
+        border: none !important;
+    }
 
 .clear {
   margin-top: 30px;

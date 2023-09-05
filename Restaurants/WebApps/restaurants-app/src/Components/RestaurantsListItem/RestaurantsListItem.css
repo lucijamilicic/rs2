@@ -9,7 +9,7 @@
 }
 
 .restaurant-item {
-    width: 700px;
+    width: 720px;
     background-color: rgb(226, 217, 217);
     padding: 20px;
     border: 2px solid rgba(0,0,0,0.6);
@@ -19,7 +19,8 @@
     border-radius: 8px;
 }
 
-.restaurant-card {
+.restaurant .card {
+    width: 100%;
     color: white;
     display: flex;
     align-items: flex-end;
@@ -27,44 +28,75 @@
     justify-content: space-between;
 }
 
-.restaurant-image {
-    width: 35%;
+.content-container {
+    width: 100%;
 }
 
-    .restaurant-image img {
+    .content-container img {
         max-width: none;
-        width:50%;
+        width: 25%;
     }
 
-.content {
-    width: 70%;
+.content-container {
+    width: 100%;
     display: flex;
-    column-gap: 30px;
+    column-gap: 60px;
     justify-content: flex-start;
 }
 
 .show-menu-button {
     background-color: transparent;
+    font-size: 14px;
     color: rgb(125, 26, 26);
+    font-weight: 600;
+    color: rgb(0,0,0,0.8);
+    letter-spacing: 0.5px;
+
 }
 
     .show-menu-button:hover {
         font-weight: bold;
-        color: rgb(125, 26, 26);
+        color: rgb(0,0,0,1);
     }
 
 
-.restaurant-name {
-    font-size: 24px;
+.restaurant .name {
+    font-size: 28px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 600;
     color: rgba(0,0,0,0.5);
 }
 
-.restaurant-address{
-    font-size: large;
+.restaurant .address {
+    font-size: 19px;
+    letter-spacing: 0.7px;
+    color: rgba(0,0,0, 0.8);
+    color: rgb(125, 26, 26);
+    font-weight: 600;
     font-style: italic;
-    color: rgba(125, 26, 26, 1);
-    padding-top: 10px;
+    padding-top:15px;
+}
+
+.right-container {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    row-gap: 30px;
+}
+
+.upper-container {
+
+}
+
+.bottom-container {
+    display: flex;
+    column-gap: 25px;
+    justify-content: space-between;
+}
+
+.bottom-container > div {
+    display: flex;
+    column-gap: 20px;
 }

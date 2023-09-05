@@ -82,7 +82,7 @@ const RestaurantList = ({ searchedRestaurant }) => {
 
 				}
 			</div>
-			{ isAdmin && <buton className="add-recipe-button" onClick={addHandler}> Add new restaurant </buton>}
+			{ isAdmin && <button className="add-recipe-button" onClick={addHandler}> Add new restaurant </button>}
 			<EditRestaurantModal isOpen={isAddRestaurantModalOpen} data={null} onCancel={addCancelHandler} onConfirm={addConfirmHandler} />
 		</>
 	)
