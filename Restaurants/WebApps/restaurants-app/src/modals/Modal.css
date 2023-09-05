@@ -84,18 +84,31 @@ p span {
 }
 
 .quantity-buttons p {
-  margin: 0;
+
+  margin: 10px;
   font-size: 20px;
   color: rgb(0,0,0);
 }
 
 .quantity-buttons button {
+  margin-top: 15px;
   height: 25px;
   width: 25px;
   border-radius: 50%;
   background-color: rgba(125, 26, 26, 0.9);
 
 }
+
+.add-buttons button {
+  margin: 15px;
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: rgba(125, 26, 26, 0.9);
+  padding: 10px;
+
+}
+
 
 .note-input {
   display: flex;
@@ -328,4 +341,26 @@ p span {
 
 .buttons-wrap.edit button {
   width: 130px !important;
+}
+
+/*.button-wrap {
+    font-weight: bold;
+    text-align: center;
+}*/
+
+.button-delete {
+    border-radius: 10px;
+    background-color: rgba(125, 26, 26, 0.8);
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+    .button-delete:hover {
+        background-color: rgba(125, 26, 26, 1);
+    }
+
+.input {
+    background-color: rgb(112, 112, 112, 0.60);
 }

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 
 const AddToBasketModal = (props) => {
-  const { isOpen, edit, name } = props;
+
+//const [state, setState] = useState<>()
+  const { isOpen, name } = props;
   const [extraNote, setExtraNote] = useState("");
   const [quantity, setQuantity] = useState(1);
 
@@ -11,21 +13,27 @@ const AddToBasketModal = (props) => {
     setQuantity(newQuantity);
   };
 
-  const decrementQuantity = () => {
-    const newQuantity = quantity - 1;
+      const decrementQuantity = () => {
+        const newQuantity = quantity - 1;
 
-    if (newQuantity <= 0) {
-      setQuantity(0);
-      return;
-    }
+        if (newQuantity <= 0) {
+          setQuantity(0);
+          return;
+        }
 
-    setQuantity(newQuantity);
-  };
+        setQuantity(newQuantity);
+    };
+
+    const addHandler = () => {
+
+        
+
+    };
 
   return (
     <Modal isOpen={isOpen} className={`modal`}>
       <div className="modal-header">
-        <h2>{edit ? "Edit basket item" : "Add basket item"}</h2>
+        <h2>{ "Add basket item"}</h2>
       </div>
       <div className="modal-wrap">
         <h2>{name}</h2>
@@ -41,7 +49,11 @@ const AddToBasketModal = (props) => {
           <button onClick={decrementQuantity}>-</button>
           <p>{quantity}</p>
           <button onClick={incrementQuantity}>+</button>
-        </div>
+         </div>
+              <div className="add-buttons">
+                  <button className="order-buttons" onClick={() => { } }>Cancel</button>
+                  <button className="order-buttons" onClick={addHandler}>Add</button>
+              </div>
       </div>
     </Modal>
   );

@@ -46,7 +46,7 @@ namespace Restaurants.API.Controllers
         {
             await _repository.CreateRestaurant(restaurantDTO);
 
-            return CreatedAtRoute("GetRestaurant", new { restaurantName = restaurantDTO.RestaurantName }, restaurantDTO);
+            return CreatedAtRoute("GetRestaurantsByName", new { restaurantName = restaurantDTO.RestaurantName }, restaurantDTO);
 
         }
 

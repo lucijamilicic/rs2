@@ -1,13 +1,25 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./Menu.css"
 import MenuItem from "./MenuItem";
+import { getRole } from "../../common/helpers";
 
 
-const Menu = ({ menu}) =>{
+const Menu = ({ restaurantId, menu }) => {
+    const [isAdmin, setIsAdmin] = useState(false);
+    const role = getRole();
+
+    useEffect(() => {
+
+            if (role === "Administrator") {
+                setIsAdmin(true);
+            }
+        
+    }, []);
+
     var menuList = (
         <>
             {menu.map((menuItem) => {
-                return <MenuItem menuItem={menuItem} />
+                return <MenuItem restaurantId={restaurantId} menuItem={menuItem} />
             }) }
 
         </>);

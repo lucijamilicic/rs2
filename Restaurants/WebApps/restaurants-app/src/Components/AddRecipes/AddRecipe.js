@@ -23,7 +23,7 @@ const  AddRecipe = () => {
     const navigate = useNavigate();
 
     const submitHandler = () => {
-        //TODO:
+        //TODO: api poziv
         //redirect na recipes, maybe
         navigate('/');
 
@@ -48,6 +48,14 @@ const  AddRecipe = () => {
         setIngredients({ ...ingredients, [name]: value });
     };
 
+    const handleChange = (e) => {
+        setState({ ...state, category: e.target.value });
+    };
+
+    const cancelHandler = () => {
+        navigate('/');
+    };
+
     
   return (
       <div className="formular">
@@ -66,11 +74,11 @@ const  AddRecipe = () => {
           <div className="add-item">
               <p className="add-label">Category: </p>
               <div className="add-radio">
-                  <input className="radio-button" type="radio" value="Pasta" name="category" /> Pasta
-                  <input className="radio-button" type="radio" value="Pork" name="category" /> Pork
-                  <input className="radio-button" type="radio" value="Vegeterian" name="category" /> Vegeterian
-                  <input className="radio-button" type="radio" value="Beef" name="category" /> Beef
-                  <input className="radio-button" type="radio" value="Chicken" name="category" /> Chicken
+                  <input className="radio-button" type="radio" value="Pasta" name="category" onChange={handleChange} /> Pasta
+                  <input className="radio-button" type="radio" value="Pork" name="category" onChange={handleChange}  /> Pork
+                  <input className="radio-button" type="radio" value="Vegeterian" name="category" onChange={handleChange}  /> Vegeterian
+                  <input className="radio-button" type="radio" value="Beef" name="category" onChange={handleChange} /> Beef
+                  <input className="radio-button" type="radio" value="Chicken" name="category" onChange={handleChange} /> Chicken
               </div>
           </div>
           <div className="add-item">
@@ -153,6 +161,7 @@ const  AddRecipe = () => {
               </table>
           </div>
           <button type="submit" className="submit-button" onClick={submitHandler}>Submit</button>
+          <button className="cancel-button" onClick={ cancelHandler}>Cancel</button>
       </div>
   );    
 };

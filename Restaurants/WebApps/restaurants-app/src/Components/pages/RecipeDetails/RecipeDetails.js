@@ -8,10 +8,11 @@ const RecipeDetails = () => {
 
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
+    const isUserLogged = localStorage.getItem("accessToken");
 
 
     useEffect(() => {
-        
+
         const getRecipesDetailsById = async () => {
             const response = await getRecipesById(id).then(response => response.data).catch(error => null);
             setRecipe(response);
@@ -57,7 +58,7 @@ const RecipeDetails = () => {
             </div>
             <br></br>
             <p>{recipe?.recipe}</p>
-            <a href={recipe?.tutorialVideoUrl}>Watch full tutorial on YouTube</a>
+            <a href={recipe?.tutorialVideoUrl} target="_blank">Watch full tutorial on YouTube</a>
 
         </div>
     )

@@ -1,27 +1,69 @@
 import React from "react";
 import Modal from "react-modal";
-import "./EditRestaurantModal.css"
+import "./Modal.css"
+import { useState, useEffect } from "react";
+
 //import {ReactComponent as CancelImage} from "../assets/cancel-img.svg";
 
 const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
 
-   // const isEdit = data;
+    const isEdit = data;
+    const [state, setState] = useState({
+        img: '',
+        restaurantName: '',
+        address: '',
+    });
 
-   return( <Modal isOpen className="modal" >
-       <div className="modal-wrap">
-           NAME
-           <input type="text" className="input" placeholder="name" name="nameRestaurant" maxlength="30" size="10" />
-           ADDRESS
-           <input type="text" className="input" placeholder="address" name="address" maxlength="30" size="10" />
+    useEffect(() => {
+        isEdit && setState({
+            ...data,
+            img: '',
+            restaurantName: data.restaurantName,
+            address: data.address,
+        });
+        
+    }, [isOpen]);
 
-           <h2>Are you sure?</h2>
-           <p>Do you really want to edit {/*text*/}?  </p>
-           <div className="button-wrap">
-               <button onClick={onConfirm} className="button-delete">Confirm</button>
-               <button onClick={onCancel} className="button-delete">Cancel</button>
-           </div>
-        </div>
-    </Modal>
+
+    const textInputHandler = (e) => {
+        const { name, value } = e.target;
+
+        setState({ ...state, [name]: value });
+    }
+
+    const clearState = () => {
+        setState({
+            img: '',
+            restaurantName: '',
+            address: '',
+        });
+    };
+
+    return (
+        <Modal
+            isOpen={isOpen}
+            className="modal"
+        >
+            <div className="modal-wrap">
+                <div className="input-wrap">
+                    <label>Name</label>
+                    <input type="text" placeholder="Name" name="restaurantName" maxLength="30" size="10" value={state.restaurantName} onChange={textInputHandler} />
+                </div>
+                <div className="input-wrap">
+                    <label>Address</label>
+                    <input type="text" placeholder="Address" name="address" maxLength="30" size="10" value={state.address} onChange={textInputHandler} />
+                </div>
+                <div className="button-wrap">
+                    <button
+                        onClick={() => {
+                            onCancel();
+                            clearState();
+                        }}
+                        className="button-delete">Cancel</button>
+                    <button onClick={() => onConfirm(state)} className="button-delete">Confirm</button>
+                </div>
+            </div>
+        </Modal>
    );
 };
 

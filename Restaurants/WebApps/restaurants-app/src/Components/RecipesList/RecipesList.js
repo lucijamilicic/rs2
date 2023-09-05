@@ -2,9 +2,8 @@ import { getRecipes, getRecipesByCategory } from "../../api/Service";
 import RecipesListItem from "../RecipesListItem/RecipesListItem"
 import React, { useEffect, useState } from 'react';
 import "./RecipesList.css"
-import AddRecipe from "../AddRecipes/AddRecipe";
 import { useNavigate } from 'react-router-dom'; 
-import jwt_decode from 'jwt-decode';
+import { getRole } from "../../common/helpers";
 
 const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 
@@ -12,19 +11,9 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	const [showAdd, setShowAdd] = useState(false);
 
 	const navigate = useNavigate();
+	const role = getRole();
 
 	useEffect(() => {
-		const token = localStorage.getItem("accessToken");
-		const decodedToken = jwt_decode(token)
-
-		const role = Object.keys(decodedToken).map(key => {
-
-			if (key.includes('role')) {
-				return decodedToken[key];
-			}
-			return null;
-		}).find(elem => elem !== null);
-
 		if (role === "Administrator") {
 			setShowAdd(true);
 		}
@@ -38,24 +27,26 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	useEffect(() => {
 
 		const getAllRecipes = async () => {
-			const recipes = await getRecipes().then(response => response.data).catch(error => []);
-			setRecipes(recipes);
-		}
+			const recipes = await getRecipes();
+			setRecipes(recipes.data);
+		};
 
 		const getRecipesByName = async () => {
-			const recipes = await getRecipesByName(searchedRecipe).then(response => response.data).catch(error => []);
-			setRecipes(recipes);
-		}
-
+			const recipes = await getRecipesByName(searchedRecipe);
+			setRecipes(recipes.data);
+		};
+		
+		//TODO: da se searchuje pretrazena rec
 		getAllRecipes();
+
 
 	}, []);
 
 	useEffect(() => {
 
 		const getAllRecipesInCategory = async () => {
-			const recipes = await getRecipesByCategory(searchedCategory).then(response => response.data).catch(error => []);
-			setRecipes(recipes);
+			const recipes = await getRecipesByCategory(searchedCategory);
+			setRecipes(recipes.data);
 		}
 
 		searchedCategory && getAllRecipesInCategory();

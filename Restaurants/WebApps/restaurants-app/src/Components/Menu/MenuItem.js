@@ -1,13 +1,40 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./Menu.css"
 import { Link, useNavigate } from 'react-router-dom'
-//import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
+import DeleteModal from "../../modals/DeleteModal";
+import AddToBasketModal from "../../modals/AddToBasketModal";
+import { getRole } from "../../common/helpers";
 
-const MenuItem = ({ menuItem }) => {
 
-    const clickHandler = () => {
+const MenuItem = ({ restaurantId, menuItem }) => {
 
-    }
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [showOrder, setShowOrder] = useState(false);
+    const role = getRole();
+
+    useEffect(() => {
+
+        if (role === "Administrator") {
+            setIsAdmin(true);
+        }
+
+    }, []);
+
+    const orderHandler = () => {
+        setShowOrder(true);
+        //TODO: addtobasket api
+    };
+
+  
+    const cancelHandler = () => {
+        setIsDeleteModalOpen(false);
+    };
+
+    //TODO
+    const deleteItemHandler = async () => {
+        
+    };
 
     return (
         <div className="list-item">
@@ -15,7 +42,10 @@ const MenuItem = ({ menuItem }) => {
                 <div className="food-name" ><Link to={"/details/" + menuItem.id} >{menuItem.mealName}</Link></div>
                 <div className="food-price">{menuItem.price}</div>
             </div>
-            <button className="right-content order-button">Order</button>
+            {!isAdmin && <button className="right-content order-button" onClick={orderHandler}>Order</button>}
+            {isAdmin && < button className="right-content order-button" onClick={() => setIsDeleteModalOpen(true)}>Delete</button>}
+            <DeleteModal isOpen={isDeleteModalOpen} data={menuItem.mealName} onCancel={cancelHandler} onConfirm={deleteItemHandler} />
+            {!isAdmin && showOrder && <AddToBasketModal isOpen={showOrder} name={menuItem.mealName} />}
         </div>
     );
     

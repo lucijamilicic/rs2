@@ -3,11 +3,13 @@ import "./Header.css";
 import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
 import { logout } from "../../api/Service"
 import { useNavigate } from "react-router-dom";
+import { getRole } from "../../common/helpers";
 
 
 
 const Header = ({ state, setState, setIsBasketOpen }) => {
 
+    const role = getRole();
   const [showCategories, setShowCategories] = useState(false);
   const [searchState, setSearchState] = useState("");
   const [categories, setCategories] = useState([
@@ -68,14 +70,14 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
       <div className="header-left">
         <div className="search-wrap">
           <input
-                      type="text"
-                      name="restaurants-recipes"
-                      value={searchState}
-                      placeholder={
-                          !state.isRestaurant ? "Search recipes" : "Search restaurants"
-                      }
-                      onChange={textInputHandler}
-                      onKeyPress={(e) => handleKeyPress(e) }
+             type="text"
+             name="restaurants-recipes"
+             value={searchState}
+             placeholder={
+               !state.isRestaurant ? "Search recipes" : "Search restaurants"
+             }
+             onChange={textInputHandler}
+             onKeyPress={(e) => handleKeyPress(e)}
           />
           <button
             type="button"
@@ -88,7 +90,8 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                         ...state,
                         isRestaurant: true,
                     });
-                setShowCategories(false);
+                    setShowCategories(false);
+                    navigate('/');
                 }
             }}
           >
@@ -103,7 +106,8 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                         ...state,
                         isRestaurant: false,
                     })
-                setShowCategories(true);
+                    setShowCategories(true);
+                    navigate('/');
               }
                 
             }}
@@ -114,20 +118,23 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
       </div>
           <div className="header-right">
               {
-                  localStorage.getItem("refreshToken") && (
-                      <>
-                      <BasketIcon
-                          onClick={() => {
-                            setIsBasketOpen((isBasketOpen) => !isBasketOpen);
-                          }}
-                              />
+                  
+                  <>
+                      {
+                          role !== 'Administrator' && 
+                          <BasketIcon
+                              onClick={() => {
+                                  setIsBasketOpen((isBasketOpen) => !isBasketOpen);
+                              }}
+                          />
+                      }
                           <button type="button" className="logout-button" onClick={() => {
                               logoutUser();
                               }}>
                           Logout
                           </button>
                       </>
-                  )
+                  
               }
         
       </div>
@@ -141,12 +148,12 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
             <div
               className="category-item"
                   onClick={(e) => {
-                      navigate('/');
                       setState({
                           ...state,
                           isRestaurant: false,
                           category: category,
                       })
+                      navigate('/');
               }}
             >
               {category}
