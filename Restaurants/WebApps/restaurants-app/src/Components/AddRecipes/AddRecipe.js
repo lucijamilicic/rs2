@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./AddRecipe.css"
 import {ReactComponent as CancelImg} from "../../assets/cancel-icon.svg"
 import { useNavigate } from 'react-router-dom'
-import { addNewRecipe } from "../../api/Service";
+import { addNewRecipe, getCategories } from "../../api/Service";
+import { MultiSelect } from "react-multi-select-component";
 
 
 const  AddRecipe = () => {
@@ -24,7 +25,7 @@ const  AddRecipe = () => {
     const navigate = useNavigate();
 
     const submitHandler = async () => {
-        await addNewRecipe({ ...state, listOfIngredients: ingredientList });
+        await addNewRecipe({ ...state, listOfIngredients: ingredientList, category: selectedCategory[0].value });
         navigate('/');
     };
 
@@ -55,6 +56,18 @@ const  AddRecipe = () => {
         navigate('/');
     };
 
+    const [allCategories, setAllCategories] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState([])
+
+    useEffect(() => {
+        const getAllCategories = async () => {
+            const categories = await getCategories();
+            setAllCategories(categories.data.map((category) => ({ label: category, value: category })));
+        }
+
+        getAllCategories();
+    }, [])
+
     
   return (
       <div className="formular">
@@ -72,12 +85,18 @@ const  AddRecipe = () => {
           </div>
           <div className="add-item">
               <p className="add-label">Category: </p>
-              <div className="add-radio">
-                  <input className="radio-button" type="radio" value="Pasta" name="category" onChange={handleChange} /> Pasta
-                  <input className="radio-button" type="radio" value="Pork" name="category" onChange={handleChange}  /> Pork
-                  <input className="radio-button" type="radio" value="Vegeterian" name="category" onChange={handleChange}  /> Vegeterian
-                  <input className="radio-button" type="radio" value="Beef" name="category" onChange={handleChange} /> Beef
-                  <input className="radio-button" type="radio" value="Chicken" name="category" onChange={handleChange} /> Chicken
+              <div>
+                  <MultiSelect
+                      labelledBy="Select"
+                      options={allCategories}
+                      value={selectedCategory}
+                      disableSearch={true}
+                      hasSelectAll={false}
+                      onChange={(e) => {
+                          setSelectedCategory(e);
+                      }}
+
+                  />
               </div>
           </div>
           <div className="add-item">

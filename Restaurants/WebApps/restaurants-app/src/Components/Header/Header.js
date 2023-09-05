@@ -96,6 +96,7 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                     setState({
                         ...state,
                         isRestaurant: true,
+                        category: ''
                     });
                     setShowCategories(false);
                     navigate('/');

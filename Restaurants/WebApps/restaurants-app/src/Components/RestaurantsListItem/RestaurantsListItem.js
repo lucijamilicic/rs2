@@ -96,7 +96,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
             <div className="restaurant-item">
                 <div className="restaurant-card">
                     <div className="restaurant-image content">
-                            <img src={Image} alt="alternative"></img>
+                        <img src={restaurantInfo.img} alt="alternative"></img>
                             <div>
                                 <div className="restaurant-name"> {restaurantInfo.restaurantName} </div>
                                 <div className="restaurant-address"> {restaurantInfo.address} </div>
