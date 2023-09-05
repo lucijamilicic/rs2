@@ -1,4 +1,4 @@
-import { getRecipes, getRecipesByCategory } from "../../api/Service";
+import { GetRecipesByName, getRecipes, getRecipesByCategory, getRecipesByName } from "../../api/Service";
 import RecipesListItem from "../RecipesListItem/RecipesListItem"
 import React, { useEffect, useState } from 'react';
 import "./RecipesList.css"
@@ -53,11 +53,22 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 
 	}, [searchedCategory])
 
+	useEffect(() => {
+
+		const getRecipeByName = async () => {
+			const recipes = await getRecipesByName(searchedRecipe);
+			setRecipes(recipes.data);
+		}
+
+		searchedRecipe && getRecipeByName();
+
+	}, [searchedRecipe])
+
 
 	return (<>
 		<div className="recipes-list">
 			{
-				recipes.slice(0,10).map((recipe, i) => {
+				recipes.map((recipe, i) => {
 					return (
 						<RecipesListItem key={i} recipeInfo={recipe}></RecipesListItem>
 					)

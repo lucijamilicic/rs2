@@ -1,22 +1,15 @@
 import BasketSidebar from "../modals/BasketSidebar";
 import "./App.css";
 import Header from "./Header/Header";
-import RecipesList from "./RecipesList/RecipesList";
-import EditRestaurantModal from "../modals/EditRestaurantModal";
-import RestaurantsList from "./RestaurantsList/RestaurantsList"
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LoginRegistrationModal from "../modals/LoginRegistrationModal";
-import AddToBasketModal from "../modals/AddToBasketModal";
-import { BrowserRouter as Router, Switch, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomePage from "../Components/pages/WelcomePage/WelcomePage";
 import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
-import { getRecipes } from "../api/Service";
 import AddRecipe from "./AddRecipes/AddRecipe";
-import jwt_decode from 'jwt-decode';
-import { getRole } from "../common/helpers";
 
 const App = () => {
-    
+
     const [state, setState] = useState({
         searched: '',
         isRestaurant: true,
@@ -28,7 +21,7 @@ const App = () => {
         <>
             <Router>
                 <div className="App">
-                    <Header state={state} setState={setState} setIsBasketOpen={setIsBasketSidebarOpen} />
+                        <Header state={state} setState={setState} setIsBasketOpen={setIsBasketSidebarOpen} />
                         <BasketSidebar
                             isOpen={isBasketSidebarOpen}
                             setIsOpen={setIsBasketSidebarOpen}

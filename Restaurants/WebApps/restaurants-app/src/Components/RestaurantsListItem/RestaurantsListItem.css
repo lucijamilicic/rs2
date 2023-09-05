@@ -22,7 +22,7 @@
 .restaurant-card {
     color: white;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     border-radius: 8px;
     justify-content: space-between;
 }
@@ -33,11 +33,11 @@
 
     .restaurant-image img {
         max-width: none;
-        width: 100%;
+        width:50%;
     }
 
 .content {
-    width: 40%;
+    width: 70%;
     display: flex;
     column-gap: 30px;
     justify-content: flex-start;

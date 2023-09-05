@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
 import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
-import { logout } from "../../api/Service"
+import { getCategories, logout } from "../../api/Service"
 import { useNavigate } from "react-router-dom";
 import { getRole } from "../../common/helpers";
 
@@ -10,18 +10,28 @@ import { getRole } from "../../common/helpers";
 const Header = ({ state, setState, setIsBasketOpen }) => {
 
     const role = getRole();
-  const [showCategories, setShowCategories] = useState(false);
-  const [searchState, setSearchState] = useState("");
-  const [categories, setCategories] = useState([
-    "Pork",
-    "Chicken",
-    "Pasta"
-  ]);
-  const [userState, setUserState] = useState({
-    "userName": "",
-    "refreshToken": ""
-  });
+    const refreshToken = localStorage.getItem("refreshToken");
+    const accessToken = localStorage.getItem("accessToken");
 
+    const [showCategories, setShowCategories] = useState(false);
+    const [searchState, setSearchState] = useState("");
+    const [categories, setCategories] = useState([]);
+    const [userState, setUserState] = useState({
+        "userName": "",
+        "refreshToken": ""
+    });
+
+    useEffect(() => {
+
+        const getAllCategories = async () => {
+            const cc = await getCategories();
+            setCategories(cc.data);
+        }
+
+        getAllCategories();
+
+    }, []);
+        
 
     const navigate = useNavigate();
 
@@ -41,18 +51,16 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
     }
 
     const logoutUser = async () => {
-        const token = localStorage.getItem("refreshToken");
-        const accessToken = localStorage.getItem("accessToken");
-
-        if (token) {
+        
+        if (refreshToken) {
             setUserState({
+                refreshToken,
                 userName: localStorage.getItem("userName"),
-                refreshToken: localStorage.getItem("refreshToken")
             });
 
             await logout({
+                refreshToken,
                 userName: localStorage.getItem("userName"),
-                refreshToken: localStorage.getItem("refreshToken")
 
             }, accessToken);
             localStorage.clear();
@@ -61,7 +69,6 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                 refreshToken: ""
             });
             navigate('/login-register');
-
         }
     };
 
@@ -117,8 +124,7 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
         </div>
       </div>
           <div className="header-right">
-              {
-                  
+              { 
                   <>
                       {
                           role !== 'Administrator' && 
@@ -134,7 +140,6 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                           Logout
                           </button>
                       </>
-                  
               }
         
       </div>

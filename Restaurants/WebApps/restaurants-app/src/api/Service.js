@@ -6,6 +6,10 @@ const RESTAURANT = "http://localhost:5183";
 const USER = "http://localhost:4000";
 
 
+export const getCategories = async () => {
+    return await axios.get(`${RECIPE}/api/v1/Recipes/GetAllCategories`);
+};
+
 export const getRecipes = async () => {
   return await axios.get(`${RECIPE}/api/v1/Recipes`);
 };
@@ -18,8 +22,16 @@ export const getRecipesByCategory = async (category) => {
     return await axios.get(`${RECIPE}/api/v1/Recipes/GetRecipesByCategory/${category}`);
 };
 
-export const GetRecipesByName = async (name) => {
+export const getRecipesByName = async (name) => {
     return await axios.get(`${RECIPE}/api/v1/Recipes/GetRecipesByName/${name}`);
+};
+
+export const addNewRecipe = async (body) => {
+    const token = localStorage.getItem("accessToken");
+    const headers = { Authorization: `Bearer ${token}` };
+    return await axios.post(`${RECIPE}/api/v1/Recipes`, body, {
+        headers
+    });
 };
 
 export const getRestaurantsByName = async (name) => {

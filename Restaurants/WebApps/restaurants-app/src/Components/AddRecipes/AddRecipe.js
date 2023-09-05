@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./AddRecipe.css"
 import {ReactComponent as CancelImg} from "../../assets/cancel-icon.svg"
 import { useNavigate } from 'react-router-dom'
+import { addNewRecipe } from "../../api/Service";
 
 
 const  AddRecipe = () => {
@@ -15,25 +16,23 @@ const  AddRecipe = () => {
     const [ingredients, setIngredients] = useState(
         {
             name: '',
-            measurements: ''
+            measure: ''
         });
 
     const [ingredientList, setIngredientList] = useState([]);
 
     const navigate = useNavigate();
 
-    const submitHandler = () => {
-        //TODO: api poziv
-        //redirect na recipes, maybe
+    const submitHandler = async () => {
+        await addNewRecipe({ ...state, listOfIngredients: ingredientList });
         navigate('/');
-
     };
 
     const addIngredient = () => {
         setIngredientList([...ingredientList, ingredients]);
         setIngredients({
             name: '',
-            measurements: ''
+            measure: ''
         });
     };
 
@@ -132,8 +131,8 @@ const  AddRecipe = () => {
                   <input
                       className="add-ingredient-input"
                       placeholder="measurements"
-                      value={ingredients.measurements}
-                      name="measurements"
+                      value={ingredients.measure}
+                      name="measure"
                       type="text"
                       onChange={ingredientsInputHandler}
                   />
@@ -153,7 +152,7 @@ const  AddRecipe = () => {
                       return(
                           <tr>
                               <td>{ingr.name}</td>
-                              <td>{ingr.measurements}</td>
+                              <td>{ingr.measure}</td>
                           </tr>
                       );
                   })}

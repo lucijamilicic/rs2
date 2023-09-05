@@ -102,9 +102,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                                 <div className="restaurant-address"> {restaurantInfo.address} </div>
                             </div>
                     </div>
-                    <div>
-                        <button className="show-menu-button" onClick={() => setShowMenu(!showMenu)}>{showMenu ? "Hide menu" : "View menu"}</button>
-                    </div>
+                    <button className="show-menu-button" onClick={() => setShowMenu(!showMenu)}>{showMenu ? "Hide menu" : "View menu"}</button>
                  </div>
                 {
                     isAdmin && (
