@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using Recipes.API.Entities;
 using System;
 using MongoDB.Driver.Linq;
+using Recipes.API.DTO;
 
 namespace Recipes.API.Data
 {
@@ -39,7 +40,6 @@ namespace Recipes.API.Data
                 }
                 var r = new Dish()
                 {
-                    Id = recipe.GetElement("idMeal").Value.AsString,
                     Name = recipe.GetElement("strMeal").Value.AsString,
                     Category = recipe.GetElement("strCategory").Value.AsString,
                     Recipe = recipe.GetElement("strInstructions").Value.AsString,
