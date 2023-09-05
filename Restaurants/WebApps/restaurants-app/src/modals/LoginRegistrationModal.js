@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "./Modal.css";
-import { registerUser, loginUser } from "../api/Service";
+import { registerUser, loginUser, getBasket } from "../api/Service";
 import { useNavigate } from "react-router-dom";
 
 
@@ -55,6 +55,8 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
             localStorage.setItem("refreshToken", res.data.refreshToken);
             localStorage.setItem("userName", res.data.userName);
             localStorage.setItem("userEmail", res.data.userEmail);
+
+            await getBasket(res.data.userName);
 
             navigate('/');
         } else {

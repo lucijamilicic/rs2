@@ -4,7 +4,7 @@ import MenuItem from "./MenuItem";
 import { getRole } from "../../common/helpers";
 
 
-const Menu = ({ restaurantId, menu }) => {
+const Menu = ({ restaurantInfo, menu }) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const role = getRole();
 
@@ -18,8 +18,8 @@ const Menu = ({ restaurantId, menu }) => {
 
     var menuList = (
         <>
-            {menu.map((menuItem) => {
-                return <MenuItem restaurantId={restaurantId} menuItem={menuItem} />
+            {menu.map(menuItem => {
+                return <MenuItem restaurantInfo={restaurantInfo} menuItem={menuItem} />
             }) }
 
         </>);

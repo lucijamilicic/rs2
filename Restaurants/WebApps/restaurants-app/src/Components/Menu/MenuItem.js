@@ -4,9 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import DeleteModal from "../../modals/DeleteModal";
 import AddToBasketModal from "../../modals/AddToBasketModal";
 import { getRole } from "../../common/helpers";
+import { updateBasket } from "../../api/Service";
 
 
-const MenuItem = ({ restaurantId, menuItem }) => {
+const MenuItem = ({ restaurantInfo, menuItem }) => {
 
     const [isAdmin, setIsAdmin] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -21,19 +22,13 @@ const MenuItem = ({ restaurantId, menuItem }) => {
 
     }, []);
 
-    const orderHandler = () => {
-        setShowOrder(true);
-        //TODO: addtobasket api
-    };
-
   
-    const cancelHandler = () => {
-        setIsDeleteModalOpen(false);
-    };
 
     //TODO
-    const deleteItemHandler = async () => {
-        
+    const addHandler = async (body) => {
+
+        await updateBasket(body);
+        setShowOrder(false);
     };
 
     return (
@@ -42,10 +37,10 @@ const MenuItem = ({ restaurantId, menuItem }) => {
                 <div className="food-name" ><Link to={"/details/" + menuItem.id} >{menuItem.mealName}</Link></div>
                 <div className="food-price">{menuItem.price} &euro;</div>
             </div>
-            {!isAdmin && <button className="right-content order-button" onClick={orderHandler}>Order</button>}
+            {!isAdmin && <button className="right-content order-button" onClick={() => setShowOrder(true)}> Order </button>}
             {isAdmin && < button className="right-content order-button" onClick={() => setIsDeleteModalOpen(true)}>Delete</button>}
-            <DeleteModal isOpen={isDeleteModalOpen} data={menuItem.mealName} onCancel={cancelHandler} onConfirm={deleteItemHandler} />
-            {!isAdmin && showOrder && <AddToBasketModal isOpen={showOrder} name={menuItem.mealName} />}
+            <DeleteModal isOpen={isDeleteModalOpen} data={menuItem.mealName} onCancel={() => setIsDeleteModalOpen(false)} onConfirm={() => { }} />
+            {!isAdmin && showOrder && <AddToBasketModal isOpen={showOrder} menuItem={menuItem} restaurantInfo={restaurantInfo} onConfirm={addHandler} onCancel={() => setShowOrder(false)} />}
         </div>
     );
     

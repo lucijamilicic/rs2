@@ -117,7 +117,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                 {
                     
                 }
-                {showMenu && <Menu restaurantId={restaurantInfo.id} menu={menu} />}
+                {showMenu && <Menu restaurantInfo={restaurantInfo} menu={menu} />}
                 {isAdmin && 
                     <>
                     {

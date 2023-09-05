@@ -109,7 +109,7 @@ export const updateMealInMenu = async (restaurantId, body) => {
 export const getBasket = async (username) => {
     const token = localStorage.getItem("accessToken");
     const headers = { Authorization: `Bearer ${token}` };
-    return await axios.get(`${BASKET}/api/v1/Basket/${username}`, {
+    return await axios.get(`${BASKET}/api/v1/BasketControllers/${username}`, {
         headers
     });
 };
@@ -117,7 +117,7 @@ export const getBasket = async (username) => {
 export const updateBasket = async (body) => {
     const token = localStorage.getItem("accessToken");
     const headers = { Authorization: `Bearer ${token}` };
-    return await axios.put(`${BASKET}/api/v1/Basket`, body, {
+    return await axios.put(`${BASKET}/api/v1/BasketControllers`, body, {
         headers
     });
 };
@@ -125,7 +125,7 @@ export const updateBasket = async (body) => {
 export const checkout = async (body) => {
     const token = localStorage.getItem("accessToken");
     const headers = { Authorization: `Bearer ${token}` };
-    return await axios.post(`${BASKET}/api/v1/Basket/Checkout`, body, {
+    return await axios.post(`${BASKET}/api/v1/BasketControllers/Checkout`, body, {
         headers
     });
 };
@@ -133,7 +133,15 @@ export const checkout = async (body) => {
 export const deleteBasket = async (username) => {
     const token = localStorage.getItem("accessToken");
     const headers = { Authorization: `Bearer ${token}` };
-    return await axios.delete(`${BASKET}/api/v1/Basket/${username}`, {
+    return await axios.delete(`${BASKET}/api/v1/BasketControllers/${username}`, {
+        headers
+    });
+};
+
+export const deleteBasketItem = async (username) => {
+    const token = localStorage.getItem("accessToken");
+    const headers = { Authorization: `Bearer ${token}` };
+    return await axios.delete(`${BASKET}/orderItem`, {
         headers
     });
 };

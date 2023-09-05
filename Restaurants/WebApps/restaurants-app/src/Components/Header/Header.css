@@ -39,6 +39,7 @@ button {
     border: none;
     color: white;
     cursor: pointer;
+    letter-spacing: 2px;
 }
 
 .logout-button {
@@ -69,6 +70,7 @@ input::selection {
 input::placeholder {
     font-size: 18px;
     color: rgba(255,255,255, 0.7);
+    letter-spacing: 1px;
 }
 
 input:hover,
@@ -80,17 +82,18 @@ input:focus {
 }
 
 .switch-button {
-    width: 150px;
+    width: 170px;
     margin-left: 15px;
     padding: 0px;
     height: 40px;
     background-color: transparent;
     border:none;
+    font-weight: bold;
     border-bottom: 1px solid rgba(255,255, 255, 0.7);
 }
 
 .switch-button.disabled {
-    color: rgba(255,255,255, 0.5);
+    color: rgba(255,255,255, 0.4);
     border-bottom: 1px solid rgba(255,255, 255, 0.3);
 }
 
