@@ -30,3 +30,9 @@ export interface FoodOrder {
     quantity: number;
     price: number;
 }
+
+export interface MenuItem {
+    id: string;
+    mealName: string;
+    price: number;
+}

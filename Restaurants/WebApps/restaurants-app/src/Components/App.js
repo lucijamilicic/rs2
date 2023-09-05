@@ -20,8 +20,6 @@ const App = () => {
     });
     const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
 
-    
-
     return (
         <>
             <Router>

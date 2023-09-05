@@ -4,48 +4,64 @@ import { ReactComponent as EditIcon } from "../assets/edit.svg";
 import { ReactComponent as CancelIcon } from "../assets/cancel.svg";
 import { ReactComponent as BasketIcon } from "../assets/basket.svg";
 import { ReactComponent as ArrowIcon } from "../assets/double-arrow.svg";
-//import BasketCheckoutType from '../../src/types/types/BasketCheckoutType';
 import "./Modal.css";
+import { getBasket, updateBasket } from "../api/Service";
 
-const BasketListItem = (props) => {
-  const { restaurantName, name, price, quantity, extraNote } = props.item;
-  console.log(quantity);
-  const [state, setState] = useState({
-    quantity,
-    extraNote,
-  });
+const BasketListItem = ({ restaurantId, restaurantName, order }) => {
+    const { price, quantity, extraNote, dishName, dishId } = order;
+    const buyerUsername = localStorage.getItem('userName');
+    const buyerEmail = localStorage.getItem('userEmail');
 
-  const [edit, setEdit] = useState(false);
+    const [state, setState] = useState({
+        price: price,
+        quantity: quantity,
+        extraNote: extraNote,
+      });
 
-  const deleteItemHandler = () => {
-    // call API for delete
-  };
+      const [edit, setEdit] = useState(false);
 
-  const incrementQuantity = () => {
-    const newQuantity = state?.quantity + 1;
-    setState({ ...state, quantity: newQuantity });
-  };
+      const deleteItemHandler = () => {
+        // call API for delete
+      };
 
-  const decrementQuantity = () => {
-    const newQuantity = state?.quantity - 1;
+      const incrementQuantity = () => {
+        const newQuantity = state?.quantity + 1;
+        setState({ ...state, quantity: newQuantity });
+      };
 
-    if (newQuantity <= 0) {
-      setState({ ...state, quantity: 0 });
-      return;
-    }
+      const decrementQuantity = () => {
+        const newQuantity = state?.quantity - 1;
 
-    setState({ ...state, quantity: newQuantity });
-  };
+        if (newQuantity <= 0) {
+          setState({ ...state, quantity: 0 });
+          return;
+        }
 
-  const onCancel = () => {
-    setState({ extraNote, quantity });
-    setEdit(false);
-  };
+        setState({ ...state, quantity: newQuantity });
+      };
 
-  const onSave = () => {
-    //call edit API
-    setEdit(false);
-  };
+      const onCancel = () => {
+        setState({ extraNote, quantity });
+        setEdit(false);
+      };
+
+    const onEditItem = async () => {
+        const body = {
+            restaurantName,
+            restaurantId,
+            deliveryAddress: '',
+            buyerUsername,
+            buyerEmail,
+            orderedItem: {
+                ...state,
+                dishId,
+                dishName,
+            },
+
+        }
+        await updateBasket(body);
+        setEdit(false);
+      };
 
   return (
     <>
@@ -53,9 +69,9 @@ const BasketListItem = (props) => {
         <div className="content">
           <div className="item-restaurant-name">{restaurantName}</div>
           <div className="item">
-            {quantity} x {name}
+            {quantity} x {dishName}
           </div>
-          <div className="item-price">{quantity * price} RSD</div>
+          <div className="item-price">{quantity * price} &euro;</div>
         </div>
         <div className="header-buttons">
           <EditIcon
@@ -71,7 +87,7 @@ const BasketListItem = (props) => {
           <label>Add extra note for the restaurant: </label>
           <textarea
             name="extraNote"
-            value={extraNote}
+            value={state.extraNote}
             onChange={(e) => setState({ ...state, extraNote: e.target.value })}
           />
         </div>
@@ -92,7 +108,7 @@ const BasketListItem = (props) => {
             <button onClick={onCancel} className="clear">
               Cancel
             </button>
-            <button type="submit" className="checkout-button" onClick={onSave}>
+            <button type="submit" className="checkout-button" onClick={onEditItem}>
               Save
             </button>
           </div>
@@ -104,44 +120,26 @@ const BasketListItem = (props) => {
 
 const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
-    /*   const [basketState, setBasketState] = useState < BasketCheckoutType > ({
 
-        });
-
-       
-    */
+    const [basket, setBasket] = useState();
+    const [listOfItems, setListOfItems] = useState([]);
 
 
-    const [listOfItems, setListOfItems] = useState([
-        {
-            restaurantName: 'Restaurant 1',
-            name: 'Meal 1',
-            quantity: 2,
-            price: 5,
-        },
-        {
-            restaurantName: 'Restaurant 2',
-            name: 'Meal 2',
-            quantity: 7,
-            price: 2.6,
-        },
-        {
-            restaurantName: 'Restaurant 3',
-            name: 'Meal 3',
-            quantity: 5.8,
-            price: 5,
-        }]);
-  const [totalPrice, setTotalPrice] = useState(0);
+    useEffect(() => {
 
-  const calculateTotalPrice = () => {
-    const prices = listOfItems.map((item) => item.price * item.quantity);
-    return prices.reduce((acc, price) => acc + price, 0);
-  };
+        const username = localStorage.getItem('userName');
 
-  useEffect(() => {
-    const total = calculateTotalPrice().toPrecision(4);
-    setTotalPrice(total);
-  }, [listOfItems]);
+        const getBasketItems = async () => {
+            const basket = await getBasket(username).catch(error => []);
+            setBasket(basket.data);
+            setListOfItems(basket.data.orderItems);
+        }
+
+        if (isOpen) {
+           getBasketItems();
+        }
+
+    }, [isOpen]);
 
     const onCheckout = () => {
         //TODO
@@ -159,12 +157,14 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
             </div>
           </div>
           <div className="list">
-            {listOfItems?.map((item) => (
-              <BasketListItem item={item} setState={setListOfItems} />
-            ))}
+                      {listOfItems?.map((restaurant, i) => {
+                          return restaurant?.foodOrder.map((order, j) => {
+                              return <BasketListItem key={`${i}${j}`} restaurantId={ restaurant?.restaurantId} restaurantName={restaurant?.restaurantName} order={order}/>
+                          })
+                      })}
           </div>
           <div className="total-price">
-            Total price: <span> {totalPrice} RSD</span>
+            Total price: <span> {basket?.totalPrice} &euro;</span>
           </div>
           <input
             type="text"
@@ -177,9 +177,10 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
               placeholder="Enter email"
               className="address-input"
               required
-          />
+                  />
+                  { /*DELETE BASKET*/}
           <div className="buttons-wrap">
-            <button onClick={() => setListOfItems([])} className="clear">
+                      <button onClick={() => { } } className="clear">
               Clear basket
             </button>
             <button type="submit" className="checkout-button" onClick={onCheckout}>

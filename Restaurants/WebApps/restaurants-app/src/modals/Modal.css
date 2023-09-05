@@ -196,7 +196,6 @@ p span {
   letter-spacing: 2px;
 }
 .list {
-    overflow-y: scroll;
   width: 100%;
 }
 

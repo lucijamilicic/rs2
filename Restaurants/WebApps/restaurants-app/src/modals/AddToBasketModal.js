@@ -1,33 +1,56 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { updateBasket } from "../api/Service";
 
-const AddToBasketModal = (props) => {
+const AddToBasketModal = ({ isOpen, menuItem, restaurantInfo, onConfirm, onCancel }) => {
 
-//const [state, setState] = useState<>()
-  const { isOpen, name } = props;
-  const [extraNote, setExtraNote] = useState("");
-  const [quantity, setQuantity] = useState(1);
+    const buyerUsername = localStorage.getItem('userName');
+    const buyerEmail = localStorage.getItem('userEmail');
+
+
+
+    /*const [state, setState] = useState({
+        restaurantName: restaurantInfo.restaurantName,
+        restaurantId: restaurantInfo.id,
+    });*/
+
+    const [foodOrder, setFoodOrder] = useState({
+        dishName: menuItem.mealName,
+        dishId: menuItem.id,
+        extraNote: '',
+        quantity: 1,
+        price: menuItem.price,
+    })
 
   const incrementQuantity = () => {
-    const newQuantity = quantity + 1;
-    setQuantity(newQuantity);
+      const newQuantity = foodOrder.quantity + 1;
+      setFoodOrder({ ...foodOrder, quantity: newQuantity });
   };
 
       const decrementQuantity = () => {
-        const newQuantity = quantity - 1;
+          const newQuantity = foodOrder.quantity - 1;
 
         if (newQuantity <= 0) {
-          setQuantity(0);
+            setFoodOrder({ ...foodOrder, quantity: 0 });
           return;
         }
 
-        setQuantity(newQuantity);
+          setFoodOrder({ ...foodOrder, quantity: newQuantity });
     };
 
     const addHandler = () => {
+        const body = {
+            buyerUsername,
+            buyerEmail,
+            deliveryAddress: 'asv',
+            restaurantName: restaurantInfo.restaurantName,
+            restaurantId: (restaurantInfo.id).toString(),
+            orderedItem: {
+                ...foodOrder,
+            }
+        };
 
-        
-
+        onConfirm(body);
     };
 
   return (
@@ -36,22 +59,27 @@ const AddToBasketModal = (props) => {
         <h2>{ "Add basket item"}</h2>
       </div>
       <div className="modal-wrap">
-        <h2>{name}</h2>
+        <h2>{menuItem.mealName}</h2>
         <div className="note-input">
           <label>Add extra note for the restaurant: </label>
           <textarea
-            name="extraNote"
-            value={extraNote}
-            onChange={(e) => setExtraNote(e.target.value)}
+             name="extraNote"
+             value={foodOrder.extraNote}
+              onChange={(e) => {
+                 setFoodOrder({
+                    ...foodOrder,
+                    extraNote: e.target.value,
+                 });
+              }}
           />
         </div>
         <div className="quantity-buttons">
           <button onClick={decrementQuantity}>-</button>
-          <p>{quantity}</p>
+          <p>{foodOrder.quantity}</p>
           <button onClick={incrementQuantity}>+</button>
          </div>
               <div className="add-buttons">
-                  <button className="order-buttons" onClick={() => { } }>Cancel</button>
+                  <button className="order-buttons" onClick={onCancel}>Cancel</button>
                   <button className="order-buttons" onClick={addHandler}>Add</button>
               </div>
       </div>

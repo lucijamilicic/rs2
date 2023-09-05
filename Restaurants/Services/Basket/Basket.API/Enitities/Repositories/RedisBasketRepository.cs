@@ -41,6 +41,7 @@ namespace Basket.API.Enitities.Repositories
         public async Task<bool> UpdateBasket(BasketItemDTO orderedItem)
         {
             var basketString = await _cache.GetStringAsync(orderedItem.buyerUsername);
+            Console.WriteLine("///////////////////////////////////////" + basketString);
             var basket = JsonConvert.DeserializeObject<OrderCart>(basketString);
 
             var newBasketString = "";
