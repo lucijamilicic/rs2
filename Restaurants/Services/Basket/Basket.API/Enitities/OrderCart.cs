@@ -2,25 +2,18 @@
 {
     public class OrderCart
     {
-        //public Guid Id { get; set; }
-       // public DateTime CreationDate { get; set; }
         public string BuyerUsername { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string ZipCode { get; set; }
-        public string EmailAddress { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string BuyerEmailAddress { get; set; }
 
-        public string BuyerId { get; set; }
-
-        public IEnumerable<OrderCartItem> OrderItems { get; set; } = new List<OrderCartItem>();
-
-        //TODO: ovo mozda skloniti
-        public OrderCart() { }
-
-        public OrderCart(string username)
+        public List<OrderCartItem> OrderItems { get; set; } 
+     
+        public OrderCart(string buyerUsername, string deliveryAddress="", string buyerEmailAddress="")
         {
-            BuyerUsername = username ?? throw new ArgumentNullException(nameof(username));
+            BuyerUsername = buyerUsername ?? throw new ArgumentNullException(nameof(buyerUsername));
+            DeliveryAddress = deliveryAddress ;
+            BuyerEmailAddress = buyerEmailAddress;
+            OrderItems = new List<OrderCartItem>();
         }
 
         public decimal TotalPrice

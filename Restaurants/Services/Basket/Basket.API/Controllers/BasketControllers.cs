@@ -40,15 +40,17 @@ namespace Basket.API.Controllers
             }
             
             var basket = await _repository.GetBasket(username); 
-            return Ok(basket ?? new OrderCart(username));
+            return Ok(basket );
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(OrderCart), StatusCodes.Status200OK)]
-        public async Task<ActionResult<OrderCart>> UpdateBasket([FromBody]OrderCart basket)
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status400BadRequest)]
+        
+        public async Task<ActionResult<bool>> UpdateBasket([FromBody] BasketItemDTO basket)
         {
             
-            if (User.FindFirstValue(ClaimTypes.Name) != basket.BuyerUsername)
+            if (User.FindFirstValue(ClaimTypes.Name) != basket.buyerUsername)
             {
                 return Forbid();
             }
@@ -67,17 +69,18 @@ namespace Basket.API.Controllers
             {
                 return Forbid();
             }
-
+            
             //get existing basket
-            var basket = await _repository.GetBasket(basketCheckout.BuyerUsername);
-            //if basket doesnt exist or it is empty
-            if (basket is null || basket.OrderItems is null)
+            var res = _repository.CreateBasket(basketCheckout);
+            
+            //if basket doesn't exist or it is empty
+            if (basketCheckout is null || basketCheckout.OrderItems is null)
             {
                 return BadRequest();
             }
             
             //send checkout event
-            var eventMessage = _mapper.Map<BasketCheckoutEvent>(basket);
+            var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
             await _publishEndpoint.Publish(eventMessage);
             
             return Ok(eventMessage);
@@ -100,7 +103,23 @@ namespace Basket.API.Controllers
             
             return BadRequest();
         }
-
         
+        [HttpDelete("/orderItem")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status400BadRequest)]
+
+        public async Task<IActionResult> DeleteBasketItem([FromBody] BasketItemDTO basketItemDTO)
+        {
+            
+            if (User.FindFirstValue(ClaimTypes.Name) != basketItemDTO.buyerUsername)
+            {
+                return Forbid();
+            }
+            
+            var res = await _repository.DeleteCartItem(basketItemDTO);
+            return res ? Ok(res) : BadRequest(res);
+        }
+
+       
     }
 }

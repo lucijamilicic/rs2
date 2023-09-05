@@ -9,6 +9,8 @@ public class EmailSendingEvent
     public string RestaurantName { get; set; }
     public string RestaurantEmailAddress { get; set; }
 
+    //TODO: izbaci visak
+    
     //User Info
     public string BuyerUsername { get; set; }
     public string Street { get; set; }
