@@ -11,11 +11,8 @@ public class OrderDTOFactory:IOrderDTOFactory
     {
         var orderDTO = new OrderDTO();
         orderDTO.BuyerUsername = orders.BuyerName;
-        orderDTO.City = orders.BuyerAddress.City;
-        orderDTO.Country = orders.BuyerAddress.Country;
-        orderDTO.Street = orders.BuyerAddress.Street;
-        orderDTO.ZipCode = orders.BuyerAddress.ZipCode;
-        orderDTO.EmailAddress = orders.BuyerAddress.EmailAddress;
+        orderDTO.BuyerEmailAddress = orders.BuyerEmailAddress;
+        orderDTO.DeliveryAddress = orders.BuyerAddress;
         var orderItemsDTOList = new List<OrderItemDTO>();
         var total = 0M;
         foreach (var item in orders.ListOfOrders)

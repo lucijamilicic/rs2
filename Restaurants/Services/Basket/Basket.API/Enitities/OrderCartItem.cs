@@ -2,20 +2,21 @@
 {
     public class OrderCartItem
     {
+        public OrderCartItem(string restaurantName, string restaurantId)
+        {
+            RestaurantName = restaurantName;
+            RestaurantId = restaurantId;
+            FoodOrder = new List<Dish>();
+        }
 
-       public string RestaurantName { get; set; }
+        public string RestaurantName { get; set; }
 
        public string RestaurantId { get; set; }
       
-       public List<Dish> FoodOrder { get; set; } = new List<Dish>();
+       public List<Dish> FoodOrder { get; set; }
 
-       //Address
-       public string Street { get; set; }
-       public string City { get; set; }
-       public string Country { get; set; }
-       public string ZipCode { get; set; }
-       public string EmailAddress { get; set; }
-       public decimal TotalPrice
+       //Address 
+        public decimal TotalPrice
         {
             get
             {

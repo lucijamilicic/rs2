@@ -31,10 +31,10 @@ namespace FoodOrdering.API.Controllers
         [ProducesResponseType(typeof(void),StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(string username)
         {
-           /* if (User.FindFirst(ClaimTypes.Name)?.Value != username)
+            if (User.FindFirst(ClaimTypes.Name)?.Value != username)
             {
                 return Forbid();
-            }*/
+            }
             var result = await _repository.CheckoutOrdersByUsername(username);
 
             if(result!=null)
