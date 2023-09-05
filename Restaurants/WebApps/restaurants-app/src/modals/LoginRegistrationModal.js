@@ -21,6 +21,30 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
         password: ""
     });
 
+    const [isValidForm, setIsValidForm] = useState(true);
+
+    const isValidRegister = () => {
+        let valid = true;
+        valid = valid && registerState.firstName.length > 0;
+        valid = valid && registerState.lastName.length > 0;
+        valid = valid && registerState.email.length > 0;
+        valid = valid && registerState.userName.length > 0;
+        valid = valid && registerState.password.length > 0;
+        valid = valid && registerState.phoneNumber.length > 0;
+
+        setIsValidForm(valid);
+        return valid;
+    }
+
+    const isValidLogin = () => {
+        let valid = true;
+        valid = valid && logInState.userName.length > 0;
+        valid = valid && logInState.password.length > 0;
+
+        setIsValidForm(valid);
+        return valid;
+    }
+
     const isLogged = () => {
         const token = localStorage.getItem("accessToken");
         if (token !== null) {
@@ -44,23 +68,32 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
         setLogInState({ ...logInState, [name]: value });
     };
 
-    //TODO
-    const inputVerification = () => { };
+    const [isCorrectPassword, setIsCorrectPassword] = useState(true);
+    const [usernameExists, setUsernameExists] = useState(false);
+
 
     const loginRegistrationHandler = async () => {
 
         if (registered) {
-            const res = await loginUser(logInState);
-            localStorage.setItem("accessToken", res.data.accessToken);
-            localStorage.setItem("refreshToken", res.data.refreshToken);
-            localStorage.setItem("userName", res.data.userName);
-            localStorage.setItem("userEmail", res.data.userEmail);
 
-            navigate('/');
+            if (isValidLogin()) {
+                await loginUser(logInState).then((res) => {
+                    localStorage.setItem("accessToken", res.data.accessToken);
+                    localStorage.setItem("refreshToken", res.data.refreshToken);
+                    localStorage.setItem("userName", res.data.userName);
+                    localStorage.setItem("userEmail", res.data.userEmail);
+                    navigate('/');
+                }).catch((err) => { setIsCorrectPassword(false) });
+            }
         } else {
-            await registerUser(registerState);
-            setRegistered(true);
-            navigate('/login-register');
+
+            if (isValidRegister()) {
+                await registerUser(registerState).then(() => { 
+
+                setRegistered(true);
+                    navigate('/login-register');
+                }).catch((err) => { setUsernameExists(true) });
+            }
         }
     };
 
@@ -79,7 +112,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                 {!registered ? (
                     <>
                         <div className="input-wrap">
-                            <label htmlFor="firstName">First name: </label>
+                            <label htmlFor="firstName">First name*  </label>
                             <input
                                 placeholder="Enter name"
                                 value={registerState.firstName}
@@ -89,7 +122,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="lastName">Last name: </label>
+                            <label htmlFor="lastName">Last name* </label>
                             <input
                                 placeholder="Enter last name"
                                 value={registerState.lastName}
@@ -99,7 +132,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="userName">Username: </label>
+                            <label htmlFor="userName">Username* </label>
                             <input
                                 placeholder="Enter username"
                                 value={registerState.userName}
@@ -109,7 +142,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="email">Email: </label>
+                            <label htmlFor="email">Email* </label>
                             <input
                                 placeholder="Enter email"
                                 value={registerState.email}
@@ -119,7 +152,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="password">Password: </label>
+                            <label htmlFor="password">Password* </label>
                             <input
                                 placeholder="Enter password"
                                 value={registerState.password}
@@ -129,7 +162,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="phone">Phone number: </label>
+                            <label htmlFor="phone">Phone number* </label>
                             <input
                                 placeholder="Enter phone number"
                                 value={registerState.phoneNumber}
@@ -142,7 +175,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                 ) : (
                     <>
                         <div className="input-wrap">
-                            <label htmlFor="userName">Username: </label>
+                            <label htmlFor="userName">Username* </label>
                             <input
                                 placeholder="Enter username"
                                 value={logInState.userName}
@@ -152,7 +185,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="password">Password: </label>
+                            <label htmlFor="password">Password* </label>
                             <input
                                 placeholder="Enter password"
                                 value={logInState.password}
@@ -163,6 +196,9 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                         </div>
                     </>
                 )}
+                {isValidForm ? <></> : <div>All fields are required</div>}
+                {isCorrectPassword ? <></> : <div>Incorrect username or password</div>}
+                {usernameExists ? <div>Account with same username already exists</div> : <></>}
                 <button
                     type="submit"
                     className="login-button"
