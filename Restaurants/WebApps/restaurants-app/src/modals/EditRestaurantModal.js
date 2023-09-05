@@ -9,6 +9,7 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
 
     const isEdit = data;
     const [state, setState] = useState({
+        img: '',
         restaurantName: '',
         address: '',
     });
@@ -16,6 +17,7 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
     useEffect(() => {
         isEdit && setState({
             ...data,
+            img: '',
             restaurantName: data.restaurantName,
             address: data.address,
         });
@@ -31,6 +33,7 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
 
     const clearState = () => {
         setState({
+            img: '',
             restaurantName: '',
             address: '',
         });
