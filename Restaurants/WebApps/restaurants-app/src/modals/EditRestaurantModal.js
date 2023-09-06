@@ -37,7 +37,19 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
             restaurantName: '',
             address: '',
         });
+        setValidationErr("");
     };
+
+    const [validationErr, setValidationErr] = useState("");
+
+    const isValid = () => {
+        if (state.restaurantName === '' || state.address === '') {
+            setValidationErr("Restaurant name and addres are required");
+            return false;
+        }
+        setValidationErr("");
+        return true;
+    }
 
     return (
         <Modal
@@ -46,17 +58,18 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
         >
             <div className="modal-wrap">
                 <div className="input-wrap">
-                    <label>Name</label>
+                    <label>Name*</label>
                     <input type="text" placeholder="Name" name="restaurantName" maxLength="30" size="10" value={state.restaurantName} onChange={textInputHandler} />
                 </div>
                 <div className="input-wrap">
-                    <label>Address</label>
+                    <label>Address*</label>
                     <input type="text" placeholder="Address" name="address" maxLength="30" size="10" value={state.address} onChange={textInputHandler} />
                 </div>
                 <div className="input-wrap">
                     <label>Image URL</label>
                     <input type="text" placeholder="Image url" name="img" size="10" value={state.img} onChange={textInputHandler} />
                 </div>
+                <div>{validationErr}</div>
                 <div className="button-wrap">
                     <button
                         onClick={() => {
@@ -65,7 +78,9 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
                         }}
                         className="button-delete">Cancel</button>
                     <button onClick={() => {
-                        onConfirm(state);
+                        if (isValid()) {
+                            onConfirm(state);
+                        }
                     }
                     } className="button-delete">Confirm</button>
                 </div>
