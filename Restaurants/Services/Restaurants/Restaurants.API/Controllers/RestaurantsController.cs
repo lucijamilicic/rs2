@@ -72,9 +72,12 @@ namespace Restaurants.API.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost("menu/{restaurantId}")]
         [ProducesResponseType(typeof(IEnumerable<MenuItemDTO>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status409Conflict)]
         public async Task<ActionResult> AddToMenu([FromBody] MenuItemDTO menuItemDTO, int restaurantId)
         {
-            return Ok(await _repository.AddToMenu(restaurantId, menuItemDTO));
+            var res = await _repository.AddToMenu(restaurantId, menuItemDTO);
+
+            return res ? Ok(res) : Conflict();
         }
 
 
