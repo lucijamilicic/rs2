@@ -21,6 +21,22 @@ namespace Restaurants.Common.Repositories
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+
+
+            // Initialize Database for testing
+            _context.GetConnection().ExecuteAsync(
+                "CREATE TABLE IF NOT EXISTS Restaurant ( " +
+                "ID SERIAL PRIMARY KEY NOT NULL, " +
+                "RestaurantName VARCHAR(24) NOT NULL, " +
+                "Address TEXT, " +
+                "Img TEXT );" +
+                "" +
+                "CREATE TABLE IF NOT EXISTS Menu ( " +
+                "MealID VARCHAR(24) NOT NULL, " +
+                "RestaurantID INT NOT NULL, " +
+                "MealName VARCHAR(50) NOT NULL, " +
+                "Price INT, " +
+                "CONSTRAINT PK_Menu PRIMARY KEY (MealID, RestaurantID) );");
         }
 
         public async Task<bool> CreateRestaurant(CreateRestaurantDTO restaurantDTO)
@@ -112,12 +128,23 @@ namespace Restaurants.Common.Repositories
         {
             using var connection = _context.GetConnection();
 
-            var affectedRows = await connection.ExecuteAsync(
-                "INSERT INTO Menu (RestaurantID, MealID, MealName, Price) VALUES " +
-                "(@RestaurantID, @MealID, @MealName, @Price)",
-                new { RestaurantID = restaurantId, MealID = menuItemDTO.Id, menuItemDTO.MealName, menuItemDTO.Price});
+            var test = await connection.QueryFirstAsync<MenuItem>(
+                    "SELECT MealID AS ID, MealName, Price FROM Menu WHERE RestaurantID = @RestaurantId AND MealID=@MealId",
+                    new { RestaurantId = restaurantId, MealId = menuItemDTO.Id}
+                    );
 
-            return affectedRows != 0;
+            if ( test == null ) { 
+
+                var affectedRows = await connection.ExecuteAsync(
+                    "INSERT INTO Menu (RestaurantID, MealID, MealName, Price) VALUES " +
+                    "(@RestaurantID, @MealID, @MealName, @Price)",
+                    new { RestaurantID = restaurantId, MealID = menuItemDTO.Id, menuItemDTO.MealName, menuItemDTO.Price});
+                
+                return affectedRows != 0;
+
+            }
+
+            return false;
         }
 
         public async Task<bool> DeleteFromMenu(int restaurantId, string mealId)
