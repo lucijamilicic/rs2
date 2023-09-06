@@ -188,6 +188,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
         }
         else {
             setBasketErr("");
+            return true;
         }
     }
 
@@ -195,6 +196,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
         if (isValidBasket()) {
             await checkout(basket).then((res) => {
                 setBasket({ ...basket, deliveryAddress: "", orderItems: [], totalPrice: 0.0 });
+                setIsOpen(false);
             });
         }
     }
@@ -236,8 +238,8 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
                               name="deliveryAddress"
                               onChange={(e) => { setBasket({ ...basket, deliveryAddress: e.target.value }) }}
                     required
-                  />
-                          { /*DELETE BASKET*/}
+                      />
+                      <div className="basket-err">{basketErr}</div>
                       <div className="buttons-wrap">
                           <button onClick={() => setIsDeleteModalOpen(true)} className="clear">
                       Clear basket
