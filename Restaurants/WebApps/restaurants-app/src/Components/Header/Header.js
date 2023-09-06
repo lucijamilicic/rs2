@@ -160,9 +160,9 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                 }`}
               >
                 {categories.map((category) => {
-                  return (
-                    <div
-                      className="category-item"
+                    return (
+                        <div
+                            className={`category-item ${state.category === category && 'selected'}`}
                           onClick={(e) => {
                               setState({
                                   ...state,

@@ -7,6 +7,7 @@ import { ReactComponent as ArrowIcon } from "../assets/double-arrow.svg";
 import "./Modal.css";
 import { getBasket, updateBasket, checkout, deleteBasketItem, deleteBasket } from "../api/Service";
 import DeleteModal from '../modals/DeleteModal';
+import { PulseLoader } from 'react-spinners';
 
 const BasketListItem = ({ restaurantId, restaurantName, order }) => {
     const { price, quantity, extraNote, dishName, dishId } = order;
@@ -155,6 +156,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
     const [basket, setBasket] = useState();
     const [listOfItems, setListOfItems] = useState([]);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
 
 
     useEffect(() => {
@@ -194,9 +196,11 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
     const onCheckout = async () => {
         if (isValidBasket()) {
+            setShowLoader(true);
             await checkout(basket).then((res) => {
                 setBasket({ ...basket, deliveryAddress: "", orderItems: [], totalPrice: 0.0 });
                 setIsOpen(false);
+                setShowLoader(false);
             });
         }
     }
@@ -209,11 +213,15 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
         await deleteBasket(username);
     }
 
-  return (
-    <>
-          {isOpen ? (
+  return (          
               <>
-                <div className="sidebar open">
+          <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
+                      {
+                          showLoader &&
+                              <div className="loader-overlay">
+                                  <PulseLoader className="loader" />
+                              </div>
+                      }
                   <div className="basket-header">
                     <ArrowIcon onClick={() => setIsOpen(false)} />
                     <div className="basket-headline">
@@ -251,11 +259,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
                   </div>
                   <DeleteModal isOpen={isDeleteModalOpen} name="all items in basket" onConfirm={clearBasket} onCancel={() => setIsDeleteModalOpen(false)} />
             </>
-          ) : (
-            <div className="sidebar closed"></div>
-          )}
-    </>
-  );
+           );
 };
 
 export default BasketSidebar;

@@ -3,6 +3,7 @@ using FoodOrdering.Application.EmailModels;
 using FoodOrdering.Application.Persistance;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace FoodOrdering.Infrastructure.Repositories;
 
@@ -34,7 +35,7 @@ public class OrderRepository:IOrderRepository
              return null;
         }
         
-        var orders =JsonConvert.DeserializeObject<OrderDTO>(orderString);
+        var orders = JsonConvert.DeserializeObject<OrderDTO>(orderString);
         
         await SendMail(orders);
         
@@ -54,8 +55,11 @@ public class OrderRepository:IOrderRepository
     }
     public async Task DeleteOrder(string username)
     {
-        var order = await _cache.GetStringAsync(username);
-        await _cache.RemoveAsync(username);
+        var orderString = await _cache.GetStringAsync(username);
+        var order = JsonConvert.DeserializeObject<OrderDTO>(orderString);
+        order.OrderItems = new List<OrderItemDTO>();
+        var newOrder = JsonConvert.SerializeObject(order);
+        await _cache.SetStringAsync(username, newOrder);
     }
 
 }
