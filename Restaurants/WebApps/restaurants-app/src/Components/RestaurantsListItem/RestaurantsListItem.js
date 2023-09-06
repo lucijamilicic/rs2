@@ -66,10 +66,24 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         await updateRestaurantById(body).then(() => {
             setIsEditModalOpen(false);
             setRefresh(true);
+            window.location.reload();
         });
     };
 
+    const [validationErr, setValidationErr] = useState("");
+    const isValid = () => {
+        if (addItemState.id.length <= 0 || addItemState.name === '' || !addItemState.price || addItemState.price === '') {
+            setValidationErr("All fields are required");
+            return false;
+        }
+
+        setValidationErr('');
+        return true;
+    }
+
     const addMenuItemHandler = async () => {
+
+        if (isValid()) {
 
         const body = {
             id: addItemState.id[0].value,
@@ -81,6 +95,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         setMenuState([...menuState, body]);
         setIsAddItemShown(false);
 
+        }
     };
 
     const deleteMenuItem = async () => {
@@ -160,6 +175,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                                     <label>Price: </label>
                                     <input type="number" name="price" value={addItemState.price} onChange={inputHandler} />
                                 </div>
+                                <div>{validationErr}</div>
                                 <button onClick={addMenuItemHandler}>Add</button>
                             </div>
                     }

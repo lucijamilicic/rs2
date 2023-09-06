@@ -25,8 +25,11 @@ const  AddRecipe = () => {
     const navigate = useNavigate();
 
     const submitHandler = async () => {
-        await addNewRecipe({ ...state, listOfIngredients: ingredientList, category: selectedCategory[0].value });
-        navigate('/');
+        if (isValid()) {
+            await addNewRecipe({ ...state, listOfIngredients: ingredientList, category: selectedCategory[0].value });
+            navigate('/');
+        }
+            console.log(validationErr);
     };
 
     const addIngredient = () => {
@@ -68,12 +71,61 @@ const  AddRecipe = () => {
         getAllCategories();
     }, [])
 
+    const [validationErr, setValidationErr] = useState({
+        nameErr: "",
+        recipeErr: "",
+        ingredientErr: "",
+        categoryErr: ""
+    });
+
+    const isValid = () => {
+        let valid = true;
+        const errors = {
+            nameErr: "",
+            recipeErr: "",
+            ingredientErr: "",
+            categoryErr: ""
+        }
+        if (state.name === '') {
+            errors.nameErr = 'Name is required';
+            valid = false;
+        }
+        else {
+            errors.nameErr = '';
+        }
+        if (state.recipe === '') {
+            errors.recipeErr = 'Recipe is required';
+            valid = false;
+        }
+        else {
+            errors.recipeErr = '';
+        }
+        if (ingredientList.length <= 0) {
+            errors.ingredientErr = 'At least one ingredient is required';
+            valid = false;
+        }
+        else {
+            errors.ingredientErr = '';
+        }
+        if (selectedCategory.length <= 0) {
+            errors.categoryErr = 'Category is required';
+            valid = false;
+        }
+        else {
+            errors.categoryErr = '';
+        }
+
+        setValidationErr(errors);
+        return valid;
+
+    }
     
   return (
       <div className="formular">
           <p className="add-title">Add new recipe</p>
           <div className="add-item">
-              <p className="add-label">Name of dish: </p>
+              <label className="add-label">Name of dish: </label>
+              <span>{validationErr.nameErr}</span>
               <input
                   className="add-input"
                   placeholder="Dish name"
@@ -85,6 +137,7 @@ const  AddRecipe = () => {
           </div>
           <div className="add-item">
               <p className="add-label">Category: </p>
+              <span>{validationErr.categoryErr}</span>
               <div>
                   <MultiSelect
                       labelledBy="Select"
@@ -100,7 +153,8 @@ const  AddRecipe = () => {
               </div>
           </div>
           <div className="add-item">
-              <p className="add-label">Recipe: </p>
+              <label className="add-label">Recipe: </label>
+              <span>{validationErr.recipeErr}</span>
               <textarea
                   className="add-textarea"
                   placeholder="Recipe"
@@ -133,7 +187,8 @@ const  AddRecipe = () => {
               />
           </div>
           <div className="add-item">
-              <p className="add-label">List of ingredients: </p>
+              <label className="add-label">List of ingredients: </label>
+              <span>{validationErr.ingredientErr}</span>
               <div className="add-ingredient">
                   <p className="add-ingredient-label"> Ingredient: </p>
                   <input
