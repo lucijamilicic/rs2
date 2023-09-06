@@ -66,7 +66,6 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
                         className="button-delete">Cancel</button>
                     <button onClick={() => {
                         onConfirm(state);
-                        window.location.reload();
                     }
                     } className="button-delete">Confirm</button>
                 </div>

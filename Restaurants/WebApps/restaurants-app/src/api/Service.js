@@ -143,11 +143,11 @@ export const deleteBasket = async (username) => {
     });
 };
 
-export const deleteBasketItem = async (username) => {
+export const deleteBasketItem = async (body) => {
     const token = localStorage.getItem("accessToken");
     const headers = { Authorization: `Bearer ${token}` };
     return await axios.delete(`${BASKET}/orderItem`, {
-        headers
+        headers, data: body
     });
 };
 

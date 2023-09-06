@@ -37,6 +37,12 @@
     letter-spacing: 0.8px;
 }
 
+.food-name a:hover {
+    font-size: 17px;
+    font-weight: 700;
+    color: rgba(0,0,0,0.9);
+}
+
 .food-price {
     margin-top: 5px;
     font-size: 14px;

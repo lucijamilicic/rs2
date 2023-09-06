@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import DeleteModal from "../../modals/DeleteModal";
 import AddToBasketModal from "../../modals/AddToBasketModal";
 import { getRole } from "../../common/helpers";
-import { updateBasket } from "../../api/Service";
+import { deleteFromMenu, updateBasket } from "../../api/Service";
 
 
 const MenuItem = ({ restaurantInfo, menuItem }) => {
@@ -22,7 +22,12 @@ const MenuItem = ({ restaurantInfo, menuItem }) => {
 
     }, []);
 
-  
+
+    const deleteHandler = async () => {
+        await deleteFromMenu(restaurantInfo.id, menuItem.id);
+        setIsDeleteModalOpen(false);
+        window.location.reload();
+    }
 
     //TODO
     const addHandler = async (body) => {
@@ -37,10 +42,23 @@ const MenuItem = ({ restaurantInfo, menuItem }) => {
                 <div className="food-name" ><Link to={"/details/" + menuItem.id} >{menuItem.mealName}</Link></div>
                 <div className="food-price">{menuItem.price} &euro;</div>
             </div>
-            {!isAdmin && <button className="right-content order-button" onClick={() => setShowOrder(true)}> Order </button>}
-            {isAdmin && < button className="right-content order-button" onClick={() => setIsDeleteModalOpen(true)}>Delete</button>}
-            <DeleteModal isOpen={isDeleteModalOpen} data={menuItem.mealName} onCancel={() => setIsDeleteModalOpen(false)} onConfirm={() => { }} />
-            {!isAdmin && showOrder && <AddToBasketModal isOpen={showOrder} menuItem={menuItem} restaurantInfo={restaurantInfo} onConfirm={addHandler} onCancel={() => setShowOrder(false)} />}
+            {
+                !isAdmin ? (
+                    <button className="right-content order-button" onClick={() => setShowOrder(true)}> Order </button>
+                ) : (
+                    < button className="right-content order-button" onClick={() => setIsDeleteModalOpen(true)}>Delete</button>
+                )
+            }
+            <DeleteModal isOpen={isDeleteModalOpen} name={menuItem.mealName} onCancel={() => setIsDeleteModalOpen(false)} onConfirm={deleteHandler} />
+            {!isAdmin && showOrder &&
+                <AddToBasketModal
+                    isOpen={showOrder}
+                    menuItem={menuItem}
+                    restaurantInfo={restaurantInfo}
+                    onConfirm={addHandler}
+                    onCancel={() => setShowOrder(false)}
+                />
+            }
         </div>
     );
     

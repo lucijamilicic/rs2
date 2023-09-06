@@ -56,7 +56,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         setIsEditModalOpen(false);
     };
 
-    const deleteConfirm = async (id) => {
+    const deleteConfirm = async () => {
         await deleteRestaurantById(restaurantInfo.id);
         setIsDeleteModalOpen(false);
         setRefresh(true);

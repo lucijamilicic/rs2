@@ -28,4 +28,15 @@ export const getRefreshToken = () => {
     return localStorage.getItem("refreshToken");
 };
 
+export const getUsername = () => {
+    return localStorage.getItem("userName");
+};
+
+
+export const refreshToken = async (body) => {
+    const response = await refreshToken(body);
+    localStorage.setItem("accessToken", response.data.accessToken);
+    localStorage.setItem("refreshToken", response.data.refreshToken);
+
+}
     

@@ -30,6 +30,16 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
         getAllCategories();
 
     }, []);
+
+    useEffect(() => {
+
+        if (!state.isRestaurant) {
+            setShowCategories(true);
+        } else {
+            setShowCategories(false);
+        }
+
+    }, [state]);
         
 
     const navigate = useNavigate();
@@ -95,6 +105,7 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                         if (!state.isRestaurant) {
                             setState({
                                 ...state,
+                                searched: '',
                                 isRestaurant: true,
                                 category: ''
                             });
@@ -112,6 +123,7 @@ const Header = ({ state, setState, setIsBasketOpen }) => {
                         if (state.isRestaurant) {
                             setState({
                                 ...state,
+                                searched: '',
                                 isRestaurant: false,
                             })
                             setShowCategories(true);

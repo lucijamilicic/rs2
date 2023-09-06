@@ -7,7 +7,6 @@ import RecipesList from '../../RecipesList/RecipesList';
 
 const WelcomePage = ({ state }) => {
     const { isRestaurant, searched, category } = state;
-    console.log(category);
     const navigate = useNavigate();
     const accToken = localStorage.getItem("accessToken") ? true : false;
     const isLogged = () => {

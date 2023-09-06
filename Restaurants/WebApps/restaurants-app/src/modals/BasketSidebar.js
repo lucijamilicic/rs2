@@ -5,12 +5,15 @@ import { ReactComponent as CancelIcon } from "../assets/cancel.svg";
 import { ReactComponent as BasketIcon } from "../assets/basket.svg";
 import { ReactComponent as ArrowIcon } from "../assets/double-arrow.svg";
 import "./Modal.css";
-import { getBasket, updateBasket, checkout } from "../api/Service";
+import { getBasket, updateBasket, checkout, deleteBasketItem, deleteBasket } from "../api/Service";
+import DeleteModal from '../modals/DeleteModal';
 
 const BasketListItem = ({ restaurantId, restaurantName, order }) => {
     const { price, quantity, extraNote, dishName, dishId } = order;
+    const [quantityValue, setQuantityValue] = useState(quantity);
     const buyerUsername = localStorage.getItem('userName');
     const buyerEmail = localStorage.getItem('userEmail');
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const [state, setState] = useState({
         price: price,
@@ -20,30 +23,51 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
 
       const [edit, setEdit] = useState(false);
 
-      const deleteItemHandler = () => {
-        // call API for delete
-      };
-
       const incrementQuantity = () => {
-        const newQuantity = state?.quantity + 1;
-        setState({ ...state, quantity: newQuantity });
+          const newQuantity = quantityValue + 1;
+          //setState({ ...state, quantity: newQuantity });
+          setQuantityValue(newQuantity);
       };
 
       const decrementQuantity = () => {
-        const newQuantity = state?.quantity - 1;
+        const newQuantity = quantityValue - 1;
 
         if (newQuantity <= 0) {
-          setState({ ...state, quantity: 0 });
+          //setState({ ...state, quantity: 0 });
+            setQuantityValue(0);
+
           return;
         }
 
-        setState({ ...state, quantity: newQuantity });
+        //setState({ ...state, quantity: newQuantity });
+          setQuantityValue(newQuantity);
+
       };
 
       const onCancel = () => {
         setState({ extraNote, quantity });
         setEdit(false);
-      };
+    };
+
+    const onConfirm = async () => {
+
+        const body = {
+            restaurantName,
+            restaurantId,
+            deliveryAddress: '',
+            buyerUsername,
+            buyerEmail,
+            orderedItem: {
+                ...state,
+                dishId,
+                dishName,
+            },
+        }
+
+        await deleteBasketItem(body);
+        setIsDeleteModalOpen(false);
+        window.location.reload();
+    }
 
     const onEditItem = async () => {
         const body = {
@@ -57,9 +81,12 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
                 dishId,
                 dishName,
             },
-
         }
         await updateBasket(body);
+        setState({
+            ...state,
+            quantity: quantityValue,
+        })
         setEdit(false);
       };
 
@@ -69,9 +96,9 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
         <div className="content">
           <div className="item-restaurant-name">{restaurantName}</div>
           <div className="item">
-            {quantity} x {dishName}
+            {state.quantity} x {dishName}
           </div>
-          <div className="item-price">{quantity * price} &euro;</div>
+          <div className="item-price">{state.quantity * state.price} &euro;</div>
         </div>
         <div className="header-buttons">
           <EditIcon
@@ -79,7 +106,7 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
               setEdit(!edit);
             }}
           />
-          <CancelIcon onClick={deleteItemHandler} />
+          <CancelIcon onClick={() => setIsDeleteModalOpen(true) } />
         </div>
       </div>
       <div className={`edit-container ${edit ? "open" : "closed"}`}>
@@ -101,7 +128,7 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
         >
           <div className="quantity-buttons">
             <button onClick={decrementQuantity}>-</button>
-            <p>{state?.quantity}</p>
+            <p>{quantityValue}</p>
             <button onClick={incrementQuantity}>+</button>
           </div>
           <div className="buttons-wrap edit">
@@ -113,7 +140,8 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
             </button>
           </div>
         </div>
-      </div>
+          </div>
+          <DeleteModal isOpen={isDeleteModalOpen} name={dishName} onConfirm={onConfirm} onCancel={() => setIsDeleteModalOpen(false)} />
     </>
   );
 };
@@ -123,8 +151,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
     const [basket, setBasket] = useState();
     const [listOfItems, setListOfItems] = useState([]);
-    //const [deliveryAddress, setDeliveryAddress] = useState("");
-
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     useEffect(() => {
 
@@ -145,56 +172,66 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
     const onCheckout = async () => {
         if (basket.deliveryAddress.length > 0) {
+            setIsOpen(false);
             await checkout(basket).then((res) => {
                 setBasket({ ...basket, deliveryAddress: "", orderItems: [], totalPrice: 0.0 });
-                setIsOpen(false);
             });
-
         }
+    }
+
+    const clearBasket = async () => {
+
+        const username = localStorage.getItem('userName');
+        setIsDeleteModalOpen(false);
+        setIsOpen(false);
+        await deleteBasket(username);
     }
 
   return (
     <>
-      {isOpen ? (
-        <div className="sidebar open">
-          <div className="basket-header">
-            <ArrowIcon onClick={() => setIsOpen(false)} />
-            <div className="basket-headline">
-              <BasketIcon />
-              <h2>Basket</h2>
-            </div>
-          </div>
-          <div className="list">
-                      {listOfItems?.map((restaurant, i) => {
-                          return restaurant?.foodOrder.map((order, j) => {
-                              return <BasketListItem key={`${i}${j}`} restaurantId={ restaurant?.restaurantId} restaurantName={restaurant?.restaurantName} order={order}/>
-                          })
-                      })}
-          </div>
-          <div className="total-price">
-            Total price: <span> {basket?.totalPrice} &euro;</span>
-          </div>
-          <input
-            type="text"
-            placeholder="Enter delivery address"
-            className="address-input"
-                      name="deliveryAddress"
-                      onChange={(e) => { setBasket({ ...basket, deliveryAddress: e.target.value }) }}
-            required
-          />
-                  { /*DELETE BASKET*/}
-          <div className="buttons-wrap">
-                      <button onClick={() => { } } className="clear">
-              Clear basket
-            </button>
-            <button type="submit" className="checkout-button" onClick={onCheckout}>
-              Checkout
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="sidebar closed"></div>
-      )}
+          {isOpen ? (
+              <>
+                <div className="sidebar open">
+                  <div className="basket-header">
+                    <ArrowIcon onClick={() => setIsOpen(false)} />
+                    <div className="basket-headline">
+                      <BasketIcon />
+                      <h2>Basket</h2>
+                    </div>
+                  </div>
+                  <div className="list">
+                              {listOfItems?.map((restaurant, i) => {
+                                  return restaurant?.foodOrder.map((order, j) => {
+                                      return <BasketListItem key={`${i}${j}`} restaurantId={ restaurant?.restaurantId} restaurantName={restaurant?.restaurantName} order={order}/>
+                                  })
+                              })}
+                  </div>
+                  <div className="total-price">
+                    Total price: <span> {basket?.totalPrice} &euro;</span>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Enter delivery address"
+                    className="address-input"
+                              name="deliveryAddress"
+                              onChange={(e) => { setBasket({ ...basket, deliveryAddress: e.target.value }) }}
+                    required
+                  />
+                          { /*DELETE BASKET*/}
+                      <div className="buttons-wrap">
+                          <button onClick={() => setIsDeleteModalOpen(true)} className="clear">
+                      Clear basket
+                    </button>
+                    <button type="submit" className="checkout-button" onClick={onCheckout}>
+                      Checkout
+                    </button>
+                  </div>
+                  </div>
+                  <DeleteModal isOpen={isDeleteModalOpen} name="all items in basket" onConfirm={clearBasket} onCancel={() => setIsDeleteModalOpen(false)} />
+            </>
+          ) : (
+            <div className="sidebar closed"></div>
+          )}
     </>
   );
 };
