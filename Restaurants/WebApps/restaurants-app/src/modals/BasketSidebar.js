@@ -120,10 +120,12 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
 
 const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
+    const AddressErr = "Delivery address is required"
+    const zeroItemsErr = "Basket is empty. Nothing to order."
+
 
     const [basket, setBasket] = useState();
     const [listOfItems, setListOfItems] = useState([]);
-    //const [deliveryAddress, setDeliveryAddress] = useState("");
 
 
     useEffect(() => {
@@ -132,7 +134,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
         const getBasketItems = async () => {
             const basket = await getBasket(username).catch(error => []);
-            basket.data.buyerEmailAddress = "pesic466@gmail.com"; //localStorage.getItem("userEmail");
+            basket.data.buyerEmailAddress = localStorage.getItem("userEmail");
             setBasket(basket.data);
             setListOfItems(basket.data.orderItems);
         }
@@ -143,8 +145,25 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
     }, [isOpen]);
 
+
+    const [basketErr, setBasketErr] = useState("");
+
+    const isValidBasket = () => {
+        if (basket.orderItems.length <= 0) {
+            setBasketErr(zeroItemsErr);
+            return false;
+        }
+        else if (basket.deliveryAddress.length <= 0) {
+            setBasketErr(AddressErr);
+            return false;
+        }
+        else {
+            setBasketErr("");
+        }
+    }
+
     const onCheckout = async () => {
-        if (basket.deliveryAddress.length > 0) {
+        if (isValidBasket()) {
             await checkout(basket).then((res) => {
                 setBasket({ ...basket, deliveryAddress: "", orderItems: [], totalPrice: 0.0 });
                 setIsOpen(false);
@@ -182,11 +201,12 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
                       onChange={(e) => { setBasket({ ...basket, deliveryAddress: e.target.value }) }}
             required
           />
+          <div className="basket-err">{basketErr}</div>
                   { /*DELETE BASKET*/}
           <div className="buttons-wrap">
                       <button onClick={() => { } } className="clear">
               Clear basket
-            </button>
+                      </button>
             <button type="submit" className="checkout-button" onClick={onCheckout}>
               Checkout
             </button>

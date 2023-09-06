@@ -70,6 +70,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
 
     const [isCorrectPassword, setIsCorrectPassword] = useState(true);
     const [usernameExists, setUsernameExists] = useState(false);
+    const [errMessages, setErrMessages] = useState([]);
 
 
     const loginRegistrationHandler = async () => {
@@ -92,9 +93,17 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
             if (isValidRegister()) {
                 await registerUser(registerState).then(() => { 
 
-                setRegistered(true);
+                    setRegistered(true);
+                    setIsValidForm(true);
+                    setErrMessages([]);
                     navigate('/login-register');
-                }).catch((err) => { setUsernameExists(true) });
+                }).catch((err) => {
+                    let data = err.response.data;
+                    setErrMessages(Object.keys(data).map((key) => {
+                        console.log(data[key][0]);
+                        return data[key][0];
+                    }))
+                });
             }
         }
     };
@@ -200,7 +209,9 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                 )}
                 {isValidForm ? <></> : <div>All fields are required</div>}
                 {isCorrectPassword ? <></> : <div>Incorrect username or password</div>}
-                {usernameExists ? <div>Account with same username already exists</div> : <></>}
+                {errMessages.map((msg) => {
+                    return <div>{ msg }</div>
+                })}
                 <button
                     type="submit"
                     className="login-button"
@@ -219,6 +230,8 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                                 setRegistered(false);
                                 setMessage("Already registered? Log in ");
                             }
+                            setErrMessages([]);
+                            setIsCorrectPassword(true);
                         }}
                     >
                         here.

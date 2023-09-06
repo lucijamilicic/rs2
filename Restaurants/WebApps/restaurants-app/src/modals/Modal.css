@@ -374,3 +374,8 @@ p span {
 .input {
     background-color: rgb(112, 112, 112, 0.60);
 }
+
+.basket-err {
+    color:darkred;
+    padding-top: 20px;
+}
