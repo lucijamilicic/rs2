@@ -27,11 +27,15 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
     });
     const role = getRole();
 
+    const [menuState, setMenuState] = useState([]);
+
     useEffect(() => {
 
         if (role === "Administrator") {
             setIsAdmin(true);
         }
+
+        setMenuState(menu);
 
     }, []);
 
@@ -59,9 +63,10 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
     };
 
     const editConfirm = async (body) => {
-        await updateRestaurantById(body);
-        setIsEditModalOpen(false);
-        setRefresh(true);
+        await updateRestaurantById(body).then(() => {
+            setIsEditModalOpen(false);
+            setRefresh(true);
+        });
     };
 
     const addMenuItemHandler = async () => {
@@ -73,6 +78,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         };
 
         await addToMenu(restaurantInfo.id, body);
+        setMenuState([...menuState, body]);
         setIsAddItemShown(false);
 
     };
@@ -117,7 +123,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                 {
                     
                 }
-                {showMenu && <Menu restaurantInfo={restaurantInfo} menu={menu} />}
+                {showMenu && <Menu restaurantInfo={restaurantInfo} menu={menuState} key={menuState} />}
                 {isAdmin && 
                     <>
                     {

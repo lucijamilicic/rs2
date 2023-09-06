@@ -5,7 +5,7 @@ import { ReactComponent as CancelIcon } from "../assets/cancel.svg";
 import { ReactComponent as BasketIcon } from "../assets/basket.svg";
 import { ReactComponent as ArrowIcon } from "../assets/double-arrow.svg";
 import "./Modal.css";
-import { getBasket, updateBasket } from "../api/Service";
+import { getBasket, updateBasket, checkout } from "../api/Service";
 
 const BasketListItem = ({ restaurantId, restaurantName, order }) => {
     const { price, quantity, extraNote, dishName, dishId } = order;
@@ -123,6 +123,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
     const [basket, setBasket] = useState();
     const [listOfItems, setListOfItems] = useState([]);
+    //const [deliveryAddress, setDeliveryAddress] = useState("");
 
 
     useEffect(() => {
@@ -131,6 +132,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
         const getBasketItems = async () => {
             const basket = await getBasket(username).catch(error => []);
+            basket.data.buyerEmailAddress = "pesic466@gmail.com"; //localStorage.getItem("userEmail");
             setBasket(basket.data);
             setListOfItems(basket.data.orderItems);
         }
@@ -141,8 +143,14 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
 
     }, [isOpen]);
 
-    const onCheckout = () => {
-        //TODO
+    const onCheckout = async () => {
+        if (basket.deliveryAddress.length > 0) {
+            await checkout(basket).then((res) => {
+                setBasket({ ...basket, deliveryAddress: "", orderItems: [], totalPrice: 0.0 });
+                setIsOpen(false);
+            });
+
+        }
     }
 
   return (
@@ -170,14 +178,10 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
             type="text"
             placeholder="Enter delivery address"
             className="address-input"
+                      name="deliveryAddress"
+                      onChange={(e) => { setBasket({ ...basket, deliveryAddress: e.target.value }) }}
             required
           />
-          <input
-              type="text"
-              placeholder="Enter email"
-              className="address-input"
-              required
-                  />
                   { /*DELETE BASKET*/}
           <div className="buttons-wrap">
                       <button onClick={() => { } } className="clear">

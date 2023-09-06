@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrdering.API.Controllers
 {
-    
+    [Authorize(Roles = "Buyer")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class FoodOrderingController:ControllerBase
@@ -26,15 +26,19 @@ namespace FoodOrdering.API.Controllers
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
 
-        [HttpPost("checkout")]
+        [HttpGet("checkout/{username}")]
         [ProducesResponseType(typeof(OrderDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void),StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(string username)
         {
+            
             if (User.FindFirst(ClaimTypes.Name)?.Value != username)
             {
+
                 return Forbid();
             }
+            
+
             var result = await _repository.CheckoutOrdersByUsername(username);
 
             if(result!=null)

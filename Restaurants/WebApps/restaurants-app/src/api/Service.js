@@ -4,6 +4,7 @@ const BASKET = "http://localhost:8001";
 const RECIPE = "http://localhost:5009";
 const RESTAURANT = "http://localhost:5183";
 const USER = "http://localhost:4000";
+const ORDERING = "http://localhost:5005";
 
 
 export const getCategories = async () => {
@@ -127,6 +128,10 @@ export const checkout = async (body) => {
     const headers = { Authorization: `Bearer ${token}` };
     return await axios.post(`${BASKET}/api/v1/BasketControllers/Checkout`, body, {
         headers
+    }).then(async () => {
+        await axios.get(`${ORDERING}/api/v1/FoodOrdering/checkout/${body.buyerUsername}`, {
+            headers
+        })
     });
 };
 
