@@ -90,9 +90,16 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
             price: addItemState.price,
         };
 
-        await addToMenu(restaurantInfo.id, body);
-        setMenuState([...menuState, body]);
-        setIsAddItemShown(false);
+            await addToMenu(restaurantInfo.id, body).then(() => {
+                setMenuState([...menuState, body]);
+                setIsAddItemShown(false);
+                setValidationErr('');
+            }).catch((e) => {
+                if (e.response.data.status === 409) {
+                    setValidationErr('Item already exists in this menu')
+                }
+            
+            });
 
         }
     };
@@ -107,6 +114,10 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         })
     }
 
+    const clearState = () => {
+        setAddItemState({ id: [], name: '', price: '' })
+        setValidationErr('');
+    }
 
     return (
         <>
@@ -139,7 +150,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                     <>
                     {
                         showMenu &&
-                        <button className=" show-menu-button" onClick={() => setIsAddItemShown(!isAddItemShown)}>Add item to menu</button>
+                        <button className=" show-menu-button" onClick={() => { setIsAddItemShown(!isAddItemShown); clearState() }}>Add item to menu</button>
                     }
                     {
                         isAddItemShown && showMenu &&  
@@ -172,8 +183,8 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                                     <label>Price: </label>
                                     <input type="number" name="price" min="0" value={addItemState.price} onChange={inputHandler} />
                                 </div>
-                                <div>{validationErr}</div>
-                                <button onClick={addMenuItemHandler}>Add</button>
+                                <div className="validation-err-add">{validationErr}</div>
+                                <button onClick={addMenuItemHandler} className="add-item-button">Add</button>
                             </div>
                     }
                 </>

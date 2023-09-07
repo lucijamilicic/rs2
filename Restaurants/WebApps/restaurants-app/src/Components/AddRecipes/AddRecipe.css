@@ -152,3 +152,9 @@ td {
 .table-head {
     text-align: left;
 }
+
+.validation-err{
+    color: darkred;
+    text-align:left;
+    font-size: x-small;
+}

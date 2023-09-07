@@ -71,7 +71,7 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
                     <label>Image URL</label>
                     <input type="text" placeholder="Image url" name="img" size="10" value={state.img} onChange={textInputHandler} />
                 </div>
-                <div>{validationErr}</div>
+                <div className="validation-err-add">{validationErr}</div>
                 <div className="buttons-wrap">
                     <button
                         onClick={() => {

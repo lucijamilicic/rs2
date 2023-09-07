@@ -125,14 +125,15 @@
     margin-bottom: 0px;
 }
 
-    .add-item-wrap button {
+
+    .add-item-button {
         width: 100%;
         height: 40px;
         margin-top: 20px;
         background-color: rgb(125, 26, 26, 0.8);
     }
 
-        .add-item-wrap button:hover {
+        .add-item-button:hover {
             background-color: rgb(125, 26, 26, 1);
         }
 
@@ -152,4 +153,9 @@
     justify-content: center;
     color: rgb(125, 26, 26, 1);
     font-weight: 600;
+}
+
+.validation-err-add {
+    color:darkred;
+    text-align:center;
 }

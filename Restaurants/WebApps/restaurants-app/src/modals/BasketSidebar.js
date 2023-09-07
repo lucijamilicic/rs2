@@ -179,7 +179,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
             setBasketErr(zeroItemsErr);
             return false;
         }
-        else if (basket.deliveryAddress.length <= 0) {
+        else if (basket.deliveryAddress === '') {
             setBasketErr(AddressErr);
             return false;
         }
@@ -193,7 +193,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
         if (isValidBasket()) {
             setShowLoader(true);
             await checkout(basket).then((res) => {
-                setBasket({ ...basket, deliveryAddress: "", orderItems: [], totalPrice: 0.0 });
+                setBasket({ ...basket, deliveryAddress: '', orderItems: [], totalPrice: 0.0 });
                 setIsOpen(false);
                 setShowLoader(false);
             });

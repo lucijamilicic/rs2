@@ -89,3 +89,26 @@ img {
     font-weight: 500;
 }
 
+.tutorial {
+    padding-top: 30px;
+}
+
+.restaurant-name {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: x-large;
+}
+
+.restaurant-address {
+    color: rgba(0, 0, 0, 0.4);
+    font-size:medium;
+    font-style: italic;
+}
+
+.available {
+    color: rgba(0, 0, 0, 0.6);
+    font-size:x-large;
+}
+
+.available-restaurant {
+    padding-bottom: 15px;
+}

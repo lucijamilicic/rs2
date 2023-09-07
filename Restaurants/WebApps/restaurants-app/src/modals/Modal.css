@@ -457,3 +457,8 @@ h2.meal-name {
 .multi-select-input div[class*='dropdown-heading-value'] span {
     font-weight: normal !important;
 }
+
+.err-msg {
+    color: darkred;
+    font-size: small;
+}

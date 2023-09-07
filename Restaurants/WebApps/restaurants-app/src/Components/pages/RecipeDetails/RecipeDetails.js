@@ -64,19 +64,20 @@ const RecipeDetails = () => {
                               </div>
                                 </div>
                                 <div className="third-column">
-                              <a href={recipe?.tutorialVideoUrl} target="_blank">Watch full tutorial on YouTube</a>
                                     {recipe?.restaurants.length > 0 &&
-                                        <div>
-                                            <h3>Available in:</h3>
+                                        <div >
+                                            <h3 className="available">Available in:</h3>
                                             {recipe?.restaurants.map((restaurant) => {
                                                 return (
-                                                    <>
-                                                        <div> {restaurant.restaurantName} {restaurant.address}</div>
-                                                    </>
+                                                    <div className="available-restaurant">
+                                                        <div className="restaurant-name"> {restaurant.restaurantName}</div>
+                                                        <div className="restaurant-address">{restaurant.address}</div>
+                                                    </div>
                                                 )
                                             })}
                                         </div>
                                     }
+                                    <a href={recipe?.tutorialVideoUrl} target="_blank" className="tutorial">Watch full tutorial on YouTube</a>
                           </div>
                           </div>
                             <p className="recipe-paragraph">{recipe?.recipe}</p>

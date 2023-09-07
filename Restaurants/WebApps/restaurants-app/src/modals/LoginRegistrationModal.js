@@ -209,10 +209,10 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                         </div>
                     </>
                 )}
-                {isValidForm ? <></> : <div>All fields are required</div>}
-                {isCorrectPassword ? <></> : <div>Incorrect username or password</div>}
+                {isValidForm ? <></> : <div className="err-msg">All fields are required</div>}
+                {isCorrectPassword ? <></> : <div className="err-msg">Incorrect username or password</div>}
                 {errMessages.map((msg) => {
-                    return <div>{ msg }</div>
+                    return <div className="err-msg">{ msg }</div>
                 })}
                 <button
                     type="submit"

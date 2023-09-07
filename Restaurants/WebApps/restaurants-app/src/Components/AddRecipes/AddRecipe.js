@@ -125,7 +125,7 @@ const  AddRecipe = () => {
           <div className="left">
               <div className="input-wrap">
                   <label>Name of dish: </label>
-                  <span>{validationErr.nameErr}</span>
+                  <span className="validation-err">{validationErr.nameErr}</span>
                   <input
                       placeholder="Dish name"
                       value={state.name}
@@ -136,7 +136,7 @@ const  AddRecipe = () => {
               </div>
               <div className="input-wrap">
                   <label>Category: </label>
-                  <span>{validationErr.categoryErr}</span>
+                  <span className="validation-err">{validationErr.categoryErr}</span>
                   <div>
                       <MultiSelect
                           
@@ -154,7 +154,7 @@ const  AddRecipe = () => {
               </div>
               <div className="input-wrap">
                   <label className="add-label">Recipe: </label>
-                  <span>{validationErr.recipeErr}</span>
+                  <span className="validation-err">{validationErr.recipeErr}</span>
                   <textarea
                       placeholder="Recipe"
                       value={state.recipe}
@@ -187,7 +187,7 @@ const  AddRecipe = () => {
           <div className="right">
               <div className="ingredients-container">
                   <h4>List of ingredients: </h4>
-                  <span>{validationErr.ingredientErr}</span>
+                  <span className="validation-err">{validationErr.ingredientErr}</span>
                   <div className="ingredient-inputs">
                     <div className="input-wrap">
                       <label className="add-label"> Ingredient name: </label>
