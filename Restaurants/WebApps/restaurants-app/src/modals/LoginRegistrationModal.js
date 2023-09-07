@@ -3,6 +3,8 @@ import Modal from "react-modal";
 import "./Modal.css";
 import { registerUser, loginUser, getBasket } from "../api/Service";
 import { useNavigate } from "react-router-dom";
+import { getRole } from "../common/helpers";
+
 
 
 const LoginRegistrationModal = ({ isOpen = true }) => {
@@ -72,6 +74,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
     const [usernameExists, setUsernameExists] = useState(false);
     const [errMessages, setErrMessages] = useState([]);
 
+    
 
     const loginRegistrationHandler = async () => {
 
@@ -83,7 +86,14 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                     localStorage.setItem("refreshToken", res.data.refreshToken);
                     localStorage.setItem("userName", res.data.userName);
                     localStorage.setItem("userEmail", res.data.userEmail);
-                    await getBasket(res.data.userName);
+                    console.log(role + "oduhafougfouagvf");
+                    const role = getRole();
+                    if (role !== "Administrator") {
+
+                        await getBasket(res.data.userName);
+
+                    }
+                    
                     navigate('/');
                 }).catch((err) => { setIsCorrectPassword(false) });
             }
