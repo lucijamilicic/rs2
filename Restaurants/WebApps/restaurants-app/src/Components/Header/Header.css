@@ -1,0 +1,142 @@
+.header {
+    position: sticky;
+    top: 0;
+    height: 110px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color:rgba(27,27,27,0.7);
+    padding: 20px;
+    z-index: 10;
+    flex-wrap: wrap;
+}
+
+.header-left,
+.header-right {
+    width: 50%;
+}
+
+.header-left .search-wrap {
+    font-size: 18px;
+    color: white;
+}
+
+.header-right  {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+}
+
+.header svg {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button {
+    height: 45px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+
+.logout-button {
+    background-color: rgba(125, 26, 26, 0.7);
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-weight: bold; 
+}
+
+.logout-button:hover {
+    background-color: rgba(125, 26, 26, 0.9);
+}
+
+input {
+    border-radius: 5px 5px;
+    height: 40px;
+    color: white;
+    background-color: rgba(27, 22, 27, 0);
+    border:none;
+    border-bottom: 1px solid rgba(255,255, 255, 0.3);
+    padding: 5px 15px;
+}
+
+input::selection {
+    color: white;
+}
+
+input::placeholder {
+    font-size: 18px;
+    color: rgba(255,255,255, 0.7);
+    letter-spacing: 1px;
+}
+
+input:hover,
+input:focus {
+    background-color: rgba(27, 22, 27, 0.3);
+    border:none;
+    border-bottom: 1px solid rgba(255,255, 255, 0.3);
+    cursor: pointer;
+}
+
+.switch-button {
+    width: 160px;
+    font-size: 16px;
+    margin-left: 15px;
+    padding: 0px;
+    height: 40px;
+    background-color: transparent;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    border:none;
+    border-bottom: 1px solid rgba(255,255, 255, 0.7);
+}
+
+.switch-button.disabled {
+    color: rgba(255,255,255, 0.4);
+    border-bottom: 1px solid rgba(255,255, 255, 0.3);
+}
+
+.categories-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 20px;
+    overflow: hidden;
+}
+
+.category-item {
+    border-radius: 8px;
+    border: none;
+    height:30px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: rgba(125, 26, 26, 0.6);
+    display: flex;
+    font-size: 13px;
+    justify-content: center;
+    letter-spacing: 0.4px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 5px 8px;
+}
+
+    .category-item.selected {
+        background-color: rgba(125, 26, 26);
+    }
+
+.categories-container.visible {
+    height: 40px;
+}
+
+.categories-container.hidden {
+    height: 0;
+}
+
+.category-item:hover {
+    background-color: rgba(125, 26, 26, 1);
+}
+
