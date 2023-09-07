@@ -26,13 +26,20 @@ const  AddRecipe = () => {
 
     const submitHandler = async () => {
         if (isValid()) {
-            await addNewRecipe({ ...state, listOfIngredients: ingredientList, category: selectedCategory[0].value });
-            navigate('/');
+            await addNewRecipe({ ...state, listOfIngredients: ingredientList, category: selectedCategory[0].value })
+                .then(() => {
+                    navigate('/');
+                })
+                .catch((e) => { console.log(e) });
         }
-            console.log(validationErr);
     };
 
     const addIngredient = () => {
+        if (ingredients.name === '' || ingredients.measure === '') {
+            setValidationErr({ ...validationErr, ingredientErr: 'Name and measure for ingredient are required' });
+            return;
+        }
+        setValidationErr({ ...validationErr, ingredientErr: '' })
         setIngredientList([...ingredientList, ingredients]);
         setIngredients({
             name: '',
@@ -64,8 +71,11 @@ const  AddRecipe = () => {
 
     useEffect(() => {
         const getAllCategories = async () => {
-            const categories = await getCategories();
-            setAllCategories(categories.data.map((category) => ({ label: category, value: category })));
+            await getCategories()
+                .then((categories) => {
+                    setAllCategories(categories.data.map((category) => ({ label: category, value: category })));
+                })
+                .catch((e) => { console.log(e) })
         }
 
         getAllCategories();

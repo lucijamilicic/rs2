@@ -31,16 +31,16 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 
 		const getAllRecipes = async () => {
 			setShowLoader(true);
-			const recipes = await getRecipes().then(response => {
+			await getRecipes().then(response => {
 				setShowLoader(false);
-				return response.data;
-			});
-			setRecipes(recipes);
+				setRecipes(response.data);
+			}).catch((e) => { console.log(e) });
 		};
 
 		const getRecipesByName = async () => {
-			const recipes = await getRecipesByName(searchedRecipe);
-			setRecipes(recipes.data);
+			await getRecipesByName(searchedRecipe).then((recipes) => {
+				setRecipes(recipes.data);
+			}).catch((e) => { console.log(e) });
 		};
 		
 		getAllRecipes();
@@ -49,8 +49,10 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	useEffect(() => {
 
 		const getAllRecipesInCategory = async () => {
-			const recipes = await getRecipesByCategory(searchedCategory);
-			setRecipes(recipes.data);
+			await getRecipesByCategory(searchedCategory).then((recipes) => { 
+
+				setRecipes(recipes.data);
+			}).catch((e) => { console.log(e) });
 		}
 
 		searchedCategory && getAllRecipesInCategory();
@@ -60,8 +62,9 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	useEffect(() => {
 
 		const getRecipeByName = async () => {
-			const recipes = await getRecipesByName(searchedRecipe);
-			setRecipes(recipes.data);
+			await getRecipesByName(searchedRecipe).then((recipes) => {
+				setRecipes(recipes.data);
+			}).catch((e) => { console.log(e) });
 		}
 
 		searchedRecipe && getRecipeByName();

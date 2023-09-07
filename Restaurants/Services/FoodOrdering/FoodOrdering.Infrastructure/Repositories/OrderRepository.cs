@@ -48,7 +48,7 @@ public class OrderRepository:IOrderRepository
         
         email.To = orderDTO.BuyerEmailAddress;
         email.Subject = "Order from MATFraurant App";
-        var bodyStr = $"Order for user {orderDTO.BuyerUsername} is successfully created.\n\n";
+        var bodyStr = $"Dear {orderDTO.BuyerUsername},\n\n Your order is successfully created.\nTotal price for your purchase is {orderDTO.TotalPrice.ToString()} eur. \n\n";
         bodyStr += "Thank you for using our service.\n Have a good day!";
         email.Body = bodyStr;
         await _emailService.SendEmail(email);

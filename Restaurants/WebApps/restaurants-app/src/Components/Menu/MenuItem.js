@@ -24,14 +24,14 @@ const MenuItem = ({ restaurantInfo, menuItem }) => {
 
 
     const deleteHandler = async () => {
-        await deleteFromMenu(restaurantInfo.id, menuItem.id);
+        await deleteFromMenu(restaurantInfo.id, menuItem.id).catch((e) => { console.log(e) });
         setIsDeleteModalOpen(false);
         window.location.reload();
     }
 
     const addHandler = async (body) => {
 
-        await updateBasket(body);
+        await updateBasket(body).catch((e) => { console.log(e) });
         setShowOrder(false);
     };
 

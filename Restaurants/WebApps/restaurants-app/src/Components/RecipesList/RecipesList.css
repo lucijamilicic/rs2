@@ -15,4 +15,5 @@
 
 .add-recipe-button:hover {
     background-color: rgba(125, 26, 26, 1);
+    cursor: pointer;
 }

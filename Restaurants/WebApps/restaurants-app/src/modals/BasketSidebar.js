@@ -60,7 +60,7 @@ const BasketListItem = ({ restaurantId, restaurantName, order, setShowLoader }) 
         }
 
         setShowLoader(true);
-        await deleteBasketItem(body).then(_ => setShowLoader(false));
+        await deleteBasketItem(body).then(_ => setShowLoader(false)).catch((e) => { console.log(e) });
         setIsDeleteModalOpen(false);
         window.location.reload();
     }
@@ -78,7 +78,7 @@ const BasketListItem = ({ restaurantId, restaurantName, order, setShowLoader }) 
                 dishName,
             },
         }
-        await updateBasket(body);
+        await updateBasket(body).catch((e) => { console.log(e) });
         setState({
             ...state,
             quantity: quantityValue,
@@ -159,7 +159,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
         const username = localStorage.getItem('userName');
 
         const getBasketItems = async () => {
-            const basket = await getBasket(username).catch(error => []);
+            const basket = await getBasket(username).catch((e) => { console.log(e)});
             basket.data.buyerEmailAddress = localStorage.getItem("userEmail");
             setBasket(basket.data);
             setListOfItems(basket.data.orderItems);
@@ -196,7 +196,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
                 setBasket({ ...basket, deliveryAddress: '', orderItems: [], totalPrice: 0.0 });
                 setIsOpen(false);
                 setShowLoader(false);
-            });
+            }).catch((e) => { console.log(e) });
         }
     }
 
@@ -205,7 +205,7 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
         const username = localStorage.getItem('userName');
         setIsDeleteModalOpen(false);
         setIsOpen(false);
-        await deleteBasket(username);
+        await deleteBasket(username).catch((e) => { console.log(e) });
     }
 
   return (          

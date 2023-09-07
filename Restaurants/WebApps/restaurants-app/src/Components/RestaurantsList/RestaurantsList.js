@@ -24,8 +24,9 @@ const RestaurantList = ({ searchedRestaurant }) => {
 		if (role === "Administrator") {
 			setIsAdmin(true);
 			const getAllRecipes = async () => {
-				const recipes = await getRecipes();
-				setRecipes(recipes.data.map((recipe) => ({ label: recipe.name, value: recipe.id })));
+				await getRecipes().then((recipes) => {
+					setRecipes(recipes.data.map((recipe) => ({ label: recipe.name, value: recipe.id })));
+				}).catch((e) => { console.log(e) });
 			}
 
 			getAllRecipes();
@@ -38,7 +39,7 @@ const RestaurantList = ({ searchedRestaurant }) => {
 	};
 
 	const addConfirmHandler = async (body) => {
-		await createRestaurants(body);
+		await createRestaurants(body).catch((e) => { console.log(e) });
 		setIsAddRestaurantModalOpen(false);
 		setRefreshFlag(true);
 	};
@@ -52,20 +53,18 @@ const RestaurantList = ({ searchedRestaurant }) => {
 
 		const getRestaurants = async () => {
 			setShowLoader(true);
-			const restaurants = await getAllRestaurants().then(response => {
+			await getAllRestaurants().then(response => {
 				setShowLoader(false);
-				return response.data;
-			});
-			setRestaurants(restaurants);
+				setRestaurants(response.data);
+			}).catch((e) => { console.log(e) });
 		}
 
 		const getRestaurantsByRName = async (name) => {
 			setShowLoader(true);
-			const restaurants = await getRestaurantsByName(name).then(response => {
+			await getRestaurantsByName(name).then(response => {
 				setShowLoader(false);
-				return response.data;
-			});
-			setRestaurants(restaurants);
+				setRestaurants(response.data);
+			}).catch((e) => { console.log(e) });
 		}
 
 		if (searchedRestaurant === "" || refreshFlag) {

@@ -90,23 +90,23 @@ img {
 }
 
 .tutorial {
-    padding-top: 30px;
+    padding-top: 40px;
 }
 
 .restaurant-name {
     color: rgba(0, 0, 0, 0.6);
-    font-size: x-large;
+    font-size: large;
 }
 
 .restaurant-address {
     color: rgba(0, 0, 0, 0.4);
-    font-size:medium;
+    font-size:small;
     font-style: italic;
 }
 
 .available {
     color: rgba(0, 0, 0, 0.6);
-    font-size:x-large;
+    font-size:large;
 }
 
 .available-restaurant {

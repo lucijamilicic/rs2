@@ -55,7 +55,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
     };
 
     const deleteConfirm = async () => {
-        await deleteRestaurantById(restaurantInfo.id);
+        await deleteRestaurantById(restaurantInfo.id).catch((e) => { console.log(e) });
         setIsDeleteModalOpen(false);
         setRefresh(true);
         window.location.reload();
@@ -66,7 +66,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
             setIsEditModalOpen(false);
             setRefresh(true);
             window.location.reload();
-        });
+        }).catch((e) => { console.log(e) });
     };
 
     const [validationErr, setValidationErr] = useState("");
@@ -74,6 +74,10 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         if (addItemState.id.length <= 0 || addItemState.name === '' || !addItemState.price || addItemState.price === '') {
             setValidationErr("All fields are required");
             return false;
+        }
+        else if (addItemState.price < 0) {
+            setValidationErr("Price must be positive")
+            return false
         }
 
         setValidationErr('');
@@ -98,7 +102,9 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                 if (e.response.data.status === 409) {
                     setValidationErr('Item already exists in this menu')
                 }
-            
+                else {
+                    console.log(e);
+                }
             });
 
         }
