@@ -1,14 +1,17 @@
-import { GetRecipesByName, getRecipes, getRecipesByCategory, getRecipesByName } from "../../api/Service";
+import { getRecipes, getRecipesByCategory, getRecipesByName } from "../../api/Service";
 import RecipesListItem from "../RecipesListItem/RecipesListItem"
 import React, { useEffect, useState } from 'react';
 import "./RecipesList.css"
 import { useNavigate } from 'react-router-dom'; 
 import { getRole } from "../../common/helpers";
+import { PulseLoader } from 'react-spinners';
+
 
 const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 
 	const [recipes, setRecipes] = useState([]);
 	const [showAdd, setShowAdd] = useState(false);
+	const [showLoader, setShowLoader] = useState(true);
 
 	const navigate = useNavigate();
 	const role = getRole();
@@ -27,8 +30,12 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	useEffect(() => {
 
 		const getAllRecipes = async () => {
-			const recipes = await getRecipes();
-			setRecipes(recipes.data);
+			setShowLoader(true);
+			const recipes = await getRecipes().then(response => {
+				setShowLoader(false);
+				return response.data;
+			});
+			setRecipes(recipes);
 		};
 
 		const getRecipesByName = async () => {
@@ -36,10 +43,7 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 			setRecipes(recipes.data);
 		};
 		
-		//TODO: da se searchuje pretrazena rec
 		getAllRecipes();
-
-
 	}, []);
 
 	useEffect(() => {
@@ -65,18 +69,35 @@ const RecipesList = ({ searchedRecipe, searchedCategory }) => {
 	}, [searchedRecipe])
 
 
-	return (<>
-		<div className="recipes-list">
+	return (
+		<>
 			{
-				recipes.map((recipe, i) => {
-					return (
-						<RecipesListItem key={i} recipeInfo={recipe}></RecipesListItem>
-					)
-				})
+				showLoader ? (
+					<div className="page-loader-overlay">
+						<PulseLoader className="loader" />
+					</div>
+				) : (
+					<>
+					{
+						recipes?.length === 0 ? (
+						<div className="message-wrap">There are no results for this search.</div>
+					) : (
+							<div className="recipes-list">
+								{
+									recipes?.map((recipe, i) => {
+										return (
+											<RecipesListItem key={i} recipeInfo={recipe}></RecipesListItem>
+										)
+									})
+								}
+							</div>
+						)
+							}
+					</>
+				)
 			}
-		</div>
-		{showAdd && <buton className="add-recipe-button" onClick={addNewHandler}>Add new recipe</buton>}
-	</>
+			{showAdd && <buton className="add-recipe-button" onClick={addNewHandler}>Add new recipe</buton>}
+		</>
 	)
 
 }

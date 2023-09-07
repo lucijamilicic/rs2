@@ -13,8 +13,6 @@ import { getRole } from "../../common/helpers";
 
 const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions }) => {
 
-    const navigate = useNavigate();
-
     const [showMenu, setShowMenu] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -60,6 +58,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         await deleteRestaurantById(restaurantInfo.id);
         setIsDeleteModalOpen(false);
         setRefresh(true);
+        window.location.reload();
     };
 
     const editConfirm = async (body) => {
@@ -98,9 +97,6 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
         }
     };
 
-    const deleteMenuItem = async () => {
-
-    }
 
     const inputHandler = (e) => {
         const { name, value } = e.target;
@@ -146,9 +142,10 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                         <button className=" show-menu-button" onClick={() => setIsAddItemShown(!isAddItemShown)}>Add item to menu</button>
                     }
                     {
-                        isAddItemShown &&  
+                        isAddItemShown && showMenu &&  
                             <div className="add-item-wrap">
                                 <div>
+                                <label>Select dish:</label>
                                     <MultiSelect
                                         labelledBy="Select"
                                         options={recipesOptions}
@@ -173,7 +170,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                                 </div>
                                 <div className="input-wrap">
                                     <label>Price: </label>
-                                    <input type="number" name="price" value={addItemState.price} onChange={inputHandler} />
+                                    <input type="number" name="price" min="0" value={addItemState.price} onChange={inputHandler} />
                                 </div>
                                 <div>{validationErr}</div>
                                 <button onClick={addMenuItemHandler}>Add</button>
@@ -182,7 +179,7 @@ const RestaurantsListItem = ({ setRefresh, restaurantInfo, menu, recipesOptions 
                 </>
                 }
             </div>
-            <DeleteModal isOpen={isDeleteModalOpen} data={restaurantInfo} onCancel={deleteCancel} onConfirm={deleteConfirm} />
+            <DeleteModal isOpen={isDeleteModalOpen} name={restaurantInfo.restaurantName}  onCancel={deleteCancel} onConfirm={deleteConfirm} />
             <EditRestaurantModal isOpen={isEditModalOpen} data={restaurantInfo} onConfirm={editConfirm} onCancel={editCancel} />
         </>
     )

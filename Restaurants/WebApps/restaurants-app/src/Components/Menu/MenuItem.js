@@ -29,7 +29,6 @@ const MenuItem = ({ restaurantInfo, menuItem }) => {
         window.location.reload();
     }
 
-    //TODO
     const addHandler = async (body) => {
 
         await updateBasket(body);

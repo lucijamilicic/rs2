@@ -48,10 +48,16 @@ const RecipeDetails = () => {
                              <h1>{recipe?.name}</h1>
                              <div className="ingredients">
                                   <h3>Ingredients: </h3>
-                                   {recipe?.listOfIngredients.map((ingredient) => {
+                                   {recipe?.listOfIngredients.map((ingredient, i) => {
                                         return (
-                                           <>
-                                              <div> {ingredient.measure} - {ingredient.name}</div>
+                                            <>
+                                                {ingredient.measure} - {ingredient.name}
+                                                <>
+                                                    {i !== (recipe?.listOfIngredients.length - 1) && 
+                                                      <>, { " "}</> 
+                                                    }
+                                                </>
+                                                
                                             </>
                                         )
                                    })}

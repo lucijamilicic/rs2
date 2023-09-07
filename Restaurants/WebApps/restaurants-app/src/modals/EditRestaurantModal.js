@@ -3,8 +3,6 @@ import Modal from "react-modal";
 import "./Modal.css"
 import { useState, useEffect } from "react";
 
-//import {ReactComponent as CancelImage} from "../assets/cancel-img.svg";
-
 const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
 
     const isEdit = data;
@@ -56,13 +54,17 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
             isOpen={isOpen}
             className="modal"
         >
+            <div className="modal-header">
+                {isEdit ? "Edit restaurant" : "Add restaurant"}
+            </div>
             <div className="modal-wrap">
+                
                 <div className="input-wrap">
-                    <label>Name*</label>
+                    <label>* Name</label>
                     <input type="text" placeholder="Name" name="restaurantName" maxLength="30" size="10" value={state.restaurantName} onChange={textInputHandler} />
                 </div>
                 <div className="input-wrap">
-                    <label>Address*</label>
+                    <label>* Address</label>
                     <input type="text" placeholder="Address" name="address" maxLength="30" size="10" value={state.address} onChange={textInputHandler} />
                 </div>
                 <div className="input-wrap">
@@ -70,19 +72,24 @@ const EditRestaurantModal = ({ isOpen, data, onConfirm, onCancel }) => {
                     <input type="text" placeholder="Image url" name="img" size="10" value={state.img} onChange={textInputHandler} />
                 </div>
                 <div>{validationErr}</div>
-                <div className="button-wrap">
+                <div className="buttons-wrap">
                     <button
                         onClick={() => {
                             onCancel();
                             clearState();
                         }}
-                        className="button-delete">Cancel</button>
+                        className="clear">Cancel</button>
                     <button onClick={() => {
                         if (isValid()) {
                             onConfirm(state);
+                            setState({
+                                img: '',
+                                restaurantName: '',
+                                address: '',
+                            });
                         }
                     }
-                    } className="button-delete">Confirm</button>
+                    } className="checkout-button">Confirm</button>
                 </div>
             </div>
         </Modal>

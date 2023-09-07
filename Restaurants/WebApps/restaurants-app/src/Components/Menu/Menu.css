@@ -4,6 +4,7 @@
     color: beige;
     align-content: center;
     padding: 10px;
+    width: 90%;
 }
 
 .menu-title {
@@ -23,7 +24,7 @@
     margin-bottom: 10px;
     background-color: #a88e8e;
     flex-wrap: wrap;
-    border-radius: 10px;
+    border-radius: 5px;
     justify-content: space-between;
     position: page;
     color: beige;
@@ -45,7 +46,7 @@
 
 .food-price {
     margin-top: 5px;
-    font-size: 14px;
+    font-size: 16px;
     font-style: italic;
     font-weight: bold;
     color: rgba(125, 26, 26, 1);
@@ -61,7 +62,7 @@
 
 .order-button {
     background-color: rgba(125, 26, 26, 0.6);
-    border-radius: 10px;
+    border-radius: 5px;
     font-weight: bold;
 }
 

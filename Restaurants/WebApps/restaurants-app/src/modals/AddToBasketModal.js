@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { updateBasket } from "../api/Service";
 
 const AddToBasketModal = ({ isOpen, menuItem, restaurantInfo, onConfirm, onCancel }) => {
 
     const buyerUsername = localStorage.getItem('userName');
     const buyerEmail = localStorage.getItem('userEmail');
-
-
-
-    /*const [state, setState] = useState({
-        restaurantName: restaurantInfo.restaurantName,
-        restaurantId: restaurantInfo.id,
-    });*/
 
     const [foodOrder, setFoodOrder] = useState({
         dishName: menuItem.mealName,
@@ -56,10 +48,10 @@ const AddToBasketModal = ({ isOpen, menuItem, restaurantInfo, onConfirm, onCance
   return (
     <Modal isOpen={isOpen} className={`modal`}>
       <div className="modal-header">
-        <h2>{ "Add basket item"}</h2>
+        <h2>Add basket item</h2>
       </div>
-      <div className="modal-wrap">
-        <h2>{menuItem.mealName}</h2>
+          <div className="modal-wrap">
+              <h2 className="meal-name">{menuItem.mealName}</h2>
         <div className="note-input">
           <label>Add extra note for the restaurant: </label>
           <textarea
@@ -78,9 +70,9 @@ const AddToBasketModal = ({ isOpen, menuItem, restaurantInfo, onConfirm, onCance
           <p>{foodOrder.quantity}</p>
           <button onClick={incrementQuantity}>+</button>
          </div>
-              <div className="add-buttons">
-                  <button className="order-buttons" onClick={onCancel}>Cancel</button>
-                  <button className="order-buttons" onClick={addHandler}>Add</button>
+              <div className="buttons-wrap">
+                  <button className="clear" onClick={onCancel}>Cancel</button>
+                  <button className="checkout-button" onClick={addHandler}>Add</button>
               </div>
       </div>
     </Modal>

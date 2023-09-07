@@ -2,9 +2,10 @@ import { useState, useEffect } from "react"
 import RestaurantsListItem from "../RestaurantsListItem/RestaurantsListItem"
 import { getAllRestaurants, getRecipes, getRestaurantsByName } from "./../../api/Service"
 import { createRestaurants, deleteRestaurantById, updateRestaurantById } from "../../api/Service"
-import { useNavigate } from 'react-router-dom'
 import EditRestaurantModal from "../../modals/EditRestaurantModal";
 import { getRole } from "../../common/helpers";
+import { PulseLoader } from 'react-spinners';
+import AddToMenuModal from "../../modals/AddToMenuModal"
 
 
 const RestaurantList = ({ searchedRestaurant }) => {
@@ -12,12 +13,10 @@ const RestaurantList = ({ searchedRestaurant }) => {
 	const [restaurants, setRestaurants] = useState([])
 	const [recipes, setRecipes] = useState([]);
 	const [refreshFlag, setRefreshFlag] = useState(false);
-
+	const [showLoader, setShowLoader] = useState(true);
 	const [isAdmin, setIsAdmin] = useState(false);
-
 	const [isAddRestaurantModalOpen, setIsAddRestaurantModalOpen] = useState(false);
 
-	const navigate = useNavigate();
 	const role = getRole();
 
 	useEffect(() => {
@@ -52,13 +51,21 @@ const RestaurantList = ({ searchedRestaurant }) => {
 	useEffect(() => {
 
 		const getRestaurants = async () => {
-			const restaurants = await getAllRestaurants();
-			setRestaurants(restaurants.data);
+			setShowLoader(true);
+			const restaurants = await getAllRestaurants().then(response => {
+				setShowLoader(false);
+				return response.data;
+			});
+			setRestaurants(restaurants);
 		}
 
 		const getRestaurantsByRName = async (name) => {
-			const restaurants = await getRestaurantsByName(name);
-			setRestaurants(restaurants.data);
+			setShowLoader(true);
+			const restaurants = await getRestaurantsByName(name).then(response => {
+				setShowLoader(false);
+				return response.data;
+			});
+			setRestaurants(restaurants);
 		}
 
 		if (searchedRestaurant === "" || refreshFlag) {
@@ -72,17 +79,32 @@ const RestaurantList = ({ searchedRestaurant }) => {
 
 	return (
 		<>
-			<div className="restaurant-list">
-				{
-					restaurants.map((restaurant) => {
-						return (
-							<RestaurantsListItem restaurantInfo={restaurant} menu={restaurant.menu} recipesOptions={recipes} setRefresh={setRefreshFlag} ></RestaurantsListItem>
-						)
-					})
+			{
+				showLoader ? (
+					<div className="page-loader-overlay">
+						<PulseLoader className="loader" />
+					</div>
+				) : (
+					<>
+						{
+							restaurants?.length === 0 ? (
+								<div className="message-wrap">There are no results for this search.</div>
+							) : (
+								<div className="restaurant-list">
+									{
+										restaurants?.map((restaurant) => {
+											return (
+												<RestaurantsListItem restaurantInfo={restaurant} menu={restaurant.menu} recipesOptions={recipes} setRefresh={setRefreshFlag} ></RestaurantsListItem>
+											)
+										})
 
-				}
-			</div>
-			{ isAdmin && <button className="add-recipe-button" onClick={addHandler}> Add new restaurant </button>}
+									}
+								</div>
+							)
+						}
+					</>
+				)}
+			{isAdmin && <button className="add-recipe-button" onClick={addHandler}> Add new restaurant </button>}
 			<EditRestaurantModal isOpen={isAddRestaurantModalOpen} data={null} onCancel={addCancelHandler} onConfirm={addConfirmHandler} />
 		</>
 	)

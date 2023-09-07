@@ -27,7 +27,7 @@
     column-gap: 20px;
 }
 
-svg {
+.header svg {
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -54,7 +54,7 @@ button {
 }
 
 input {
-    border-radius: 10px 10px 5px 5px;
+    border-radius: 5px 5px;
     height: 40px;
     color: white;
     background-color: rgba(27, 22, 27, 0);

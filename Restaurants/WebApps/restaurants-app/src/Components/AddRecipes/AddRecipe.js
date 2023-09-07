@@ -122,120 +122,136 @@ const  AddRecipe = () => {
     
   return (
       <div className="formular">
-          <p className="add-title">Add new recipe</p>
-          <div className="add-item">
-              <label className="add-label">Name of dish: </label>
-              <span>{validationErr.nameErr}</span>
-              <input
-                  className="add-input"
-                  placeholder="Dish name"
-                  value={state.name}
-                  name="name"
-                  type="text"
-                  onChange={textInputHandler}
-              />
-          </div>
-          <div className="add-item">
-              <p className="add-label">Category: </p>
-              <span>{validationErr.categoryErr}</span>
-              <div>
-                  <MultiSelect
-                      labelledBy="Select"
-                      options={allCategories}
-                      value={selectedCategory}
-                      disableSearch={true}
-                      hasSelectAll={false}
-                      onChange={(e) => {
-                          setSelectedCategory(e);
-                      }}
-
-                  />
-              </div>
-          </div>
-          <div className="add-item">
-              <label className="add-label">Recipe: </label>
-              <span>{validationErr.recipeErr}</span>
-              <textarea
-                  className="add-textarea"
-                  placeholder="Recipe"
-                  value={state.recipe}
-                  name="recipe"
-                  type="text"
-                  onChange={textInputHandler}
-              />
-          </div>
-          <div className="add-item">
-              <p className="add-label">Image url: </p>
-              <input
-                  className="add-input"
-                  placeholder="Image of the dish"
-                  value={state.imageUrl}
-                  name="imageUrl"
-                  type="text"
-                  onChange={textInputHandler}
-              />
-          </div>
-          <div className="add-item">
-              <p className="add-label">Tutorial video url: </p>
-              <input
-                  className="add-input"
-                  placeholder="Tutorial video"
-                  value={state.tutorialVideoUrl}
-                  name="tutorialVideoUrl"
-                  type="text"
-                  onChange={textInputHandler}
-              />
-          </div>
-          <div className="add-item">
-              <label className="add-label">List of ingredients: </label>
-              <span>{validationErr.ingredientErr}</span>
-              <div className="add-ingredient">
-                  <p className="add-ingredient-label"> Ingredient: </p>
+          <div className="left">
+              <div className="input-wrap">
+                  <label>Name of dish: </label>
+                  <span>{validationErr.nameErr}</span>
                   <input
-                      className="add-ingredient-input"
-                      placeholder="ingredient name"
-                      value={ingredients.name}
+                      placeholder="Dish name"
+                      value={state.name}
                       name="name"
                       type="text"
-                      onChange={ingredientsInputHandler}
+                      onChange={textInputHandler}
                   />
               </div>
-              <div className="add-ingredient">
-                  <p className="add-ingredient-label"> Measurements: </p>
-                  <input
-                      className="add-ingredient-input"
-                      placeholder="measurements"
-                      value={ingredients.measure}
-                      name="measure"
+              <div className="input-wrap">
+                  <label>Category: </label>
+                  <span>{validationErr.categoryErr}</span>
+                  <div>
+                      <MultiSelect
+                          
+                          labelledBy="Select"
+                          options={allCategories}
+                          value={selectedCategory}
+                          disableSearch={false}
+                          hasSelectAll={false}
+                          onChange={(e) => {
+                              setSelectedCategory(e);
+                          }}
+
+                      />
+                  </div>
+              </div>
+              <div className="input-wrap">
+                  <label className="add-label">Recipe: </label>
+                  <span>{validationErr.recipeErr}</span>
+                  <textarea
+                      placeholder="Recipe"
+                      value={state.recipe}
+                      name="recipe"
                       type="text"
-                      onChange={ingredientsInputHandler}
+                      onChange={textInputHandler}
                   />
               </div>
-              <button className="add-ingred-button" onClick={addIngredient}>+</button>
+              <div className="input-wrap">
+                  <label>Image url: </label>
+                  <input
+                      placeholder="Image of the dish"
+                      value={state.imageUrl}
+                      name="imageUrl"
+                      type="text"
+                      onChange={textInputHandler}
+                  />
+              </div>
+              <div className="input-wrap">
+                  <label>Tutorial video url: </label>
+                  <input
+                      placeholder="Tutorial video"
+                      value={state.tutorialVideoUrl}
+                      name="tutorialVideoUrl"
+                      type="text"
+                      onChange={textInputHandler}
+                  />
+              </div>
           </div>
-          <div className="add-item">
-              <table className="add-table">
-                  <thead>
-                      <tr>
-                          <td className="table-head">Ingredient</td>
-                          <td className="table-head">Measurements</td>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {ingredientList?.map(ingr=>{
-                      return(
-                          <tr>
-                              <td>{ingr.name}</td>
-                              <td>{ingr.measure}</td>
-                          </tr>
-                      );
-                  })}
-                  </tbody>
-              </table>
+          <div className="right">
+              <div className="ingredients-container">
+                  <h4>List of ingredients: </h4>
+                  <span>{validationErr.ingredientErr}</span>
+                  <div className="ingredient-inputs">
+                    <div className="input-wrap">
+                      <label className="add-label"> Ingredient name: </label>
+                      <input
+                          placeholder="Enter name"
+                          value={ingredients.name}
+                          name="name"
+                          type="text"
+                          onChange={ingredientsInputHandler}
+                      />
+                    </div>
+                    <div className="input-wrap">
+                      <label className="add-label"> Measure: </label>
+                      <input
+                          placeholder="Enter measure"
+                          value={ingredients.measure}
+                          name="measure"
+                          type="text"
+                          onChange={ingredientsInputHandler}
+                      />
+                      </div>
+                      <button className="add-ingred-button" onClick={addIngredient}>+</button>
+                  </div>
+                  {
+                      ingredientList.length !== 0 &&
+                      <div>
+                          <table className="add-table">
+                              <thead>
+                                  <tr>
+                                      <th className="table-head">Ingredient</th>
+                                      <th className="table-head">Measurements</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {ingredientList?.map((ingr, i) => {
+                                      return (
+                                          <tr>
+                                              <td>{ingr.name}</td>
+                                              <td>{ingr.measure}</td>
+                                              <td><button onClick={() => (
+                                                   setIngredientList(prevList => {
+                                                       const newList = prevList.filter((_, j) => j !== i);
+                                                       return newList;
+                                                  })
+                                              )}>
+                                                  x
+                                              </button></td>
+                                          </tr>
+                                      );
+                                  })}
+                              </tbody>
+                          </table>
+                      </div>
+                  }
+              </div>
+              
+             
+              <div className="buttons-wrap">
+                  <button className="clear" onClick={cancelHandler}>Cancel</button>
+                  <button type="submit" className="checkout-button" onClick={submitHandler}>Create</button>
+              </div> 
           </div>
-          <button type="submit" className="submit-button" onClick={submitHandler}>Submit</button>
-          <button className="cancel-button" onClick={ cancelHandler}>Cancel</button>
-      </div>
+          
+       </div>
   );    
 };
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Modal from "react-modal";
-import "./DeleteModal.css"
+import "./Modal.css"
 import {ReactComponent as CancelImage} from "../assets/cancel-img.svg";
 
 const DeleteModal = ({ isOpen, name, onConfirm, onCancel }) => {
@@ -14,9 +14,9 @@ const DeleteModal = ({ isOpen, name, onConfirm, onCancel }) => {
                 <CancelImage className="cancel-img" onClick={onCancel} />
                 <h2>Are you sure?</h2>
                 <p>Do you really want to delete <span>{name}</span>? This process cannot be undone. </p>
-                <div className="button-wrap">
-                    <button onClick={onCancel} className="button-delete">Cancel</button>
-                    <button onClick={onConfirm} className="button-delete">Confirm</button>
+                <div className="buttons-wrap">
+                    <button onClick={onCancel} className="clear">Cancel</button>
+                    <button onClick={onConfirm} className="checkout-button">Confirm</button>
                 </div>
             </div>
         </Modal>

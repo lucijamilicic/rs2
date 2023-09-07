@@ -1,7 +1,7 @@
 import BasketSidebar from "../modals/BasketSidebar";
 import "./App.css";
 import Header from "./Header/Header";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import LoginRegistrationModal from "../modals/LoginRegistrationModal";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomePage from "../Components/pages/WelcomePage/WelcomePage";
@@ -19,16 +19,21 @@ const App = () => {
         isRestaurant: true,
         category:'',
     });
+
+    const basketRef = useRef();
+
     const [isBasketSidebarOpen, setIsBasketSidebarOpen] = useState(false);
 
     return (
         <>
             <Router>
                 <div className="App">
-                        <BasketSidebar
-                            isOpen={isBasketSidebarOpen}
-                            setIsOpen={setIsBasketSidebarOpen}
-                        />
+                    <div>
+                            <BasketSidebar
+                                isOpen={isBasketSidebarOpen}
+                                setIsOpen={setIsBasketSidebarOpen}
+                            />
+                        </div>
                         <Routes>
                             <Route
                                 exact

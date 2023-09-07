@@ -122,8 +122,9 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
             <div className="modal-wrap">
                 {!registered ? (
                     <>
+                        <div className="inputs-wrap">
                         <div className="input-wrap">
-                            <label htmlFor="firstName">First name*  </label>
+                            <label htmlFor="firstName">* First name  </label>
                             <input
                                 placeholder="Enter name"
                                 value={registerState.firstName}
@@ -133,7 +134,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="lastName">Last name* </label>
+                            <label htmlFor="lastName">* Last name </label>
                             <input
                                 placeholder="Enter last name"
                                 value={registerState.lastName}
@@ -141,9 +142,10 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                                 type="text"
                                 onChange={registerInputHandler}
                             />
+                         </div>
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="userName">Username* </label>
+                            <label htmlFor="userName">* Username </label>
                             <input
                                 placeholder="Enter username"
                                 value={registerState.userName}
@@ -153,7 +155,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="email">Email* </label>
+                            <label htmlFor="email">* Email </label>
                             <input
                                 placeholder="Enter email"
                                 value={registerState.email}
@@ -163,7 +165,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="password">Password* </label>
+                            <label htmlFor="password">* Password</label>
                             <input
                                 placeholder="Enter password"
                                 value={registerState.password}
@@ -173,7 +175,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="phone">Phone number* </label>
+                            <label htmlFor="phone">* Phone number </label>
                             <input
                                 placeholder="Enter phone number"
                                 value={registerState.phoneNumber}
@@ -186,7 +188,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                 ) : (
                     <>
                         <div className="input-wrap">
-                            <label htmlFor="userName">Username* </label>
+                            <label htmlFor="userName">* Username</label>
                             <input
                                 placeholder="Enter username"
                                 value={logInState.userName}
@@ -196,7 +198,7 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                             />
                         </div>
                         <div className="input-wrap">
-                            <label htmlFor="password">Password* </label>
+                            <label htmlFor="password">* Password</label>
                             <input
                                 placeholder="Enter password"
                                 value={logInState.password}

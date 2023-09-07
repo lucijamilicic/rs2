@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
 import { ReactComponent as EditIcon } from "../assets/edit.svg";
 import { ReactComponent as CancelIcon } from "../assets/cancel.svg";
 import { ReactComponent as BasketIcon } from "../assets/basket.svg";
@@ -9,7 +8,7 @@ import { getBasket, updateBasket, checkout, deleteBasketItem, deleteBasket } fro
 import DeleteModal from '../modals/DeleteModal';
 import { PulseLoader } from 'react-spinners';
 
-const BasketListItem = ({ restaurantId, restaurantName, order }) => {
+const BasketListItem = ({ restaurantId, restaurantName, order, setShowLoader }) => {
     const { price, quantity, extraNote, dishName, dishId } = order;
     const [quantityValue, setQuantityValue] = useState(quantity);
     const buyerUsername = localStorage.getItem('userName');
@@ -26,7 +25,6 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
 
       const incrementQuantity = () => {
           const newQuantity = quantityValue + 1;
-          //setState({ ...state, quantity: newQuantity });
           setQuantityValue(newQuantity);
       };
 
@@ -34,15 +32,11 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
         const newQuantity = quantityValue - 1;
 
         if (newQuantity <= 0) {
-          //setState({ ...state, quantity: 0 });
             setQuantityValue(0);
 
           return;
         }
-
-        //setState({ ...state, quantity: newQuantity });
           setQuantityValue(newQuantity);
-
       };
 
       const onCancel = () => {
@@ -65,7 +59,8 @@ const BasketListItem = ({ restaurantId, restaurantName, order }) => {
             },
         }
 
-        await deleteBasketItem(body);
+        setShowLoader(true);
+        await deleteBasketItem(body).then(_ => setShowLoader(false));
         setIsDeleteModalOpen(false);
         window.location.reload();
     }
@@ -232,9 +227,15 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
                   <div className="list">
                               {listOfItems?.map((restaurant, i) => {
                                   return restaurant?.foodOrder.map((order, j) => {
-                                      return <BasketListItem key={`${i}${j}`} restaurantId={ restaurant?.restaurantId} restaurantName={restaurant?.restaurantName} order={order}/>
-                                  })
-                              })}
+                                              return <BasketListItem
+                                                  key={`${i}${j}`}
+                                                  restaurantId={restaurant?.restaurantId}
+                                                  restaurantName={restaurant?.restaurantName}
+                                                  order={order}
+                                                  setShowLoader={setShowLoader }
+                                              />
+                                          })
+                                      })}
                   </div>
                   <div className="total-price">
                     Total price: <span> {basket?.totalPrice} &euro;</span>

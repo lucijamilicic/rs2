@@ -3,7 +3,7 @@ import "./Header.css";
 import { ReactComponent as BasketIcon } from "../../assets/basket.svg";
 import { getCategories, logout } from "../../api/Service"
 import { useNavigate } from "react-router-dom";
-import { getAccessToken, getRole } from "../../common/helpers";
+import { getRole } from "../../common/helpers";
 
 
 
