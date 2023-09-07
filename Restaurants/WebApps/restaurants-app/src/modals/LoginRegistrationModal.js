@@ -100,7 +100,6 @@ const LoginRegistrationModal = ({ isOpen = true }) => {
                 }).catch((err) => {
                     let data = err.response.data;
                     setErrMessages(Object.keys(data).map((key) => {
-                        console.log(data[key][0]);
                         return data[key][0];
                     }))
                 });

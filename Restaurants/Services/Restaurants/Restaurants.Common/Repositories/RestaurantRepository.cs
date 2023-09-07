@@ -128,12 +128,10 @@ namespace Restaurants.Common.Repositories
         {
             using var connection = _context.GetConnection();
 
-            Console.Write("Ovde radi 1");
             var test = await connection.QueryAsync<MenuItem>(
                     "SELECT MealID AS ID, MealName, Price FROM Menu WHERE RestaurantID = @RestaurantId AND MealID=@MealId",
                     new { RestaurantId = restaurantId, MealId = menuItemDTO.Id}
                     );
-            Console.Write("Ovde radi 2");
 
             if ( test == null || test.Count() <= 0) { 
 
@@ -145,7 +143,6 @@ namespace Restaurants.Common.Repositories
                 return affectedRows != 0;
 
             }
-            Console.Write("Ovde radi 3");
 
 
             return false;
