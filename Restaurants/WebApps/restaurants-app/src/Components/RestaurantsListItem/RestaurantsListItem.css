@@ -125,6 +125,10 @@
     margin-bottom: 0px;
 }
 
+.add-item-wrap div[class*='search'] input {
+    color: black !important;
+}
+
 
     .add-item-button {
         width: 100%;

@@ -8,7 +8,7 @@ import { getBasket, updateBasket, checkout, deleteBasketItem, deleteBasket } fro
 import DeleteModal from '../modals/DeleteModal';
 import { PulseLoader } from 'react-spinners';
 
-const BasketListItem = ({ restaurantId, restaurantName, order, setShowLoader }) => {
+const BasketListItem = ({ restaurantId, restaurantName, order, setShowLoader, setIsBasketOpen }) => {
     const { price, quantity, extraNote, dishName, dishId } = order;
     const [quantityValue, setQuantityValue] = useState(quantity);
     const buyerUsername = localStorage.getItem('userName');
@@ -74,6 +74,7 @@ const BasketListItem = ({ restaurantId, restaurantName, order, setShowLoader }) 
             buyerEmail,
             orderedItem: {
                 ...state,
+                quantity: quantityValue,
                 dishId,
                 dishName,
             },
@@ -83,6 +84,7 @@ const BasketListItem = ({ restaurantId, restaurantName, order, setShowLoader }) 
             ...state,
             quantity: quantityValue,
         })
+        setIsBasketOpen(false);
         setEdit(false);
       };
 
@@ -232,7 +234,8 @@ const BasketSidebar = ({ isOpen, setIsOpen }) => {
                                                   restaurantId={restaurant?.restaurantId}
                                                   restaurantName={restaurant?.restaurantName}
                                                   order={order}
-                                                  setShowLoader={setShowLoader }
+                                                  setShowLoader={setShowLoader}
+                                                  setIsBasketOpen={setIsOpen}
                                               />
                                           })
                                       })}
